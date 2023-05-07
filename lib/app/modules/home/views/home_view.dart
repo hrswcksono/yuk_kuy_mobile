@@ -16,6 +16,7 @@ class HomeView extends GetView<HomeController> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
                 padding: const EdgeInsets.only(
@@ -102,6 +103,20 @@ class HomeView extends GetView<HomeController> {
                     ),
                     backgroundColor: const Color.fromRGBO(245, 246, 250, 1),
                   ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 20,
+                  top: 5,
+                ),
+                child: Text(
+                  "Product",
+                  style: GoogleFonts.inter(
+                      textStyle: const TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.w600,
+                  )),
                 ),
               ),
               Padding(

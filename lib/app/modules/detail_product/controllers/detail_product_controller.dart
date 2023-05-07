@@ -1,23 +1,15 @@
 import 'package:get/get.dart';
 
 class DetailProductController extends GetxController {
-  //TODO: Implement DetailProductController
+  bool isFavorite = false;
 
-  final count = 0.obs;
   @override
   void onInit() {
     super.onInit();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
+  void changeFavorite() {
+    isFavorite = !isFavorite;
+    update();
   }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }
