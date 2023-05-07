@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../../core/themes/colors.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -13,7 +14,11 @@ class HomeView extends GetView<HomeController> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.only(
+              left: 20,
+              right: 20,
+              top: 30,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -30,7 +35,27 @@ class HomeView extends GetView<HomeController> {
                           fontSize: 15,
                           color: Color.fromRGBO(143, 149, 158, 1))),
                 ),
-                TextField(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      width: Get.width * 0.77,
+                      child: TextField(),
+                    ),
+                    Container(
+                      height: 47,
+                      width: 46,
+                      decoration: BoxDecoration(
+                        color: CustomColor.mainGreen,
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                      ),
+                      child: Icon(
+                        Icons.search,
+                        color: Colors.white,
+                      ),
+                    )
+                  ],
+                ),
                 SizedBox(
                   height: 40,
                   child: ListView.builder(
@@ -56,41 +81,6 @@ class HomeView extends GetView<HomeController> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(items: [
-        BottomNavigationBarItem(icon: Text('Home'), label: ""),
-        BottomNavigationBarItem(icon: Text('Transaction'), label: ""),
-        BottomNavigationBarItem(icon: Text('Favorite'), label: ""),
-        BottomNavigationBarItem(icon: Text('Profile'), label: ""),
-      ]),
-      // bottomNavigationBar: Container(
-      //   color: Colors.amber,
-      //   height: 64,
-      //   child: Row(
-      //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      //     children: [
-      //       Text(
-      //         'Home',
-      //         style: GoogleFonts.inter(
-      //             textStyle: TextStyle(color: Color.fromRGBO(25, 164, 99, 1))),
-      //       ),
-      //       Text(
-      //         'Transaction',
-      //         style: GoogleFonts.inter(
-      //             textStyle: TextStyle(color: Color.fromRGBO(25, 164, 99, 1))),
-      //       ),
-      //       Text(
-      //         'Favorite',
-      //         style: GoogleFonts.inter(
-      //             textStyle: TextStyle(color: Color.fromRGBO(25, 164, 99, 1))),
-      //       ),
-      //       Text(
-      //         'Profile',
-      //         style: GoogleFonts.inter(
-      //             textStyle: TextStyle(color: Color.fromRGBO(25, 164, 99, 1))),
-      //       )
-      //     ],
-      //   ),
-      // ),
     );
   }
 }
