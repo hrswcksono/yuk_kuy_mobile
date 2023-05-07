@@ -19,7 +19,7 @@ class BaseView extends GetView<BaseController> {
           return Scaffold(
             body: IndexedStack(
               index: bcontroller.indexTab,
-              children: const [
+              children: [
                 HomeView(),
                 TransactionView(),
                 FavoriteView(),
@@ -95,7 +95,10 @@ class BaseView extends GetView<BaseController> {
       child: Text(
         title,
         style: GoogleFonts.inter(
-            textStyle: const TextStyle(color: Color.fromRGBO(25, 164, 99, 1))),
+          textStyle: const TextStyle(
+              color: Color.fromRGBO(25, 164, 99, 1),
+              fontWeight: FontWeight.w500),
+        ),
       ),
     );
   }

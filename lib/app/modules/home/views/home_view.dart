@@ -51,7 +51,11 @@ class HomeView extends GetView<HomeController> {
                       children: [
                         SizedBox(
                           width: Get.width * 0.77,
-                          child: const TextField(),
+                          child: const TextField(
+                            decoration: InputDecoration(
+                              hintText: "Search...",
+                            ),
+                          ),
                         ),
                         Container(
                           height: 47,

@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:yuk_kuy_mobile/app/modules/login_register/views/login_view.dart';
+import 'package:yuk_kuy_mobile/app/modules/login_register/views/register_view.dart';
 
 import '../modules/base/bindings/base_binding.dart';
 import '../modules/base/views/base_view.dart';
@@ -38,7 +40,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.LOGIN_REGISTER,
-      page: () => const LoginRegisterView(),
+      page: () => const RegisterView(),
       binding: LoginRegisterBinding(),
     ),
     GetPage(
