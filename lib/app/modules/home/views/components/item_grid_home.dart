@@ -2,11 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:yuk_kuy_mobile/app/routes/app_pages.dart';
+import 'package:yuk_kuy_mobile/core/utils/extensions/string_extensions.dart';
 
 class ItemGridHome extends StatelessWidget {
   const ItemGridHome({
     super.key,
+    required this.image,
+    required this.title,
+    required this.date,
+    required this.price,
   });
+
+  final String image;
+  final String title;
+  final String date;
+  final String price;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +29,7 @@ class ItemGridHome extends StatelessWidget {
         children: [
           Container(
             height: 178.69,
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(
                   Radius.circular(15),
                 ),
@@ -28,7 +38,7 @@ class ItemGridHome extends StatelessWidget {
                   alignment: Alignment.center,
                   matchTextDirection: true,
                   repeat: ImageRepeat.noRepeat,
-                  image: AssetImage("assets/images/image_trip.jpg"),
+                  image: AssetImage(image),
                 ),
                 color: Colors.amberAccent),
           ),
@@ -36,7 +46,7 @@ class ItemGridHome extends StatelessWidget {
             height: 2,
           ),
           Text(
-            "Komodo Island",
+            title,
             style: GoogleFonts.inter(
                 textStyle: const TextStyle(
               fontSize: 11,
@@ -47,7 +57,7 @@ class ItemGridHome extends StatelessWidget {
             height: 3,
           ),
           Text(
-            '3 Mei 2023 - 5 Mei 2023',
+            date.toFormatedDate,
             style: GoogleFonts.inter(
                 textStyle: const TextStyle(
                     fontSize: 10,
@@ -58,7 +68,7 @@ class ItemGridHome extends StatelessWidget {
             height: 3,
           ),
           Text(
-            "IDR. 7jt/pax",
+            price,
             style: GoogleFonts.inter(
                 textStyle: const TextStyle(
               fontSize: 10,

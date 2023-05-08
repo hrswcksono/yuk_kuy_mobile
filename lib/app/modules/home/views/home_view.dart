@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../core/themes/colors.dart';
+import '../../../../core/values/strings/dummy_string.dart';
 import '../controllers/home_controller.dart';
 import 'components/item_grid_home.dart';
 
@@ -84,9 +85,10 @@ class HomeView extends GetView<HomeController> {
                   physics: const ClampingScrollPhysics(),
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
-                  itemCount: 15,
+                  itemCount: DummyString.listProduct.length + 1,
                   itemBuilder: (BuildContext context, int index) {
-                    if (index == 0) {
+                    if (index == 0 ||
+                        index == (DummyString.listProduct.length)) {
                       return const SizedBox(
                         width: 20,
                       );
@@ -98,7 +100,7 @@ class HomeView extends GetView<HomeController> {
                   },
                   separatorBuilder: (BuildContext context, int index) => Chip(
                     label: Text(
-                      'Surabaya',
+                      DummyString.listProduct[index]["city"],
                       style: GoogleFonts.inter(
                           textStyle: const TextStyle(
                         fontSize: 13,
@@ -131,8 +133,13 @@ class HomeView extends GetView<HomeController> {
                   mainAxisSpacing: 15,
                   crossAxisSpacing: 25,
                   children: List.generate(
-                    10,
-                    (index) => ItemGridHome(),
+                    DummyString.listProduct.length,
+                    (index) => ItemGridHome(
+                      title: DummyString.listProduct[index]["name"],
+                      image: DummyString.listProduct[index]["image"],
+                      date: DummyString.listProduct[index]["time_start"],
+                      price: DummyString.listProduct[index]["price"].toString(),
+                    ),
                   ),
                 ),
               )

@@ -10,6 +10,7 @@ abstract class Routes {
   static const TRANSACTION = _Paths.TRANSACTION;
   static const BASE = _Paths.BASE;
   static const FAVORITE = _Paths.FAVORITE;
+  static const PAYMENT = _Paths.PAYMENT;
 }
 
 abstract class _Paths {
@@ -21,4 +22,5 @@ abstract class _Paths {
   static const TRANSACTION = '/transaction';
   static const BASE = '/base';
   static const FAVORITE = '/favorite';
+  static const PAYMENT = '/payment';
 }

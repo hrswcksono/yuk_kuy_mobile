@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class TextFieldGlobal extends StatelessWidget {
-  const TextFieldGlobal({super.key, required this.title});
+class LoginDaftarTextField extends StatelessWidget {
+  const LoginDaftarTextField({super.key, required this.title});
 
   final String title;
 

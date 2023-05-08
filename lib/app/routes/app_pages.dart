@@ -1,6 +1,4 @@
 import 'package:get/get.dart';
-import 'package:yuk_kuy_mobile/app/modules/login_register/views/login_view.dart';
-import 'package:yuk_kuy_mobile/app/modules/login_register/views/register_view.dart';
 
 import '../modules/base/bindings/base_binding.dart';
 import '../modules/base/views/base_view.dart';
@@ -12,6 +10,10 @@ import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/login_register/bindings/login_register_binding.dart';
 import '../modules/login_register/views/login_register_view.dart';
+import '../modules/login_register/views/login_view.dart';
+import '../modules/login_register/views/register_view.dart';
+import '../modules/payment/bindings/payment_binding.dart';
+import '../modules/payment/views/payment_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
 import '../modules/transaction/bindings/transaction_binding.dart';
@@ -26,6 +28,7 @@ class AppPages {
   static const INITIAL = Routes.HOME;
   static const INITIAL_LR = Routes.LOGIN_REGISTER;
   static const INITIAL_DP = Routes.DETAIL_PRODUCT;
+  static const INITIAL_P = Routes.PAYMENT;
 
   static final routes = [
     GetPage(
@@ -62,6 +65,11 @@ class AppPages {
       name: _Paths.FAVORITE,
       page: () => const FavoriteView(),
       binding: FavoriteBinding(),
+    ),
+    GetPage(
+      name: _Paths.PAYMENT,
+      page: () => const PaymentView(),
+      binding: PaymentBinding(),
     ),
   ];
 }

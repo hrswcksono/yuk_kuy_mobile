@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-
-import '../../../widgets/text_field_global.dart';
+import 'package:yuk_kuy_mobile/app/modules/login_register/views/components/login_daftar_text_field.dart';
 
 class RegisterView extends GetView {
   const RegisterView({Key? key}) : super(key: key);
@@ -17,40 +16,40 @@ class RegisterView extends GetView {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
-                TextFieldGlobal(
+                const LoginDaftarTextField(
                   title: "Name",
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
-                TextFieldGlobal(
+                const LoginDaftarTextField(
                   title: "Username",
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
-                TextFieldGlobal(
+                const LoginDaftarTextField(
                   title: "Email",
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
-                TextFieldGlobal(
+                const LoginDaftarTextField(
                   title: "Password",
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
-                TextFieldGlobal(
+                const LoginDaftarTextField(
                   title: "Confirm Password",
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
-                ElevatedButton(onPressed: () {}, child: Text("Register"))
+                ElevatedButton(onPressed: () {}, child: const Text("Register"))
               ],
             ),
           ),

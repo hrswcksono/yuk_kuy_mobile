@@ -1,8 +1,10 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class TextFieldGlobal extends StatelessWidget {
-  const TextFieldGlobal({super.key, required this.title});
+class PaymentTextField extends StatelessWidget {
+  const PaymentTextField({super.key, required this.title});
 
   final String title;
 
@@ -12,10 +14,10 @@ class TextFieldGlobal extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          title,
+          "$title :",
           style: GoogleFonts.inter(
               textStyle: const TextStyle(
-            fontSize: 14,
+            fontSize: 16,
             fontWeight: FontWeight.w600,
           )),
         ),

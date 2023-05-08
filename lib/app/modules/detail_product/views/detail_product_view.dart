@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:yuk_kuy_mobile/app/routes/app_pages.dart';
 
 import '../../../../core/themes/colors.dart';
 import '../controllers/detail_product_controller.dart';
@@ -174,7 +175,9 @@ class DetailProductView extends GetView<DetailProductController> {
         ),
       ),
       bottomNavigationBar: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          Get.toNamed(AppPages.INITIAL_P);
+        },
         child: Text("Book Now"),
         style: ElevatedButton.styleFrom(
           minimumSize: const Size(
