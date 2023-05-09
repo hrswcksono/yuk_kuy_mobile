@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:yuk_kuy_mobile/app/modules/payment/views/payment_view.dart';
 import 'package:yuk_kuy_mobile/app/modules/transaction/views/order_canceled_view.dart';
 import 'package:yuk_kuy_mobile/app/modules/transaction/views/verification_pending_view.dart';
 import 'package:yuk_kuy_mobile/app/modules/transaction/views/verification_rejected_view.dart';
-// import 'package:yuk_kuy_mobile/app/modules/transaction/views/transaction_success_view.dart';
 import 'package:yuk_kuy_mobile/app/modules/transaction/views/verification_success_view.dart';
 import 'package:yuk_kuy_mobile/core/values/strings.dart';
 
@@ -42,7 +42,7 @@ class TransactionView extends GetView<TransactionController> {
                 itemCount: Strings.filterTransaction.length + 1,
                 itemBuilder: (BuildContext context, int index) {
                   if (index == 0 ||
-                      index == (DummyString.listProduct.length + 1)) {
+                      index == (Strings.filterTransaction.length)) {
                     return const SizedBox(
                       width: 20,
                     );
@@ -52,7 +52,8 @@ class TransactionView extends GetView<TransactionController> {
                     );
                   }
                 },
-                separatorBuilder: (BuildContext context, int index) => Chip(
+                separatorBuilder: (BuildContext context, int index) =>
+                    ActionChip(
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(4)),
                     side: BorderSide(
@@ -70,6 +71,8 @@ class TransactionView extends GetView<TransactionController> {
                     )),
                   ),
                   backgroundColor: Colors.white,
+                  // disabledColor: Colors.white,
+                  onPressed: () {},
                 ),
               ),
             ),
@@ -78,10 +81,17 @@ class TransactionView extends GetView<TransactionController> {
             ),
             ListView.separated(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              itemCount: 5,
+              itemCount: DummyString.listTransaction.length,
               shrinkWrap: true,
               itemBuilder: (BuildContext context, int index) {
-                return itemTransaction();
+                return itemTransaction(
+                    DummyString.listTransaction[index]["title"],
+                    DummyString.listTransaction[index]["user"],
+                    DummyString.listTransaction[index]["time"],
+                    DummyString.listTransaction[index]["pax"],
+                    DummyString.listTransaction[index]["price"],
+                    DummyString.listTransaction[index]["status"],
+                    DummyString.listTransaction[index]["image"]);
               },
               separatorBuilder: (BuildContext context, int index) =>
                   const SizedBox(
@@ -94,9 +104,29 @@ class TransactionView extends GetView<TransactionController> {
     ));
   }
 
-  InkWell itemTransaction() {
+  InkWell itemTransaction(
+    String title,
+    String user,
+    String date,
+    int pax,
+    int price,
+    String status,
+    String image,
+  ) {
     return InkWell(
-      onTap: () => Get.to(OrderCanceledView()),
+      onTap: () {
+        if (status == "payment") {
+          Get.to(PaymentView());
+        } else if (status == "verification") {
+          Get.to(VerificationPendingView());
+        } else if (status == "success") {
+          Get.to(VerificationSuccessView());
+        } else if (status == "rejected") {
+          Get.to(VerificationRejectedView());
+        } else if (status == "canceled") {
+          Get.to(OrderCanceledView());
+        }
+      },
       child: Container(
         height: 90,
         width: Get.width - 40,
@@ -120,8 +150,8 @@ class TransactionView extends GetView<TransactionController> {
               Container(
                 height: 73,
                 width: 75,
-                decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(
+                decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(
                       Radius.circular(15),
                     ),
                     image: DecorationImage(
@@ -129,7 +159,7 @@ class TransactionView extends GetView<TransactionController> {
                       alignment: Alignment.center,
                       matchTextDirection: true,
                       repeat: ImageRepeat.noRepeat,
-                      image: AssetImage("assets/images/image_trip.jpg"),
+                      image: AssetImage(image),
                     ),
                     color: Colors.amberAccent),
               ),
@@ -146,7 +176,7 @@ class TransactionView extends GetView<TransactionController> {
                       // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Transaction",
+                          title,
                           style: GoogleFonts.inter(
                               textStyle: const TextStyle(
                             fontSize: 14,
@@ -155,7 +185,7 @@ class TransactionView extends GetView<TransactionController> {
                         ),
                         const Spacer(),
                         Text(
-                          "Payment",
+                          status,
                           style: GoogleFonts.inter(
                               textStyle: const TextStyle(
                             fontSize: 10,
@@ -166,7 +196,7 @@ class TransactionView extends GetView<TransactionController> {
                       ],
                     ),
                     Text(
-                      "by : user",
+                      "by : $user",
                       style: GoogleFonts.inter(
                           textStyle: const TextStyle(
                         fontSize: 10,
@@ -178,7 +208,7 @@ class TransactionView extends GetView<TransactionController> {
                       height: 5,
                     ),
                     Text(
-                      "Date : 12-May-2023 09.00AM",
+                      date,
                       style: GoogleFonts.inter(
                           textStyle: const TextStyle(
                         fontSize: 8,
@@ -192,7 +222,7 @@ class TransactionView extends GetView<TransactionController> {
                       // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Pax : 8",
+                          "Pax : $pax",
                           style: GoogleFonts.inter(
                               textStyle: const TextStyle(
                             fontSize: 8,
@@ -201,7 +231,7 @@ class TransactionView extends GetView<TransactionController> {
                         ),
                         const Spacer(),
                         Text(
-                          "Price : IDR. 8.000.000",
+                          "Price : IDR. $price",
                           style: GoogleFonts.inter(
                               textStyle: const TextStyle(
                             fontSize: 10,
