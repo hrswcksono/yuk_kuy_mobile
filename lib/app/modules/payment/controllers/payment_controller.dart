@@ -3,21 +3,14 @@ import 'package:get/get.dart';
 class PaymentController extends GetxController {
   //TODO: Implement PaymentController
 
-  final count = 0.obs;
+  bool showListBank = false;
   @override
   void onInit() {
     super.onInit();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
+  void stateListBank() {
+    showListBank = !showListBank;
+    update();
   }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:yuk_kuy_mobile/app/modules/login_register/views/components/login_daftar_text_field.dart';
+import 'package:yuk_kuy_mobile/app/widgets/text_field_global.dart';
 
 class RegisterView extends GetView {
   const RegisterView({Key? key}) : super(key: key);
@@ -19,31 +20,31 @@ class RegisterView extends GetView {
                 const SizedBox(
                   height: 20,
                 ),
-                const LoginDaftarTextField(
+                const TextFieldGlobal(
                   title: "Name",
                 ),
                 const SizedBox(
                   height: 10,
                 ),
-                const LoginDaftarTextField(
+                const TextFieldGlobal(
                   title: "Username",
                 ),
                 const SizedBox(
                   height: 10,
                 ),
-                const LoginDaftarTextField(
+                const TextFieldGlobal(
                   title: "Email",
                 ),
                 const SizedBox(
                   height: 10,
                 ),
-                const LoginDaftarTextField(
+                const TextFieldGlobal(
                   title: "Password",
                 ),
                 const SizedBox(
                   height: 20,
                 ),
-                const LoginDaftarTextField(
+                const TextFieldGlobal(
                   title: "Confirm Password",
                 ),
                 const SizedBox(

@@ -13,4 +13,13 @@ class Strings {
     "Nov",
     "Dec",
   ];
+
+  static const List<String> filterTransaction = [
+    "All Transaction",
+    "Payment",
+    "Verification",
+    "Success",
+    "Rejected",
+    "Cancelled"
+  ];
 }

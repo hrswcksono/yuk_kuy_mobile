@@ -39,7 +39,7 @@ class ItemGridFavorite extends StatelessWidget {
                 top: 5,
                 right: 5,
                 child: Icon(
-                  Icons.favorite_border,
+                  Icons.favorite,
                   color: Colors.red,
                 ),
               ),

@@ -98,17 +98,8 @@ class HomeView extends GetView<HomeController> {
                       );
                     }
                   },
-                  separatorBuilder: (BuildContext context, int index) => Chip(
-                    label: Text(
-                      DummyString.listProduct[index]["city"],
-                      style: GoogleFonts.inter(
-                          textStyle: const TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w500,
-                      )),
-                    ),
-                    backgroundColor: const Color.fromRGBO(245, 246, 250, 1),
-                  ),
+                  separatorBuilder: (BuildContext context, int index) =>
+                      itemSearchHome(index),
                 ),
               ),
               Padding(
@@ -147,6 +138,23 @@ class HomeView extends GetView<HomeController> {
           ),
         ),
       ),
+    );
+  }
+
+  Chip itemSearchHome(int index) {
+    return Chip(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+      ),
+      label: Text(
+        DummyString.listProduct[index]["city"],
+        style: GoogleFonts.inter(
+            textStyle: const TextStyle(
+          fontSize: 13,
+          fontWeight: FontWeight.w500,
+        )),
+      ),
+      backgroundColor: const Color.fromRGBO(245, 246, 250, 1),
     );
   }
 }

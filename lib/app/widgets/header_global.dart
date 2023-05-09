@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class PaymentHeader extends StatelessWidget {
-  const PaymentHeader({
-    super.key,
-    required this.title,
-  });
+class HeaderGlobal extends StatelessWidget {
+  const HeaderGlobal({super.key, required this.title});
 
   final String title;
 
