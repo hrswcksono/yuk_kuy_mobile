@@ -29,40 +29,6 @@ class EditProfileView extends GetView {
                 SizedBox(
                   height: 10,
                 ),
-                Stack(
-                  children: [
-                    Container(
-                      height: 100,
-                      width: 100,
-                      decoration: BoxDecoration(
-                        color: CustomColor.mainGreen,
-                        shape: BoxShape.circle,
-                      ),
-                      // child: const Icon(
-                      //   Icons.add,
-                      //   // size: 16.35,
-                      //   color: Colors.white,
-                      // ),
-                    ),
-                    Positioned(
-                      right: 0,
-                      bottom: 0,
-                      child: Container(
-                        height: 30,
-                        width: 30,
-                        decoration: BoxDecoration(
-                          color: Colors.blue,
-                          shape: BoxShape.circle,
-                        ),
-                        // child: const Icon(
-                        //   Icons.add,
-                        //   // size: 16.35,
-                        //   color: Colors.white,
-                        // ),
-                      ),
-                    ),
-                  ],
-                ),
                 SizedBox(
                   height: 20,
                 ),
@@ -82,22 +48,19 @@ class EditProfileView extends GetView {
                   title: "Email",
                 ),
                 SizedBox(
-                  height: 20,
+                  height: 10,
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    Get.to(ChangePasswordView());
-                  },
-                  child: Text("Change Password",
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.inter(
-                          textStyle: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                      ))),
+                TextFieldGlobal(
+                  title: "Phone",
                 ),
                 SizedBox(
                   height: 10,
+                ),
+                TextFieldGlobal(
+                  title: "Address",
+                ),
+                SizedBox(
+                  height: 20,
                 ),
                 ElevatedButton(
                   onPressed: () {

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:yuk_kuy_mobile/app/data/providers/base_provider.dart';
 import 'package:yuk_kuy_mobile/core/themes/colors.dart';
 
 import 'app/routes/app_pages.dart';
@@ -77,4 +78,5 @@ class MyApp extends StatelessWidget {
 
 Future<void> initialConfig() async {
   await Get.putAsync(() => StorageService().init());
+  Get.lazyPut<BaseProvider>(() => BaseProvider());
 }

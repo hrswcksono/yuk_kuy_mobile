@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../widgets/header_global.dart';
+
 class VerificationPendingView extends GetView {
   const VerificationPendingView({Key? key}) : super(key: key);
   @override
@@ -17,37 +19,8 @@ class VerificationPendingView extends GetView {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(
-                  width: Get.width - 150,
-                  child: Row(
-                    children: [
-                      InkWell(
-                        onTap: () => Get.back(),
-                        child: Container(
-                            height: 40,
-                            width: 40,
-                            decoration: const BoxDecoration(
-                              color: Color.fromRGBO(245, 246, 250, 1),
-                              shape: BoxShape.circle,
-                            ),
-                            child: const Icon(
-                              Icons.arrow_back,
-                              // size: 16.35,
-                            )),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        "Verification Pending",
-                        style: GoogleFonts.inter(
-                            textStyle: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                        )),
-                      ),
-                    ],
-                  ),
+                HeaderGlobal(
+                  title: "Verification Pending",
                 ),
                 SizedBox(
                   height: 20,

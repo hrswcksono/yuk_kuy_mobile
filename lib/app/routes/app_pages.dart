@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 
+import '../middlewares/auth_middleware.dart';
 import '../modules/base/bindings/base_binding.dart';
 import '../modules/base/views/base_view.dart';
 import '../modules/detail_product/bindings/detail_product_binding.dart';
@@ -33,7 +34,7 @@ class AppPages {
   static final routes = [
     GetPage(
       name: _Paths.HOME,
-      page: () => const HomeView(),
+      page: () => HomeView(),
       binding: HomeBinding(),
     ),
     GetPage(
@@ -43,17 +44,18 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.LOGIN_REGISTER,
-      page: () => const RegisterView(),
+      page: () => LoginView(),
       binding: LoginRegisterBinding(),
+      middlewares: [AuthMiddleware()],
     ),
     GetPage(
       name: _Paths.PROFILE,
-      page: () => const ProfileView(),
+      page: () => ProfileView(),
       binding: ProfileBinding(),
     ),
     GetPage(
       name: _Paths.TRANSACTION,
-      page: () => const TransactionView(),
+      page: () => TransactionView(),
       binding: TransactionBinding(),
     ),
     GetPage(

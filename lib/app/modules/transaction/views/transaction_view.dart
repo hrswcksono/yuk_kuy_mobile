@@ -7,13 +7,17 @@ import 'package:yuk_kuy_mobile/app/modules/transaction/views/order_canceled_view
 import 'package:yuk_kuy_mobile/app/modules/transaction/views/verification_pending_view.dart';
 import 'package:yuk_kuy_mobile/app/modules/transaction/views/verification_rejected_view.dart';
 import 'package:yuk_kuy_mobile/app/modules/transaction/views/verification_success_view.dart';
+import 'package:yuk_kuy_mobile/core/themes/colors.dart';
 import 'package:yuk_kuy_mobile/core/values/strings.dart';
 
 import '../../../../core/values/strings/dummy_string.dart';
 import '../controllers/transaction_controller.dart';
 
-class TransactionView extends GetView<TransactionController> {
-  const TransactionView({Key? key}) : super(key: key);
+class TransactionView extends GetView {
+  TransactionView({Key? key}) : super(key: key);
+
+  var transactionC = Get.put(TransactionController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,49 +37,35 @@ class TransactionView extends GetView<TransactionController> {
                 )),
               ),
             ),
-            SizedBox(
-              height: 40,
-              child: ListView.separated(
-                physics: const ClampingScrollPhysics(),
-                shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                itemCount: Strings.filterTransaction.length + 1,
-                itemBuilder: (BuildContext context, int index) {
-                  if (index == 0 ||
-                      index == (Strings.filterTransaction.length)) {
-                    return const SizedBox(
-                      width: 20,
-                    );
-                  } else {
-                    return const SizedBox(
-                      width: 5,
-                    );
-                  }
-                },
-                separatorBuilder: (BuildContext context, int index) =>
-                    ActionChip(
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(4)),
-                    side: BorderSide(
-                      color: Color.fromRGBO(179, 179, 179, 1),
-                      width: 1.5,
-                    ),
-                  ),
-                  label: Text(
-                    Strings.filterTransaction[index],
-                    style: GoogleFonts.inter(
-                        textStyle: const TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w500,
-                      color: Color.fromRGBO(153, 153, 153, 1),
+            GetBuilder<TransactionController>(
+                init: TransactionController(),
+                builder: (ctx) => SizedBox(
+                      height: 40,
+                      child: ListView.separated(
+                        physics: const ClampingScrollPhysics(),
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemCount: Strings.filterTransaction.length + 1,
+                        itemBuilder: (BuildContext context, int index) {
+                          if (index == 0 ||
+                              index == (Strings.filterTransaction.length)) {
+                            return const SizedBox(
+                              width: 20,
+                            );
+                          } else {
+                            return const SizedBox(
+                              width: 5,
+                            );
+                          }
+                        },
+                        separatorBuilder: (BuildContext context, int index) =>
+                            filterTransaction(
+                          index,
+                          transactionC.stateFilter[index],
+                          ctx,
+                        ),
+                      ),
                     )),
-                  ),
-                  backgroundColor: Colors.white,
-                  // disabledColor: Colors.white,
-                  onPressed: () {},
-                ),
-              ),
-            ),
             const SizedBox(
               height: 15,
             ),
@@ -104,6 +94,38 @@ class TransactionView extends GetView<TransactionController> {
     ));
   }
 
+  ActionChip filterTransaction(
+      int index, bool state, TransactionController ctx) {
+    return ActionChip(
+      shape: RoundedRectangleBorder(
+        borderRadius: const BorderRadius.all(Radius.circular(4)),
+        side: BorderSide(
+          color: state
+              ? CustomColor.mainGreen
+              : const Color.fromRGBO(179, 179, 179, 1),
+          width: 1.5,
+        ),
+      ),
+      label: Text(
+        Strings.filterTransaction[index],
+        style: GoogleFonts.inter(
+            textStyle: TextStyle(
+          fontSize: 13,
+          fontWeight: FontWeight.w500,
+          color: state
+              ? CustomColor.mainGreen
+              : const Color.fromRGBO(153, 153, 153, 1),
+        )),
+      ),
+      backgroundColor:
+          state ? const Color.fromRGBO(233, 251, 243, 1) : Colors.white,
+      // disabledColor: Colors.white,
+      onPressed: () {
+        ctx.changeState(index);
+      },
+    );
+  }
+
   InkWell itemTransaction(
     String title,
     String user,
@@ -116,15 +138,15 @@ class TransactionView extends GetView<TransactionController> {
     return InkWell(
       onTap: () {
         if (status == "payment") {
-          Get.to(PaymentView());
+          Get.to(const PaymentView());
         } else if (status == "verification") {
-          Get.to(VerificationPendingView());
+          Get.to(const VerificationPendingView());
         } else if (status == "success") {
-          Get.to(VerificationSuccessView());
+          Get.to(const VerificationSuccessView());
         } else if (status == "rejected") {
-          Get.to(VerificationRejectedView());
+          Get.to(const VerificationRejectedView());
         } else if (status == "canceled") {
-          Get.to(OrderCanceledView());
+          Get.to(const OrderCanceledView());
         }
       },
       child: Container(
@@ -138,7 +160,7 @@ class TransactionView extends GetView<TransactionController> {
               color: const Color(0x73000000),
               blurRadius: 2.0,
               spreadRadius: 1,
-              offset: new Offset(0.0, 2.0),
+              offset: const Offset(0.0, 2.0),
             ),
           ],
         ),
@@ -184,13 +206,37 @@ class TransactionView extends GetView<TransactionController> {
                           )),
                         ),
                         const Spacer(),
-                        Text(
-                          status,
-                          style: GoogleFonts.inter(
-                              textStyle: const TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.w600,
-                          )),
+                        Container(
+                          padding: const EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            color: (() {
+                              if (status == 'payment') {
+                                return Color.fromRGBO(4, 193, 234, 1);
+                              } else if (status == 'verification') {
+                                return Color.fromRGBO(255, 217, 63, 1);
+                              } else if (status == 'success') {
+                                return Color.fromRGBO(83, 177, 117, 1);
+                              } else if (status == 'rejected') {
+                                return Color.fromRGBO(255, 79, 7, 1);
+                              } else if (status == 'cancelled') {
+                                return Color.fromRGBO(159, 64, 64, 1);
+                              }
+                            }()),
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(8),
+                                bottomRight: Radius.circular(8),
+                                topLeft: Radius.circular(8),
+                                bottomLeft: Radius.circular(8)),
+                          ),
+                          child: Text(
+                            status,
+                            style: GoogleFonts.inter(
+                                textStyle: const TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white,
+                            )),
+                          ),
                         ),
                         // Spacer()
                       ],

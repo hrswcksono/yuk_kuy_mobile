@@ -6,4 +6,8 @@ class StorageService extends GetxService {
     await GetStorage.init();
     return this;
   }
+
+  void write(String key, dynamic value) {
+    GetStorage().write(key, value);
+  }
 }

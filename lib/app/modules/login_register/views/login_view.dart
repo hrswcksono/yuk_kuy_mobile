@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:yuk_kuy_mobile/app/modules/login_register/controllers/login_register_controller.dart';
 import 'package:yuk_kuy_mobile/app/modules/login_register/views/components/login_daftar_text_field.dart';
 import 'package:yuk_kuy_mobile/app/modules/login_register/views/register_view.dart';
 import 'package:yuk_kuy_mobile/app/routes/app_pages.dart';
@@ -10,7 +11,10 @@ import 'package:yuk_kuy_mobile/app/widgets/text_field_global.dart';
 import '../../../../core/themes/colors.dart';
 
 class LoginView extends GetView {
-  const LoginView({Key? key}) : super(key: key);
+  LoginView({Key? key}) : super(key: key);
+
+  var controllerLR = Get.put(LoginRegisterController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,21 +36,23 @@ class LoginView extends GetView {
                 const SizedBox(
                   height: 100,
                 ),
-                const TextFieldGlobal(
+                LoginDaftarTextField(
                   title: "Email",
+                  filltext: controllerLR.emailLoginTF,
                 ),
                 const SizedBox(
                   height: 10,
                 ),
-                const TextFieldGlobal(
+                LoginDaftarTextField(
                   title: "Password",
+                  filltext: controllerLR.passwordLoginTF,
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 ElevatedButton(
                     onPressed: () {
-                      Get.toNamed(AppPages.INITIAL_B);
+                      controllerLR.login();
                     },
                     child: const Text("Login")),
                 const SizedBox(

@@ -9,8 +9,11 @@ import '../../../../core/values/strings/dummy_string.dart';
 import '../controllers/home_controller.dart';
 import 'components/item_grid_home.dart';
 
-class HomeView extends GetView<HomeController> {
-  const HomeView({Key? key}) : super(key: key);
+class HomeView extends GetView {
+  HomeView({Key? key}) : super(key: key);
+
+  var homeC = Get.put(HomeController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +37,7 @@ class HomeView extends GetView<HomeController> {
                           textStyle: const TextStyle(
                               fontSize: 28, fontWeight: FontWeight.w500)),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     Text(
@@ -44,7 +47,7 @@ class HomeView extends GetView<HomeController> {
                               fontSize: 15,
                               color: Color.fromRGBO(143, 149, 158, 1))),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Row(
@@ -76,32 +79,46 @@ class HomeView extends GetView<HomeController> {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 6,
               ),
-              SizedBox(
-                height: 40,
-                child: ListView.separated(
-                  physics: const ClampingScrollPhysics(),
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  itemCount: DummyString.listProduct.length + 1,
-                  itemBuilder: (BuildContext context, int index) {
-                    if (index == 0 ||
-                        index == (DummyString.listProduct.length)) {
-                      return const SizedBox(
-                        width: 20,
-                      );
-                    } else {
-                      return const SizedBox(
-                        width: 5,
-                      );
-                    }
-                  },
-                  separatorBuilder: (BuildContext context, int index) =>
-                      itemSearchHome(index),
-                ),
-              ),
+              GetBuilder<HomeController>(
+                  init: HomeController(),
+                  builder: (ctx) => SizedBox(
+                        height: 40,
+                        child: ListView.separated(
+                          physics: const ClampingScrollPhysics(),
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          // itemCount: DummyString.listProduct.length + 1,
+                          itemCount: homeC
+                                  .toFilterList(DummyString.listProduct)
+                                  .length +
+                              1,
+                          itemBuilder: (BuildContext context, int index) {
+                            if (index == 0 ||
+                                index ==
+                                    (homeC
+                                        .toFilterList(DummyString.listProduct)
+                                        .length)) {
+                              return const SizedBox(
+                                width: 20,
+                              );
+                            } else {
+                              return const SizedBox(
+                                width: 5,
+                              );
+                            }
+                          },
+                          separatorBuilder: (BuildContext context, int index) =>
+                              itemFilterHome(
+                            homeC.toFilterList(DummyString.listProduct)[index],
+                            index,
+                            ctx.stateFilterHome[index],
+                            ctx,
+                          ),
+                        ),
+                      )),
               Padding(
                 padding: const EdgeInsets.only(
                   left: 20,
@@ -116,24 +133,23 @@ class HomeView extends GetView<HomeController> {
                   )),
                 ),
               ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                child: StaggeredGrid.count(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 15,
-                  crossAxisSpacing: 25,
-                  children: List.generate(
-                    DummyString.listProduct.length,
-                    (index) => ItemGridHome(
-                      title: DummyString.listProduct[index]["name"],
-                      image: DummyString.listProduct[index]["image"],
-                      date: DummyString.listProduct[index]["time_start"],
-                      price: DummyString.listProduct[index]["price"].toString(),
+              homeC.obx((data) {
+                return Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  child: StaggeredGrid.count(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 15,
+                    crossAxisSpacing: 25,
+                    children: List.generate(
+                      data!.data.length,
+                      (index) => ItemGridHome(
+                        model: data.data[index],
+                      ),
                     ),
                   ),
-                ),
-              )
+                );
+              }),
             ],
           ),
         ),
@@ -141,20 +157,27 @@ class HomeView extends GetView<HomeController> {
     );
   }
 
-  Chip itemSearchHome(int index) {
-    return Chip(
+  ActionChip itemFilterHome(
+      String data, int index, bool state, HomeController ctx) {
+    return ActionChip(
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
       label: Text(
-        DummyString.listProduct[index]["city"],
+        data,
         style: GoogleFonts.inter(
-            textStyle: const TextStyle(
-          fontSize: 13,
-          fontWeight: FontWeight.w500,
-        )),
+            textStyle: TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w500,
+                color: state ? Colors.white : Colors.black)),
       ),
-      backgroundColor: const Color.fromRGBO(245, 246, 250, 1),
+      backgroundColor: state
+          ? CustomColor.mainGreen
+          : const Color.fromRGBO(245, 246, 250, 1),
+      // backgroundColor: Colors.white,
+      onPressed: () {
+        ctx.changeState(index);
+      },
     );
   }
 }

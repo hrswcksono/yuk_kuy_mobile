@@ -95,7 +95,7 @@ class DummyString {
       "price": 7600000,
       "pax": 10,
       "user": "rei",
-      "status": "canceled",
+      "status": "cancelled",
       "image": "assets/images/borobudur.jpg",
     },
   ];
