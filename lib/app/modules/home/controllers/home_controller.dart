@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:yuk_kuy_mobile/app/data/models/product_model.dart';
 import 'package:yuk_kuy_mobile/app/data/providers/product_provider.dart';
 
@@ -9,6 +10,11 @@ class HomeController extends GetxController with StateMixin<ProductModel> {
   List<bool> stateFilterHome = [];
 
   var productProvider = Get.put(ProductProvider());
+
+  RefreshController refreshController =
+      RefreshController(initialRefresh: false);
+
+  bool isLoading = true;
 
   @override
   void onInit() {
@@ -51,5 +57,19 @@ class HomeController extends GetxController with StateMixin<ProductModel> {
         print("gagal");
       }
     }
+  }
+
+  void onRefresh() async {
+    isLoading = false;
+    update();
+    // monitor network fetch
+    await Future.delayed(const Duration(milliseconds: 1000), () {
+      getProduct();
+      update();
+      return refreshController.refreshCompleted();
+    });
+    // is_Loading = true;
+    // if failed,use refreshFailed()
+    // update();
   }
 }

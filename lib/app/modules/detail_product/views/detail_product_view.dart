@@ -180,7 +180,7 @@ class DetailProductView extends GetView<DetailProductController> {
           ),
           bottomNavigationBar: ElevatedButton(
             onPressed: () {
-              Get.toNamed(AppPages.INITIAL_P);
+              Get.toNamed(AppPages.INITIAL_P, arguments: {"data": data.data});
             },
             child: Text("Book Now"),
             style: ElevatedButton.styleFrom(

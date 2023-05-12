@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:yuk_kuy_mobile/app/modules/payment/views/payment_view.dart';
 import 'package:yuk_kuy_mobile/app/modules/transaction/views/order_canceled_view.dart';
 import 'package:yuk_kuy_mobile/app/modules/transaction/views/verification_pending_view.dart';
@@ -22,73 +23,78 @@ class TransactionView extends GetView {
   Widget build(BuildContext context) {
     return Scaffold(
         body: SafeArea(
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: Text(
-                "Transaction",
-                style: GoogleFonts.inter(
-                    textStyle: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
-                )),
+      child: SmartRefresher(
+        controller: transactionC.refreshController,
+        onRefresh: transactionC.onRefresh,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: Text(
+                  "Transaction",
+                  style: GoogleFonts.inter(
+                      textStyle: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                  )),
+                ),
               ),
-            ),
-            GetBuilder<TransactionController>(
-                init: TransactionController(),
-                builder: (ctx) => SizedBox(
-                      height: 40,
-                      child: ListView.separated(
-                        physics: const ClampingScrollPhysics(),
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        itemCount: Strings.filterTransaction.length + 1,
-                        itemBuilder: (BuildContext context, int index) {
-                          if (index == 0 ||
-                              index == (Strings.filterTransaction.length)) {
-                            return const SizedBox(
-                              width: 20,
-                            );
-                          } else {
-                            return const SizedBox(
-                              width: 5,
-                            );
-                          }
-                        },
-                        separatorBuilder: (BuildContext context, int index) =>
-                            filterTransaction(
-                          index,
-                          transactionC.stateFilter[index],
-                          ctx,
+              GetBuilder<TransactionController>(
+                  init: TransactionController(),
+                  builder: (ctx) => SizedBox(
+                        height: 40,
+                        child: ListView.separated(
+                          physics: const ClampingScrollPhysics(),
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          itemCount: Strings.filterTransaction.length + 1,
+                          itemBuilder: (BuildContext context, int index) {
+                            if (index == 0 ||
+                                index == (Strings.filterTransaction.length)) {
+                              return const SizedBox(
+                                width: 20,
+                              );
+                            } else {
+                              return const SizedBox(
+                                width: 5,
+                              );
+                            }
+                          },
+                          separatorBuilder: (BuildContext context, int index) =>
+                              filterTransaction(
+                            index,
+                            transactionC.stateFilter[index],
+                            ctx,
+                          ),
                         ),
-                      ),
-                    )),
-            const SizedBox(
-              height: 15,
-            ),
-            ListView.separated(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              itemCount: DummyString.listTransaction.length,
-              shrinkWrap: true,
-              itemBuilder: (BuildContext context, int index) {
-                return itemTransaction(
-                    DummyString.listTransaction[index]["title"],
-                    DummyString.listTransaction[index]["user"],
-                    DummyString.listTransaction[index]["time"],
-                    DummyString.listTransaction[index]["pax"],
-                    DummyString.listTransaction[index]["price"],
-                    DummyString.listTransaction[index]["status"],
-                    DummyString.listTransaction[index]["image"]);
-              },
-              separatorBuilder: (BuildContext context, int index) =>
-                  const SizedBox(
-                height: 10,
+                      )),
+              const SizedBox(
+                height: 15,
               ),
-            ),
-          ],
+              transactionC.obx((data) => ListView.separated(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    itemCount: data!.data!.length,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (BuildContext context, int index) {
+                      return itemTransaction(
+                          data.data![index].name.toString(),
+                          data.data![index].name.toString(),
+                          data.data![index].createdAt.toString(),
+                          data.data![index].totalPackage!.toInt(),
+                          data.data![index].totalPrice!.toInt(),
+                          data.data![index].statusOrder!.status.toString(),
+                          DummyString.listTransaction[index]["image"]);
+                    },
+                    separatorBuilder: (BuildContext context, int index) =>
+                        const SizedBox(
+                      height: 10,
+                    ),
+                  )),
+            ],
+          ),
         ),
       ),
     ));

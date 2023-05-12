@@ -33,7 +33,7 @@ class PaymentView extends GetView<PaymentController> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Title Product",
+                    controller.title,
                     style: GoogleFonts.inter(
                         textStyle: const TextStyle(
                       fontSize: 16,
@@ -41,7 +41,7 @@ class PaymentView extends GetView<PaymentController> {
                     )),
                   ),
                   Text(
-                    "IDR. 7M/pax",
+                    "IDR. ${controller.price}M/pax",
                     style: GoogleFonts.inter(
                         textStyle: const TextStyle(
                             fontSize: 16,
@@ -60,55 +60,63 @@ class PaymentView extends GetView<PaymentController> {
               const SizedBox(
                 height: 10,
               ),
-              Row(
-                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Number of people :",
-                    style: GoogleFonts.inter(
-                        textStyle: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    )),
-                  ),
-                  const Spacer(),
-                  Container(
-                      height: 30,
-                      width: 30,
-                      decoration: BoxDecoration(
-                        color: CustomColor.mainGreen,
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Icon(
-                        Icons.remove,
-                        // size: 16.35,
-                        color: Colors.white,
+              GetBuilder<PaymentController>(
+                  init: PaymentController(),
+                  builder: (ctx) => Row(
+                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Number of people :",
+                            style: GoogleFonts.inter(
+                                textStyle: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            )),
+                          ),
+                          const Spacer(),
+                          InkWell(
+                            onTap: () => controller.reducePeople(),
+                            child: Container(
+                                height: 30,
+                                width: 30,
+                                decoration: BoxDecoration(
+                                  color: CustomColor.mainGreen,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: const Icon(
+                                  Icons.remove,
+                                  // size: 16.35,
+                                  color: Colors.white,
+                                )),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 12),
+                            child: Text(
+                              ctx.numPeople.toString(),
+                              style: GoogleFonts.inter(
+                                  textStyle: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                              )),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () => controller.addPeople(),
+                            child: Container(
+                                height: 30,
+                                width: 30,
+                                decoration: BoxDecoration(
+                                  color: CustomColor.mainGreen,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: const Icon(
+                                  Icons.add,
+                                  // size: 16.35,
+                                  color: Colors.white,
+                                )),
+                          ),
+                        ],
                       )),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
-                    child: Text(
-                      "1",
-                      style: GoogleFonts.inter(
-                          textStyle: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                      )),
-                    ),
-                  ),
-                  Container(
-                      height: 30,
-                      width: 30,
-                      decoration: BoxDecoration(
-                        color: CustomColor.mainGreen,
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Icon(
-                        Icons.add,
-                        // size: 16.35,
-                        color: Colors.white,
-                      )),
-                ],
-              ),
               const SizedBox(
                 height: 10,
               ),
@@ -167,14 +175,18 @@ class PaymentView extends GetView<PaymentController> {
                       fontWeight: FontWeight.w600,
                     )),
                   ),
-                  Text(
-                    "IDR. 14.000.000",
-                    style: GoogleFonts.inter(
-                        textStyle: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    )),
-                  ),
+                  GetBuilder<PaymentController>(
+                      init: PaymentController(),
+                      builder: (context) {
+                        return Text(
+                          "IDR. ${controller.totalPrice}",
+                          style: GoogleFonts.inter(
+                              textStyle: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          )),
+                        );
+                      }),
                 ],
               ),
               ElevatedButton(

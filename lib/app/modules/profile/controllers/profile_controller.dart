@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:yuk_kuy_mobile/app/data/models/profile_model.dart';
 import 'package:yuk_kuy_mobile/app/data/providers/profile_provider.dart';
 import 'package:yuk_kuy_mobile/app/routes/app_pages.dart';
@@ -25,6 +27,11 @@ class ProfileController extends GetxController with StateMixin<ProfileModel> {
   late TextEditingController oldPassword;
   late TextEditingController newPassword;
   late TextEditingController confirmPassword;
+
+  RefreshController refreshController =
+      RefreshController(initialRefresh: false);
+
+  bool isLoading = true;
 
   @override
   void onInit() {
@@ -118,5 +125,19 @@ class ProfileController extends GetxController with StateMixin<ProfileModel> {
         print("gagal");
       }
     }
+  }
+
+  void onRefresh() async {
+    isLoading = false;
+    update();
+    // monitor network fetch
+    await Future.delayed(const Duration(milliseconds: 1000), () {
+      initData();
+      update();
+      return refreshController.refreshCompleted();
+    });
+    // is_Loading = true;
+    // if failed,use refreshFailed()
+    // update();
   }
 }
