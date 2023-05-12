@@ -33,7 +33,7 @@ class DetailProductView extends GetView<DetailProductController> {
                           init: DetailProductController(),
                           builder: (context) {
                             return InkWell(
-                              onTap: () => context.changeFavorite(),
+                              onTap: () => context.changeFavorite(data.data!),
                               child: Container(
                                   height: 40,
                                   width: 40,

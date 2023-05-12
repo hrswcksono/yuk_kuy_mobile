@@ -24,8 +24,8 @@ class HomeController extends GetxController with StateMixin<ProductModel> {
   List<dynamic> toFilterList(input) {
     var temp = [];
     for (int i = 0; i < input.length; i++) {
-      if (!temp.contains(input[i]["city"])) {
-        temp.add(input[i]["city"]);
+      if (!temp.contains(input[i].city)) {
+        temp.add(input[i].city);
         stateFilterHome.add(false);
       }
     }
@@ -41,7 +41,7 @@ class HomeController extends GetxController with StateMixin<ProductModel> {
         print('error');
         change(null, status: RxStatus.error());
         if (kDebugMode) {
-          // print(error);
+          print(error);
         }
       }).whenComplete(() {
         log("List product complete!");

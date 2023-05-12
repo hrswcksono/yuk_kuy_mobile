@@ -2,15 +2,18 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:yuk_kuy_mobile/app/modules/login_register/controllers/login_register_controller.dart';
 import 'package:yuk_kuy_mobile/app/modules/login_register/views/components/login_daftar_text_field.dart';
 import 'package:yuk_kuy_mobile/app/modules/login_register/views/login_view.dart';
 import 'package:yuk_kuy_mobile/app/widgets/text_field_global.dart';
 import 'package:yuk_kuy_mobile/core/themes/colors.dart';
 
 class RegisterView extends GetView {
-  const RegisterView({Key? key}) : super(key: key);
+  RegisterView({Key? key}) : super(key: key);
+  var lrController = Get.put(LoginRegisterController());
   @override
   Widget build(BuildContext context) {
+    lrController.initTextRegister();
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -30,37 +33,46 @@ class RegisterView extends GetView {
                 const SizedBox(
                   height: 20,
                 ),
-                const TextFieldGlobal(
+                TextFieldGlobal(
                   title: "Name",
+                  value: lrController.nameRegisTF,
                 ),
                 const SizedBox(
                   height: 10,
                 ),
-                const TextFieldGlobal(
+                TextFieldGlobal(
                   title: "Username",
+                  value: lrController.usernameRegisTF,
                 ),
                 const SizedBox(
                   height: 10,
                 ),
-                const TextFieldGlobal(
+                TextFieldGlobal(
                   title: "Email",
+                  value: lrController.emailRegisTF,
                 ),
                 const SizedBox(
                   height: 10,
                 ),
-                const TextFieldGlobal(
+                TextFieldGlobal(
                   title: "Password",
+                  value: lrController.passwordRegisTF,
                 ),
                 const SizedBox(
                   height: 20,
                 ),
-                const TextFieldGlobal(
+                TextFieldGlobal(
                   title: "Confirm Password",
+                  value: lrController.confirmPassRegisTF,
                 ),
                 const SizedBox(
                   height: 20,
                 ),
-                ElevatedButton(onPressed: () {}, child: const Text("Register")),
+                ElevatedButton(
+                    onPressed: () {
+                      lrController.register();
+                    },
+                    child: const Text("Register")),
                 const SizedBox(
                   height: 10,
                 ),

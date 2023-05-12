@@ -84,23 +84,18 @@ class HomeView extends GetView {
               ),
               GetBuilder<HomeController>(
                   init: HomeController(),
-                  builder: (ctx) => SizedBox(
+                  builder: (ctx) => homeC.obx((data) => SizedBox(
                         height: 40,
                         child: ListView.separated(
                           physics: const ClampingScrollPhysics(),
                           shrinkWrap: true,
                           scrollDirection: Axis.horizontal,
                           // itemCount: DummyString.listProduct.length + 1,
-                          itemCount: homeC
-                                  .toFilterList(DummyString.listProduct)
-                                  .length +
-                              1,
+                          itemCount: homeC.toFilterList(data!.data).length + 1,
                           itemBuilder: (BuildContext context, int index) {
                             if (index == 0 ||
                                 index ==
-                                    (homeC
-                                        .toFilterList(DummyString.listProduct)
-                                        .length)) {
+                                    (homeC.toFilterList(data.data).length)) {
                               return const SizedBox(
                                 width: 20,
                               );
@@ -112,13 +107,13 @@ class HomeView extends GetView {
                           },
                           separatorBuilder: (BuildContext context, int index) =>
                               itemFilterHome(
-                            homeC.toFilterList(DummyString.listProduct)[index],
+                            homeC.toFilterList(data.data)[index],
                             index,
                             ctx.stateFilterHome[index],
                             ctx,
                           ),
                         ),
-                      )),
+                      ))),
               Padding(
                 padding: const EdgeInsets.only(
                   left: 20,

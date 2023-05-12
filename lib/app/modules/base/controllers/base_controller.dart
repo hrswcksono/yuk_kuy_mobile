@@ -7,6 +7,8 @@ class BaseController extends GetxController {
 
   @override
   void onInit() {
+    indexTab = 0;
+    update();
     super.onInit();
   }
 

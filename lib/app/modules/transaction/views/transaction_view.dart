@@ -145,7 +145,7 @@ class TransactionView extends GetView {
           Get.to(const VerificationSuccessView());
         } else if (status == "rejected") {
           Get.to(const VerificationRejectedView());
-        } else if (status == "canceled") {
+        } else if (status == "cancelled") {
           Get.to(const OrderCanceledView());
         }
       },

@@ -36,16 +36,16 @@ class LoginView extends GetView {
                 const SizedBox(
                   height: 100,
                 ),
-                LoginDaftarTextField(
+                TextFieldGlobal(
                   title: "Email",
-                  filltext: controllerLR.emailLoginTF,
+                  value: controllerLR.emailLoginTF,
                 ),
                 const SizedBox(
                   height: 10,
                 ),
-                LoginDaftarTextField(
+                TextFieldGlobal(
                   title: "Password",
-                  filltext: controllerLR.passwordLoginTF,
+                  value: controllerLR.passwordLoginTF,
                 ),
                 const SizedBox(
                   height: 20,

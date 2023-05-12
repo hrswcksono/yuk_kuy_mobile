@@ -12,7 +12,7 @@ String productDetailModelToJson(ProductDetailModel data) =>
 
 class ProductDetailModel {
   bool? status;
-  Data? data;
+  ProductDetailItem? data;
 
   ProductDetailModel({
     this.status,
@@ -22,7 +22,9 @@ class ProductDetailModel {
   factory ProductDetailModel.fromJson(Map<String, dynamic> json) =>
       ProductDetailModel(
         status: json["status"],
-        data: json["data"] == null ? null : Data.fromJson(json["data"]),
+        data: json["data"] == null
+            ? null
+            : ProductDetailItem.fromJson(json["data"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -31,7 +33,7 @@ class ProductDetailModel {
       };
 }
 
-class Data {
+class ProductDetailItem {
   int? id;
   String? name;
   DateTime? dateStart;
@@ -52,7 +54,7 @@ class Data {
   List<ImageProduct>? imageProducts;
   Seller? seller;
 
-  Data({
+  ProductDetailItem({
     this.id,
     this.name,
     this.dateStart,
@@ -74,7 +76,8 @@ class Data {
     this.seller,
   });
 
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
+  factory ProductDetailItem.fromJson(Map<String, dynamic> json) =>
+      ProductDetailItem(
         id: json["id"],
         name: json["name"],
         dateStart: json["dateStart"] == null

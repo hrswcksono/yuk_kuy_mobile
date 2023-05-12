@@ -11,7 +11,7 @@ String profileModelToJson(ProfileModel data) => json.encode(data.toJson());
 
 class ProfileModel {
   bool? status;
-  Data? data;
+  ProfileItem? data;
 
   ProfileModel({
     this.status,
@@ -20,7 +20,7 @@ class ProfileModel {
 
   factory ProfileModel.fromJson(Map<String, dynamic> json) => ProfileModel(
         status: json["status"],
-        data: json["data"] == null ? null : Data.fromJson(json["data"]),
+        data: json["data"] == null ? null : ProfileItem.fromJson(json["data"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -29,7 +29,7 @@ class ProfileModel {
       };
 }
 
-class Data {
+class ProfileItem {
   int? id;
   String? username;
   String? name;
@@ -40,7 +40,7 @@ class Data {
   DateTime? updatedAt;
   Profile? profile;
 
-  Data({
+  ProfileItem({
     this.id,
     this.username,
     this.name,
@@ -52,7 +52,7 @@ class Data {
     this.profile,
   });
 
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
+  factory ProfileItem.fromJson(Map<String, dynamic> json) => ProfileItem(
         id: json["id"],
         username: json["username"],
         name: json["name"],

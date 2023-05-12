@@ -65,7 +65,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.FAVORITE,
-      page: () => const FavoriteView(),
+      page: () => FavoriteView(),
       binding: FavoriteBinding(),
     ),
     GetPage(

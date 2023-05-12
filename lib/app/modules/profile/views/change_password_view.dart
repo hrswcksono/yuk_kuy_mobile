@@ -2,14 +2,18 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:yuk_kuy_mobile/app/modules/profile/controllers/profile_controller.dart';
 
 import '../../../widgets/header_global.dart';
 import '../../../widgets/text_field_global.dart';
 
 class ChangePasswordView extends GetView {
-  const ChangePasswordView({Key? key}) : super(key: key);
+  ChangePasswordView({Key? key}) : super(key: key);
+  var profileC = Get.put(ProfileController());
+
   @override
   Widget build(BuildContext context) {
+    profileC.initPasswordTF();
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -33,27 +37,30 @@ class ChangePasswordView extends GetView {
                 const SizedBox(
                   height: 20,
                 ),
-                const TextFieldGlobal(
+                TextFieldGlobal(
                   title: "Old Password",
+                  value: profileC.newPassword,
                 ),
                 const SizedBox(
                   height: 10,
                 ),
-                const TextFieldGlobal(
+                TextFieldGlobal(
                   title: "New Password",
+                  value: profileC.newPassword,
                 ),
                 const SizedBox(
                   height: 10,
                 ),
-                const TextFieldGlobal(
+                TextFieldGlobal(
                   title: "Confirm Password",
+                  value: profileC.confirmPassword,
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    Get.back();
+                    profileC.editPassword();
                   },
                   child: Text("Submit",
                       textAlign: TextAlign.center,

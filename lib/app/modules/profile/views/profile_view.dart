@@ -203,7 +203,7 @@ class ProfileView extends GetView<ProfileController> {
                       ),
                       ElevatedButton(
                           onPressed: () {
-                            Get.to(const EditProfileView());
+                            Get.to(EditProfileView(data.data!));
                           },
                           child: Text("Edit Profile",
                               style: GoogleFonts.inter(

@@ -7,8 +7,6 @@ class ProductProvider extends BaseProvider {
   Future<ProductModel> list_product() async {
     var response = await get('products/mobile');
 
-    print(response.body.toString());
-
     if (!response.body['status']) {
       return Future.error(response.body["message"]);
     } else {
@@ -18,8 +16,6 @@ class ProductProvider extends BaseProvider {
 
   Future<ProductDetailModel> detail_product(int id) async {
     var response = await get('products/mobile/detail/$id');
-
-    print(response.body.toString());
 
     if (!response.body['status']) {
       return Future.error(response.body["message"]);
