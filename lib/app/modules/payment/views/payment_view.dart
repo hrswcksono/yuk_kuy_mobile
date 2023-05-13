@@ -14,6 +14,7 @@ class PaymentView extends GetView<PaymentController> {
   const PaymentView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    controller.initData();
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -127,15 +128,24 @@ class PaymentView extends GetView<PaymentController> {
               const SizedBox(
                 height: 10,
               ),
-              const PaymentTextField(title: "Name"),
+              PaymentTextField(
+                title: "Name",
+                value: controller.name,
+              ),
               const SizedBox(
                 height: 20,
               ),
-              const PaymentTextField(title: "Phone"),
+              PaymentTextField(
+                title: "Phone",
+                value: controller.phone,
+              ),
               const SizedBox(
                 height: 20,
               ),
-              const PaymentTextField(title: "Email"),
+              PaymentTextField(
+                title: "Email",
+                value: controller.email,
+              ),
               // ElevatedButton(onPressed: () {}, child: const Text("Book Now"))
             ],
           ),
@@ -191,7 +201,7 @@ class PaymentView extends GetView<PaymentController> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  Get.to(PaymentInformationView());
+                  controller.addOrder();
                 },
                 style: ElevatedButton.styleFrom(
                   minimumSize: const Size(

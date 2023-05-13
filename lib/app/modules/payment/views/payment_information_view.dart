@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:yuk_kuy_mobile/app/modules/payment/controllers/payment_controller.dart';
 import 'package:yuk_kuy_mobile/app/modules/payment/views/payment_verification_view.dart';
 
 import '../../../../core/themes/colors.dart';
 import 'components/payment_header.dart';
 
 class PaymentInformationView extends GetView {
-  const PaymentInformationView({Key? key}) : super(key: key);
+  PaymentInformationView({Key? key}) : super(key: key);
+  var paymentC = Get.put(PaymentController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(

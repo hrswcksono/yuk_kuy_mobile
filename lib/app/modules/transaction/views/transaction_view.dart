@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:yuk_kuy_mobile/app/modules/payment/views/payment_information_view.dart';
 import 'package:yuk_kuy_mobile/app/modules/payment/views/payment_view.dart';
 import 'package:yuk_kuy_mobile/app/modules/transaction/views/order_canceled_view.dart';
 import 'package:yuk_kuy_mobile/app/modules/transaction/views/verification_pending_view.dart';
@@ -144,7 +145,7 @@ class TransactionView extends GetView {
     return InkWell(
       onTap: () {
         if (status == "payment") {
-          Get.to(const PaymentView());
+          Get.to(PaymentInformationView());
         } else if (status == "verification") {
           Get.to(const VerificationPendingView());
         } else if (status == "success") {

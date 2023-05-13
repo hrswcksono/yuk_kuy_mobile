@@ -1,9 +1,11 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:yuk_kuy_mobile/app/data/models/profile_model.dart';
 import 'package:yuk_kuy_mobile/app/data/providers/profile_provider.dart';
@@ -33,10 +35,30 @@ class ProfileController extends GetxController with StateMixin<ProfileModel> {
 
   bool isLoading = true;
 
+  // image picker
+  final ImagePicker _picker = ImagePicker();
+  File? imageProduct;
+
   @override
   void onInit() {
     initData();
     super.onInit();
+  }
+
+  addImage(String label) async {
+    if (label == "Gallery") {
+      var pickImage = await _picker.pickImage(source: ImageSource.gallery);
+      if (pickImage != null) {
+        imageProduct = File(pickImage.path);
+      }
+      update();
+    } else if (label == "Camera") {
+      var pickImage = await _picker.pickImage(source: ImageSource.camera);
+      if (pickImage != null) {
+        imageProduct = File(pickImage.path);
+      }
+      update();
+    }
   }
 
   void initPasswordTF() {
@@ -111,15 +133,35 @@ class ProfileController extends GetxController with StateMixin<ProfileModel> {
           .editPassword(
               oldPassword.text, newPassword.text, confirmPassword.text)
           .then((value) {
-            print('berhasil');
-            print(value);
-            Get.back();
-            // initData();
-          })
-          .onError((error, stackTrace) {})
-          .whenComplete(() {
-            log('selesai edit password');
-          });
+        print('berhasil');
+        print(value);
+        Get.back();
+        // initData();
+      }).onError((error, stackTrace) {
+        print("error");
+      }).whenComplete(() {
+        log('selesai edit password');
+      });
+    } catch (e) {
+      if (kDebugMode) {
+        print("gagal");
+      }
+    }
+  }
+
+  void changeAvatar() {
+    try {
+      profileProvider.changeAvatar(imageProduct!).then((value) {
+        print(value);
+        imageProduct = null;
+        update();
+        Get.back();
+        initData();
+      }).onError((error, stackTrace) {
+        print("error");
+      }).whenComplete(() {
+        log('selesai change avatar');
+      });
     } catch (e) {
       if (kDebugMode) {
         print("gagal");

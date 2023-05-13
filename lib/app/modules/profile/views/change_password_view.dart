@@ -39,7 +39,7 @@ class ChangePasswordView extends GetView {
                 ),
                 TextFieldGlobal(
                   title: "Old Password",
-                  value: profileC.newPassword,
+                  value: profileC.oldPassword,
                 ),
                 const SizedBox(
                   height: 10,

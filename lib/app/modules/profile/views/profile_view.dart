@@ -84,7 +84,8 @@ class ProfileView extends GetView<ProfileController> {
                               bottom: 12,
                               child: InkWell(
                                 onTap: () {
-                                  Get.dialog(changeAvatarDialog(data));
+                                  Get.dialog(
+                                      changeAvatarDialog(data, profileC));
                                 },
                                 child: Container(
                                   height: 30,
@@ -249,7 +250,7 @@ class ProfileView extends GetView<ProfileController> {
     );
   }
 
-  Column changeAvatarDialog(ProfileModel data) {
+  Column changeAvatarDialog(ProfileModel data, ProfileController controller) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -284,21 +285,44 @@ class ProfileView extends GetView<ProfileController> {
                       )),
                     ),
                     const SizedBox(height: 15),
-                    Container(
-                      height: 180,
-                      width: 180,
-                      decoration: BoxDecoration(
-                          color: Colors.grey,
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                              image: NetworkImage(
-                                  "${Consts.urlImg}${data!.data!.profile!.avatar.toString()}"))),
-                    ),
+                    GetBuilder<ProfileController>(
+                        init: ProfileController(),
+                        builder: (ctx) {
+                          return InkWell(
+                            onTap: () {
+                              ctx.addImage("Gallery");
+                            },
+                            child: ctx.imageProduct != null
+                                ? Container(
+                                    height: 180,
+                                    width: 180,
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey,
+                                      shape: BoxShape.circle,
+                                      image: DecorationImage(
+                                        image: FileImage(ctx.imageProduct!),
+                                      ),
+                                    ),
+                                  )
+                                : Container(
+                                    height: 180,
+                                    width: 180,
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey,
+                                      shape: BoxShape.circle,
+                                      image: DecorationImage(
+                                        image: NetworkImage(
+                                            "${Consts.urlImg}${data!.data!.profile!.avatar.toString()}"),
+                                      ),
+                                    ),
+                                  ),
+                          );
+                        }),
                     const SizedBox(height: 20),
                     //Buttons
                     ElevatedButton(
                       onPressed: () {
-                        // Get.to(ChangePasswordView());
+                        controller.changeAvatar();
                       },
                       child: Text("Change Picture",
                           textAlign: TextAlign.center,

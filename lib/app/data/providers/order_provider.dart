@@ -32,6 +32,6 @@ class OrderProvider extends BaseProvider {
       contentType: "application/x-www-form-urlencoded",
     );
 
-    return response.body;
+    return response.body.toString();
   }
 }

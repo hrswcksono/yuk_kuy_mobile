@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:get/get.dart';
+
 import '../models/profile_model.dart';
 import 'base_provider.dart';
 
@@ -48,5 +52,26 @@ class ProfileProvider extends BaseProvider {
     );
 
     return response.body['status'];
+  }
+
+  Future<dynamic> changeAvatar(File avatar) async {
+    var avatarFile = MultipartFile(
+      avatar,
+      filename: "test.png",
+      contentType: "multipart/form-data",
+    );
+
+    var body = FormData({
+      'avatar': avatarFile,
+    });
+
+    var response = await put(
+      'accounts/edit/avatar',
+      body,
+    );
+
+    print(response.body.toString());
+
+    return response.body.toString();
   }
 }
