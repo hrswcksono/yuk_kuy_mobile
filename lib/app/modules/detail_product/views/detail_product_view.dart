@@ -24,6 +24,7 @@ class DetailProductView extends GetView<DetailProductController> {
                       Consts.urlImg +
                           data!.data!.imageProducts![0].src.toString(),
                       height: 345,
+                      width: Get.width,
                       fit: BoxFit.cover,
                     ),
                     Positioned(

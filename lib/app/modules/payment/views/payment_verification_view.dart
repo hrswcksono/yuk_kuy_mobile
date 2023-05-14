@@ -32,22 +32,27 @@ class PaymentVerificationView extends GetView {
                 GetBuilder<PaymentController>(
                     init: PaymentController(),
                     builder: (ctx) {
-                      return Container(
-                        height: 204,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(8)),
-                            border: Border.all(
+                      return InkWell(
+                        onTap: () {
+                          ctx.addImage("Gallery");
+                        },
+                        child: Container(
+                          height: 204,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(8)),
+                              border: Border.all(
+                                color: CustomColor.mainGreen,
+                                width: 1.5,
+                              )),
+                          child: Center(
+                            child: Icon(
+                              Icons.add,
+                              size: 50,
                               color: CustomColor.mainGreen,
-                              width: 1.5,
-                            )),
-                        child: Center(
-                          child: Icon(
-                            Icons.add,
-                            size: 50,
-                            color: CustomColor.mainGreen,
+                            ),
                           ),
                         ),
                       );

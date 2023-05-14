@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:yuk_kuy_mobile/app/data/models/product_model.dart';
 import 'package:yuk_kuy_mobile/app/data/providers/product_provider.dart';
+import 'package:collection/collection.dart';
 
 class HomeController extends GetxController with StateMixin<ProductModel> {
   List<bool> stateFilterHome = [];
@@ -16,6 +17,11 @@ class HomeController extends GetxController with StateMixin<ProductModel> {
 
   bool isLoading = true;
 
+  int page = 1;
+  String keyword = "";
+
+  var listFilter = List<ProductItem>.empty();
+
   @override
   void onInit() {
     getProduct();
@@ -23,15 +29,22 @@ class HomeController extends GetxController with StateMixin<ProductModel> {
   }
 
   void changeState(int index) {
-    stateFilterHome[index] = !stateFilterHome[index];
+    bool temp = stateFilterHome[index];
+    if (temp) {
+      getProduct();
+    }
+    stateFilterHome.forEachIndexed((idx, _) {
+      stateFilterHome[idx] = false;
+    });
+    stateFilterHome[index] = !temp;
     update();
   }
 
-  List<dynamic> toFilterList(input) {
+  List<dynamic> toFilterList() {
     var temp = [];
-    for (int i = 0; i < input.length; i++) {
-      if (!temp.contains(input[i].city)) {
-        temp.add(input[i].city);
+    for (int i = 0; i < listFilter.length; i++) {
+      if (!temp.contains(listFilter[i].city)) {
+        temp.add(listFilter[i].city);
         stateFilterHome.add(false);
       }
     }
@@ -40,7 +53,55 @@ class HomeController extends GetxController with StateMixin<ProductModel> {
 
   void getProduct() {
     try {
-      productProvider.list_product().then((value) {
+      productProvider.listProduct().then((value) {
+        print(value);
+        if (listFilter == null) {
+          listFilter.addAll(value.data);
+          // stateFilterHome.forEachIndexed((index, _) {
+          //   stateFilterHome[index] = false;
+          // });
+        }
+        change(value, status: RxStatus.success());
+      }).onError((error, stackTrace) {
+        print('error');
+        change(null, status: RxStatus.error());
+        if (kDebugMode) {
+          print(error);
+        }
+      }).whenComplete(() {
+        log("List product complete!");
+      });
+    } catch (e) {
+      if (kDebugMode) {
+        print("gagal");
+      }
+    }
+  }
+
+  void getProductPagination() {
+    try {
+      productProvider.listProductPagination(page).then((value) {
+        print(value);
+        change(value, status: RxStatus.success());
+      }).onError((error, stackTrace) {
+        print('error');
+        change(null, status: RxStatus.error());
+        if (kDebugMode) {
+          print(error);
+        }
+      }).whenComplete(() {
+        log("List product complete!");
+      });
+    } catch (e) {
+      if (kDebugMode) {
+        print("gagal");
+      }
+    }
+  }
+
+  void getFilterProduct(String key) {
+    try {
+      productProvider.filterProduct(key).then((value) {
         print(value);
         change(value, status: RxStatus.success());
       }).onError((error, stackTrace) {

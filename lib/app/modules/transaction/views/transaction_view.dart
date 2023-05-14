@@ -81,7 +81,8 @@ class TransactionView extends GetView {
                     physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (BuildContext context, int index) {
                       return itemTransaction(
-                          data.data![index].name.toString(),
+                          data.data![index].id!,
+                          data.data![index].product!.name.toString(),
                           data.data![index].name.toString(),
                           data.data![index].createdAt.toString(),
                           data.data![index].totalPackage!.toInt(),
@@ -134,6 +135,7 @@ class TransactionView extends GetView {
   }
 
   InkWell itemTransaction(
+    int id,
     String title,
     String user,
     String date,
@@ -145,7 +147,7 @@ class TransactionView extends GetView {
     return InkWell(
       onTap: () {
         if (status == "payment") {
-          Get.to(PaymentInformationView());
+          Get.to(PaymentInformationView(id));
         } else if (status == "verification") {
           Get.to(const VerificationPendingView());
         } else if (status == "success") {

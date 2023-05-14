@@ -53,6 +53,7 @@ class Datum {
   DateTime? createdAt;
   DateTime? updatedAt;
   StatusOrder? statusOrder;
+  Product? product;
 
   Datum({
     this.id,
@@ -66,6 +67,7 @@ class Datum {
     this.createdAt,
     this.updatedAt,
     this.statusOrder,
+    this.product,
   });
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
@@ -86,6 +88,8 @@ class Datum {
         statusOrder: json["statusOrder"] == null
             ? null
             : StatusOrder.fromJson(json["statusOrder"]),
+        product:
+            json["product"] == null ? null : Product.fromJson(json["product"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -100,6 +104,94 @@ class Datum {
         "createdAt": createdAt?.toIso8601String(),
         "updatedAt": updatedAt?.toIso8601String(),
         "statusOrder": statusOrder?.toJson(),
+        "product": product?.toJson(),
+      };
+}
+
+class Product {
+  int? id;
+  String? name;
+  DateTime? dateStart;
+  DateTime? dateEnd;
+  int? price;
+  String? province;
+  String? city;
+  String? addressDetail;
+  dynamic longitude;
+  dynamic latitude;
+  String? description;
+  String? addressMeetingPoint;
+  int? isLive;
+  int? accountId;
+  int? guideId;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+
+  Product({
+    this.id,
+    this.name,
+    this.dateStart,
+    this.dateEnd,
+    this.price,
+    this.province,
+    this.city,
+    this.addressDetail,
+    this.longitude,
+    this.latitude,
+    this.description,
+    this.addressMeetingPoint,
+    this.isLive,
+    this.accountId,
+    this.guideId,
+    this.createdAt,
+    this.updatedAt,
+  });
+
+  factory Product.fromJson(Map<String, dynamic> json) => Product(
+        id: json["id"],
+        name: json["name"],
+        dateStart: json["dateStart"] == null
+            ? null
+            : DateTime.parse(json["dateStart"]),
+        dateEnd:
+            json["dateEnd"] == null ? null : DateTime.parse(json["dateEnd"]),
+        price: json["price"],
+        province: json["province"],
+        city: json["city"],
+        addressDetail: json["addressDetail"],
+        longitude: json["longitude"],
+        latitude: json["latitude"],
+        description: json["description"],
+        addressMeetingPoint: json["addressMeetingPoint"],
+        isLive: json["isLive"],
+        accountId: json["accountId"],
+        guideId: json["guideId"],
+        createdAt: json["createdAt"] == null
+            ? null
+            : DateTime.parse(json["createdAt"]),
+        updatedAt: json["updatedAt"] == null
+            ? null
+            : DateTime.parse(json["updatedAt"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "dateStart": dateStart?.toIso8601String(),
+        "dateEnd": dateEnd?.toIso8601String(),
+        "price": price,
+        "province": province,
+        "city": city,
+        "addressDetail": addressDetail,
+        "longitude": longitude,
+        "latitude": latitude,
+        "description": description,
+        "addressMeetingPoint": addressMeetingPoint,
+        "isLive": isLive,
+        "accountId": accountId,
+        "guideId": guideId,
+        "createdAt": createdAt?.toIso8601String(),
+        "updatedAt": updatedAt?.toIso8601String(),
       };
 }
 

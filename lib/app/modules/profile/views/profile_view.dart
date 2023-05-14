@@ -312,7 +312,7 @@ class ProfileView extends GetView<ProfileController> {
                                       shape: BoxShape.circle,
                                       image: DecorationImage(
                                         image: NetworkImage(
-                                            "${Consts.urlImg}${data!.data!.profile!.avatar.toString()}"),
+                                            "${Consts.urlImg}${data.data!.profile!.avatar.toString()}"),
                                       ),
                                     ),
                                   ),

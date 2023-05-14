@@ -1,5 +1,6 @@
 import 'package:yuk_kuy_mobile/app/data/providers/base_provider.dart';
 
+import '../models/order_detail_model.dart';
 import '../models/order_model.dart';
 
 class OrderProvider extends BaseProvider {
@@ -12,6 +13,18 @@ class OrderProvider extends BaseProvider {
       return Future.error(response.body["message"]);
     } else {
       return orderModelFromJson(response.bodyString.toString());
+    }
+  }
+
+  Future<OrderDetailModel> detailOrder(int id) async {
+    var response = await get('orders/$id');
+
+    print(response.body.toString());
+
+    if (!response.body['status']) {
+      return Future.error(response.body["message"]);
+    } else {
+      return orderDetailModelFromJson(response.bodyString.toString());
     }
   }
 

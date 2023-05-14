@@ -95,12 +95,10 @@ class HomeView extends GetView {
                             shrinkWrap: true,
                             scrollDirection: Axis.horizontal,
                             // itemCount: DummyString.listProduct.length + 1,
-                            itemCount:
-                                homeC.toFilterList(data!.data).length + 1,
+                            itemCount: homeC.toFilterList().length + 1,
                             itemBuilder: (BuildContext context, int index) {
                               if (index == 0 ||
-                                  index ==
-                                      (homeC.toFilterList(data.data).length)) {
+                                  index == (homeC.toFilterList().length)) {
                                 return const SizedBox(
                                   width: 20,
                                 );
@@ -113,7 +111,7 @@ class HomeView extends GetView {
                             separatorBuilder:
                                 (BuildContext context, int index) =>
                                     itemFilterHome(
-                              homeC.toFilterList(data.data)[index],
+                              homeC.toFilterList()[index],
                               index,
                               ctx.stateFilterHome[index],
                               ctx,
@@ -179,6 +177,7 @@ class HomeView extends GetView {
       // backgroundColor: Colors.white,
       onPressed: () {
         ctx.changeState(index);
+        ctx.getFilterProduct(data);
       },
     );
   }

@@ -4,8 +4,28 @@ import 'package:yuk_kuy_mobile/app/data/models/product_model.dart';
 import 'base_provider.dart';
 
 class ProductProvider extends BaseProvider {
-  Future<ProductModel> list_product() async {
+  Future<ProductModel> listProduct() async {
     var response = await get('products/mobile');
+
+    if (!response.body['status']) {
+      return Future.error(response.body["message"]);
+    } else {
+      return productModelFromJson(response.bodyString.toString());
+    }
+  }
+
+  Future<ProductModel> listProductPagination(int page) async {
+    var response = await get('products/mobile?page=$page&limit=6');
+
+    if (!response.body['status']) {
+      return Future.error(response.body["message"]);
+    } else {
+      return productModelFromJson(response.bodyString.toString());
+    }
+  }
+
+  Future<ProductModel> filterProduct(String name) async {
+    var response = await get('products/mobile?city=$name');
 
     if (!response.body['status']) {
       return Future.error(response.body["message"]);

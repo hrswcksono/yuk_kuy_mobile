@@ -30,7 +30,7 @@ class TransactionController extends GetxController with StateMixin<OrderModel> {
   void initData() {
     try {
       orderProvider.listOrder().then((value) {
-        print("berhasil");
+        print("list order");
         print(value);
         change(value, status: RxStatus.success());
       }).onError((error, stackTrace) {
