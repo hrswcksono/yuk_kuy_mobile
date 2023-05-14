@@ -10,9 +10,11 @@ import '../../../../core/themes/colors.dart';
 import 'components/payment_header.dart';
 
 class PaymentVerificationView extends GetView {
-  const PaymentVerificationView({Key? key}) : super(key: key);
+  PaymentVerificationView({Key? key}) : super(key: key);
+  var paymentC = Get.put(PaymentController());
   @override
   Widget build(BuildContext context) {
+    paymentC.initVerification();
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -47,13 +49,18 @@ class PaymentVerificationView extends GetView {
                                 color: CustomColor.mainGreen,
                                 width: 1.5,
                               )),
-                          child: Center(
-                            child: Icon(
-                              Icons.add,
-                              size: 50,
-                              color: CustomColor.mainGreen,
-                            ),
-                          ),
+                          child: ctx.imgVerification == null
+                              ? Center(
+                                  child: Icon(
+                                    Icons.add,
+                                    size: 50,
+                                    color: CustomColor.mainGreen,
+                                  ),
+                                )
+                              : Image.file(
+                                  ctx.imgVerification!,
+                                  fit: BoxFit.cover,
+                                ),
                         ),
                       );
                     }),

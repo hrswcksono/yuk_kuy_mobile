@@ -31,7 +31,7 @@ class PaymentController extends GetxController
   bool isLoading = true;
 
   final ImagePicker _picker = ImagePicker();
-  File? imageProduct;
+  File? imgVerification;
 
   @override
   void onInit() {
@@ -53,6 +53,10 @@ class PaymentController extends GetxController
     update();
   }
 
+  void initVerification() {
+    imgVerification = null;
+  }
+
   void reducePeople() {
     if (numPeople > 1) {
       numPeople--;
@@ -70,13 +74,13 @@ class PaymentController extends GetxController
     if (label == "Gallery") {
       var pickImage = await _picker.pickImage(source: ImageSource.gallery);
       if (pickImage != null) {
-        imageProduct = File(pickImage.path);
+        imgVerification = File(pickImage.path);
       }
       update();
     } else if (label == "Camera") {
       var pickImage = await _picker.pickImage(source: ImageSource.camera);
       if (pickImage != null) {
-        imageProduct = File(pickImage.path);
+        imgVerification = File(pickImage.path);
       }
       update();
     }

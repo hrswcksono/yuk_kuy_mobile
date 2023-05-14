@@ -88,7 +88,7 @@ class HomeView extends GetView {
                 ),
                 GetBuilder<HomeController>(
                     init: HomeController(),
-                    builder: (ctx) => homeC.obx((data) => SizedBox(
+                    builder: (ctx) => SizedBox(
                           height: 40,
                           child: ListView.separated(
                             physics: const ClampingScrollPhysics(),
@@ -117,7 +117,7 @@ class HomeView extends GetView {
                               ctx,
                             ),
                           ),
-                        ))),
+                        )),
                 Padding(
                   padding: const EdgeInsets.only(
                     left: 20,
@@ -176,8 +176,7 @@ class HomeView extends GetView {
           : const Color.fromRGBO(245, 246, 250, 1),
       // backgroundColor: Colors.white,
       onPressed: () {
-        ctx.changeState(index);
-        ctx.getFilterProduct(data);
+        ctx.changeState(index, data);
       },
     );
   }

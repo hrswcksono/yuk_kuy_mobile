@@ -20,7 +20,7 @@ class HomeController extends GetxController with StateMixin<ProductModel> {
   int page = 1;
   String keyword = "";
 
-  var listFilter = List<ProductItem>.empty();
+  var listFilter = List<ProductItem>.empty(growable: true);
 
   @override
   void onInit() {
@@ -28,16 +28,23 @@ class HomeController extends GetxController with StateMixin<ProductModel> {
     super.onInit();
   }
 
-  void changeState(int index) {
+  void changeState(int index, String filterKey) {
     bool temp = stateFilterHome[index];
     if (temp) {
       getProduct();
+    } else {
+      getFilterProduct(filterKey);
     }
     stateFilterHome.forEachIndexed((idx, _) {
       stateFilterHome[idx] = false;
     });
     stateFilterHome[index] = !temp;
     update();
+  }
+
+  void initData() {
+    getProduct();
+    listFilter.clear();
   }
 
   List<dynamic> toFilterList() {
@@ -53,14 +60,16 @@ class HomeController extends GetxController with StateMixin<ProductModel> {
 
   void getProduct() {
     try {
+      change(null, status: RxStatus.loading());
       productProvider.listProduct().then((value) {
         print(value);
-        if (listFilter == null) {
-          listFilter.addAll(value.data);
-          // stateFilterHome.forEachIndexed((index, _) {
-          //   stateFilterHome[index] = false;
-          // });
-        }
+        listFilter.clear();
+        listFilter.addAll(value.data);
+        // if (listFilter.isEmpty) {
+        //   // stateFilterHome.forEachIndexed((index, _) {
+        //   //   stateFilterHome[index] = false;
+        //   // });
+        // }
         change(value, status: RxStatus.success());
       }).onError((error, stackTrace) {
         print('error');
@@ -101,6 +110,7 @@ class HomeController extends GetxController with StateMixin<ProductModel> {
 
   void getFilterProduct(String key) {
     try {
+      change(null, status: RxStatus.loading());
       productProvider.filterProduct(key).then((value) {
         print(value);
         change(value, status: RxStatus.success());
