@@ -11,10 +11,11 @@ import '../controllers/payment_controller.dart';
 import 'components/payment_header.dart';
 
 class PaymentView extends GetView<PaymentController> {
-  const PaymentView({Key? key}) : super(key: key);
+  PaymentView({Key? key}) : super(key: key);
+  dynamic argumentData = Get.arguments;
   @override
   Widget build(BuildContext context) {
-    controller.initData();
+    controller.initData(argumentData["data"]);
     return Scaffold(
       body: SafeArea(
         child: Padding(

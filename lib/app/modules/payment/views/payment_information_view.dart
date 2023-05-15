@@ -10,18 +10,19 @@ import '../../../../core/themes/colors.dart';
 import 'components/payment_header.dart';
 
 class PaymentInformationView extends GetView {
-  PaymentInformationView(this.id, {Key? key}) : super(key: key);
+  PaymentInformationView(this.id, this.accountId, {Key? key}) : super(key: key);
   final int? id;
+  final int? accountId;
   var paymentC = Get.put(PaymentController());
   @override
   Widget build(BuildContext context) {
-    paymentC.detailOrder(id!);
+    paymentC.detailOrder(id!, accountId!);
     return Scaffold(
       body: SafeArea(
         child: SmartRefresher(
           controller: paymentC.refreshController,
           onRefresh: paymentC.onRefresh,
-          child: SingleChildScrollView(
+          child: Expanded(
             child: paymentC.obx((data) => Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
@@ -57,7 +58,7 @@ class PaymentInformationView extends GetView {
                                     fontWeight: FontWeight.w500,
                                     color: Colors.white,
                                   ))),
-                              Text("Rp. ${data!.data!.totalPrice}",
+                              Text("Rp. ${data!.item1.data!.totalPrice}",
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.inter(
                                       textStyle: const TextStyle(
@@ -70,11 +71,30 @@ class PaymentInformationView extends GetView {
                         ),
                       ),
                       const SizedBox(
-                        height: 20,
+                        height: 10,
                       ),
+                      ListView.separated(
+                        padding: const EdgeInsets.all(20),
+                        itemCount: data.item2.data!.length,
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (BuildContext context, int index) {
+                          return BankInformation(
+                            data.item2.data![index].bank.toString(),
+                            data.item2.data![index].name.toString(),
+                            data.item2.data![index].number.toString(),
+                          );
+                        },
+                        separatorBuilder: (BuildContext context, int index) {
+                          return const SizedBox(
+                            height: 5,
+                          );
+                        },
+                      ),
+                      const Spacer(),
                       ElevatedButton(
                         onPressed: () {
-                          Get.to(PaymentVerificationView());
+                          Get.to(PaymentVerificationView(data.item2.data!));
                         },
                         child: Text("Payment Verification",
                             textAlign: TextAlign.center,
@@ -84,7 +104,7 @@ class PaymentInformationView extends GetView {
                               fontWeight: FontWeight.w500,
                             ))),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       ElevatedButton(
@@ -108,13 +128,38 @@ class PaymentInformationView extends GetView {
                                   255, 79, 79, 1) // the color of the border
                               ),
                         ),
-                      )
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
                     ],
                   ),
                 )),
           ),
         ),
       ),
+    );
+  }
+
+  Row BankInformation(String bankName, String name, String number) {
+    return Row(
+      children: [
+        Text(bankName,
+            style: GoogleFonts.inter(
+                textStyle: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+            ))),
+        const SizedBox(
+          width: 5,
+        ),
+        Text("$number an $name",
+            style: GoogleFonts.inter(
+                textStyle: const TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w400,
+            )))
+      ],
     );
   }
 }

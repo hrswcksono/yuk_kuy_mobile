@@ -182,6 +182,7 @@ class DetailProductView extends GetView<DetailProductController> {
           bottomNavigationBar: ElevatedButton(
             onPressed: () {
               Get.toNamed(AppPages.INITIAL_P, arguments: {"data": data.data});
+              print("data: ${data.data!.name}");
             },
             child: Text("Book Now"),
             style: ElevatedButton.styleFrom(

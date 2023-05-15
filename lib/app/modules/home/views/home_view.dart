@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../../../../core/themes/colors.dart';
+import '../../../../core/utils/helpers.dart';
 import '../../../../core/values/strings/dummy_string.dart';
 import '../controllers/home_controller.dart';
 import 'components/item_grid_home.dart';
@@ -36,7 +37,7 @@ class HomeView extends GetView {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Username",
+                        readUsername(),
                         style: GoogleFonts.inter(
                             textStyle: const TextStyle(
                                 fontSize: 28, fontWeight: FontWeight.w500)),

@@ -76,6 +76,7 @@ class ProfileView extends GetView<ProfileController> {
                                   color: Colors.grey,
                                   shape: BoxShape.circle,
                                   image: DecorationImage(
+                                      fit: BoxFit.cover,
                                       image: NetworkImage(
                                           "${Consts.urlImg}${data!.data!.profile!.avatar.toString()}"))),
                             ),
@@ -300,6 +301,7 @@ class ProfileView extends GetView<ProfileController> {
                                       color: Colors.grey,
                                       shape: BoxShape.circle,
                                       image: DecorationImage(
+                                        fit: BoxFit.cover,
                                         image: FileImage(ctx.imageProduct!),
                                       ),
                                     ),
@@ -311,6 +313,7 @@ class ProfileView extends GetView<ProfileController> {
                                       color: Colors.grey,
                                       shape: BoxShape.circle,
                                       image: DecorationImage(
+                                        fit: BoxFit.cover,
                                         image: NetworkImage(
                                             "${Consts.urlImg}${data.data!.profile!.avatar.toString()}"),
                                       ),

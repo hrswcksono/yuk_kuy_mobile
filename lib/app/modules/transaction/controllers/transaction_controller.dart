@@ -3,9 +3,12 @@ import 'dart:developer';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:yuk_kuy_mobile/core/values/consts.dart';
+import 'package:yuk_kuy_mobile/core/values/strings.dart';
 
 import '../../../data/models/order_model.dart';
 import '../../../data/providers/order_provider.dart';
+import 'package:collection/collection.dart';
 
 class TransactionController extends GetxController with StateMixin<OrderModel> {
   List<bool> stateFilter = [true, false, false, false, false, false];
@@ -15,6 +18,7 @@ class TransactionController extends GetxController with StateMixin<OrderModel> {
       RefreshController(initialRefresh: false);
 
   bool isLoading = true;
+  int stateIndex = 0;
 
   @override
   void onInit() {
@@ -23,13 +27,54 @@ class TransactionController extends GetxController with StateMixin<OrderModel> {
   }
 
   void changeState(int index) {
-    stateFilter[index] = !stateFilter[index];
+    bool temp = stateFilter[index];
+    stateIndex = index;
+    stateFilter.forEachIndexed((idx, _) {
+      stateFilter[idx] = false;
+    });
+    stateFilter[index] = !temp;
+    if (!stateFilter.contains(true)) {
+      stateFilter[0] = true;
+    }
+    dataChange(index);
     update();
   }
 
+  void dataChange(int index) {
+    if (index != 0) {
+      filterOrder(Strings.queryTransaction[index]);
+    } else {
+      initData();
+    }
+  }
+
   void initData() {
+    change(null, status: RxStatus.loading());
     try {
       orderProvider.listOrder().then((value) {
+        print("list order");
+        print(value);
+        change(value, status: RxStatus.success());
+      }).onError((error, stackTrace) {
+        print('error');
+        change(null, status: RxStatus.error());
+        if (kDebugMode) {
+          print(error);
+        }
+      }).whenComplete(() {
+        log("List product complete!");
+      });
+    } catch (e) {
+      if (kDebugMode) {
+        print("gagal");
+      }
+    }
+  }
+
+  void filterOrder(String filter) {
+    change(null, status: RxStatus.loading());
+    try {
+      orderProvider.filterOrder(filter).then((value) {
         print("list order");
         print(value);
         change(value, status: RxStatus.success());
@@ -54,7 +99,7 @@ class TransactionController extends GetxController with StateMixin<OrderModel> {
     update();
     // monitor network fetch
     await Future.delayed(const Duration(milliseconds: 1000), () {
-      initData();
+      dataChange(stateIndex);
       update();
       return refreshController.refreshCompleted();
     });

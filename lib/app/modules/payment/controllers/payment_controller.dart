@@ -6,22 +6,27 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:tuple/tuple.dart';
+import 'package:yuk_kuy_mobile/app/data/models/bank_model.dart';
 import 'package:yuk_kuy_mobile/app/data/models/order_detail_model.dart';
+import 'package:yuk_kuy_mobile/app/data/providers/bank_provider.dart';
 import 'package:yuk_kuy_mobile/app/data/providers/order_provider.dart';
 
 class PaymentController extends GetxController
-    with StateMixin<OrderDetailModel> {
+    with StateMixin<Tuple2<OrderDetailModel, BankModel>> {
   dynamic argumentData = Get.arguments;
   String title = "";
   int price = 0, numPeople = 1;
   int totalPrice = 0;
   var orderProvider = Get.put(OrderProvider());
+  var bankProvider = Get.put(BankProvider());
 
   late TextEditingController name;
   late TextEditingController phone;
   late TextEditingController email;
 
   int idOrder = 0;
+  int idAccount = 0;
 
   bool showListBank = false;
 
@@ -38,12 +43,12 @@ class PaymentController extends GetxController
     super.onInit();
   }
 
-  void initData() {
+  void initData(data) {
     name = TextEditingController();
     phone = TextEditingController();
     email = TextEditingController();
-    title = argumentData["data"].name;
-    price = argumentData["data"].price;
+    title = data.name;
+    price = data.price;
     totalPrice = price;
   }
 
@@ -110,11 +115,12 @@ class PaymentController extends GetxController
     }
   }
 
-  void detailOrder(int id) {
+  void detailOrder(int id, int accountId) {
     idOrder = id;
+    idAccount = accountId;
     try {
-      orderProvider.detailOrder(id).then((value) {
-        change(value, status: RxStatus.success());
+      orderProvider.detailOrder(idOrder).then((value) {
+        listBank(accountId, value);
         print("berhasil");
         print(value);
       }).onError((error, stackTrace) {
@@ -133,12 +139,34 @@ class PaymentController extends GetxController
     }
   }
 
+  void listBank(int id, OrderDetailModel data) {
+    print('account id : $id');
+    try {
+      bankProvider.listBank(id).then((value) {
+        print(value.toString());
+        change(Tuple2(data, value), status: RxStatus.success());
+      }).onError((error, stackTrace) {
+        print('error');
+        change(null, status: RxStatus.error());
+        if (kDebugMode) {
+          print(error);
+        }
+      }).whenComplete(() {
+        log("Bank Order complete!");
+      });
+    } catch (e) {
+      if (kDebugMode) {
+        print("gagal");
+      }
+    }
+  }
+
   void onRefresh() async {
     isLoading = false;
     update();
     // monitor network fetch
     await Future.delayed(const Duration(milliseconds: 1000), () {
-      detailOrder(idOrder);
+      detailOrder(idOrder, idAccount);
       update();
       return refreshController.refreshCompleted();
     });

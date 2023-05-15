@@ -22,4 +22,13 @@ class Strings {
     "Rejected",
     "Cancelled"
   ];
+
+  static const List<String> queryTransaction = [
+    "",
+    "payment",
+    "verification",
+    "success",
+    "rejected",
+    "cancelled"
+  ];
 }

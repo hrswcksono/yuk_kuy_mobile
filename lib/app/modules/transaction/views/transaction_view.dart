@@ -82,6 +82,7 @@ class TransactionView extends GetView {
                     itemBuilder: (BuildContext context, int index) {
                       return itemTransaction(
                           data.data![index].id!,
+                          data.data![index].product!.accountId!,
                           data.data![index].product!.name.toString(),
                           data.data![index].name.toString(),
                           data.data![index].createdAt.toString(),
@@ -136,6 +137,7 @@ class TransactionView extends GetView {
 
   InkWell itemTransaction(
     int id,
+    int accountId,
     String title,
     String user,
     String date,
@@ -147,7 +149,7 @@ class TransactionView extends GetView {
     return InkWell(
       onTap: () {
         if (status == "payment") {
-          Get.to(PaymentInformationView(id));
+          Get.to(PaymentInformationView(id, accountId));
         } else if (status == "verification") {
           Get.to(const VerificationPendingView());
         } else if (status == "success") {

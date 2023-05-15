@@ -1,11 +1,24 @@
 import 'package:yuk_kuy_mobile/app/data/providers/base_provider.dart';
 
+import '../models/add_order_model.dart';
 import '../models/order_detail_model.dart';
 import '../models/order_model.dart';
 
 class OrderProvider extends BaseProvider {
   Future<OrderModel> listOrder() async {
     var response = await get('orders/mobile');
+
+    print(response.body.toString());
+
+    if (!response.body['status']) {
+      return Future.error(response.body["message"]);
+    } else {
+      return orderModelFromJson(response.bodyString.toString());
+    }
+  }
+
+  Future<OrderModel> filterOrder(String status) async {
+    var response = await get('orders/mobile?status=$status');
 
     print(response.body.toString());
 
@@ -28,7 +41,7 @@ class OrderProvider extends BaseProvider {
     }
   }
 
-  Future<dynamic> addOder(String name, String phone, String email,
+  Future<AddOrderModel> addOder(String name, String phone, String email,
       int totalPrice, int totalPackage, int productId) async {
     Map<String, dynamic> jsonBody = {
       'totalPackage': totalPackage,
@@ -45,6 +58,10 @@ class OrderProvider extends BaseProvider {
       contentType: "application/x-www-form-urlencoded",
     );
 
-    return response.body.toString();
+    if (!response.body['status']) {
+      return Future.error(response.body["message"]);
+    } else {
+      return addOrderModelFromJson(response.bodyString.toString());
+    }
   }
 }

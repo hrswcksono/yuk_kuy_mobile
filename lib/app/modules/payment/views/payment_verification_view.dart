@@ -7,11 +7,14 @@ import 'package:yuk_kuy_mobile/app/modules/home/views/home_view.dart';
 import 'package:yuk_kuy_mobile/app/modules/payment/controllers/payment_controller.dart';
 
 import '../../../../core/themes/colors.dart';
+import '../../../data/models/bank_model.dart';
 import 'components/payment_header.dart';
 
 class PaymentVerificationView extends GetView {
-  PaymentVerificationView({Key? key}) : super(key: key);
+  PaymentVerificationView(this.item, {Key? key}) : super(key: key);
   var paymentC = Get.put(PaymentController());
+
+  final List<BankItem> item;
   @override
   Widget build(BuildContext context) {
     paymentC.initVerification();
@@ -102,10 +105,10 @@ class PaymentVerificationView extends GetView {
                   builder: (ctx) => ctx.showListBank
                       ? ListView.builder(
                           // padding: const EdgeInsets.all(8),
-                          itemCount: 5,
+                          itemCount: item.length,
                           shrinkWrap: true,
                           itemBuilder: (BuildContext context, int index) {
-                            return chooseBank();
+                            return chooseBank(item[index].bank!);
                           })
                       : SizedBox(),
                 ),
@@ -132,25 +135,28 @@ class PaymentVerificationView extends GetView {
     );
   }
 
-  Container chooseBank() {
-    return Container(
-      height: 33,
-      width: double.infinity,
-      decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border.all(
-            color: CustomColor.mainGreen,
-            width: 1.5,
-          )),
-      child: Padding(
-        padding: const EdgeInsets.only(left: 15),
-        child: Align(
-          alignment: Alignment.centerLeft,
-          child: Text(
-            "BRI",
-            style: GoogleFonts.inter(
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
+  InkWell chooseBank(String name) {
+    return InkWell(
+      onTap: () {},
+      child: Container(
+        height: 33,
+        width: double.infinity,
+        decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border.all(
+              color: CustomColor.mainGreen,
+              width: 1.5,
+            )),
+        child: Padding(
+          padding: const EdgeInsets.only(left: 15),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              name,
+              style: GoogleFonts.inter(
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
         ),

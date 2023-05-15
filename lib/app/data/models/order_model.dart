@@ -122,6 +122,7 @@ class Product {
   String? description;
   String? addressMeetingPoint;
   int? isLive;
+  int? isDelete;
   int? accountId;
   int? guideId;
   DateTime? createdAt;
@@ -141,6 +142,7 @@ class Product {
     this.description,
     this.addressMeetingPoint,
     this.isLive,
+    this.isDelete,
     this.accountId,
     this.guideId,
     this.createdAt,
@@ -164,6 +166,7 @@ class Product {
         description: json["description"],
         addressMeetingPoint: json["addressMeetingPoint"],
         isLive: json["isLive"],
+        isDelete: json["isDelete"],
         accountId: json["accountId"],
         guideId: json["guideId"],
         createdAt: json["createdAt"] == null
@@ -188,6 +191,7 @@ class Product {
         "description": description,
         "addressMeetingPoint": addressMeetingPoint,
         "isLive": isLive,
+        "isDelete": isDelete,
         "accountId": accountId,
         "guideId": guideId,
         "createdAt": createdAt?.toIso8601String(),
@@ -198,7 +202,7 @@ class Product {
 class StatusOrder {
   int? id;
   String? status;
-  dynamic reason;
+  String? reason;
   int? orderId;
   DateTime? createdAt;
   DateTime? updatedAt;
