@@ -3,9 +3,9 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie_player/lottie_player.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:yuk_kuy_mobile/app/modules/favorite/views/components/item_grid_favorite.dart';
-
-import '../../home/views/components/item_grid_home.dart';
 import '../controllers/favorite_controller.dart';
 
 class FavoriteView extends GetView<FavoriteController> {
@@ -15,8 +15,12 @@ class FavoriteView extends GetView<FavoriteController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: controller.obx((data) => SingleChildScrollView(
-              child: Padding(
+        child: SmartRefresher(
+          controller: favC.refreshController,
+          onRefresh: favC.onRefresh,
+          child: SingleChildScrollView(
+            child: controller.obx(
+              (data) => Padding(
                 padding: const EdgeInsets.all(20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -29,7 +33,7 @@ class FavoriteView extends GetView<FavoriteController> {
                         fontWeight: FontWeight.w600,
                       )),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     StaggeredGrid.count(
@@ -38,13 +42,23 @@ class FavoriteView extends GetView<FavoriteController> {
                       crossAxisSpacing: 25,
                       children: List.generate(
                         data!.length,
-                        (index) => ItemGridFavorite(),
+                        (index) => ItemGridFavorite(
+                          model: data[index],
+                        ),
                       ),
                     )
                   ],
                 ),
               ),
-            )),
+              onEmpty: const LottiePlayer(
+                networkUrl:
+                    'https://assets10.lottiefiles.com/packages/lf20_NeuXI2OPLG.json',
+                width: 200,
+                height: 200,
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }

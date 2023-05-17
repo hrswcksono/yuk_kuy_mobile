@@ -40,6 +40,7 @@ class ChangePasswordView extends GetView {
                 TextFieldGlobal(
                   title: "Old Password",
                   value: profileC.oldPassword,
+                  obsTxt: true,
                 ),
                 const SizedBox(
                   height: 10,
@@ -47,6 +48,7 @@ class ChangePasswordView extends GetView {
                 TextFieldGlobal(
                   title: "New Password",
                   value: profileC.newPassword,
+                  obsTxt: true,
                 ),
                 const SizedBox(
                   height: 10,
@@ -54,6 +56,7 @@ class ChangePasswordView extends GetView {
                 TextFieldGlobal(
                   title: "Confirm Password",
                   value: profileC.confirmPassword,
+                  obsTxt: true,
                 ),
                 const SizedBox(
                   height: 20,

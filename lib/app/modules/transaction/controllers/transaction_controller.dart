@@ -10,6 +10,8 @@ import '../../../data/models/order_model.dart';
 import '../../../data/providers/order_provider.dart';
 import 'package:collection/collection.dart';
 
+import '../../../data/providers/verification_provider.dart';
+
 class TransactionController extends GetxController with StateMixin<OrderModel> {
   List<bool> stateFilter = [true, false, false, false, false, false];
   var orderProvider = Get.put(OrderProvider());
@@ -35,8 +37,10 @@ class TransactionController extends GetxController with StateMixin<OrderModel> {
     stateFilter[index] = !temp;
     if (!stateFilter.contains(true)) {
       stateFilter[0] = true;
+      initData();
+    } else {
+      dataChange(index);
     }
-    dataChange(index);
     update();
   }
 
@@ -54,7 +58,12 @@ class TransactionController extends GetxController with StateMixin<OrderModel> {
       orderProvider.listOrder().then((value) {
         print("list order");
         print(value);
-        change(value, status: RxStatus.success());
+        if (value.data!.isNotEmpty) {
+          change(value, status: RxStatus.success());
+        } else {
+          print("empty");
+          change(value, status: RxStatus.empty());
+        }
       }).onError((error, stackTrace) {
         print('error');
         change(null, status: RxStatus.error());
@@ -77,7 +86,12 @@ class TransactionController extends GetxController with StateMixin<OrderModel> {
       orderProvider.filterOrder(filter).then((value) {
         print("list order");
         print(value);
-        change(value, status: RxStatus.success());
+        if (value.data!.isNotEmpty) {
+          change(value, status: RxStatus.success());
+        } else {
+          print("empty");
+          change(value, status: RxStatus.empty());
+        }
       }).onError((error, stackTrace) {
         print('error');
         change(null, status: RxStatus.error());

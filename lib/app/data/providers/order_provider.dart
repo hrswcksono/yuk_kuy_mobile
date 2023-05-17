@@ -58,10 +58,24 @@ class OrderProvider extends BaseProvider {
       contentType: "application/x-www-form-urlencoded",
     );
 
+    print(response.body.toString());
+
     if (!response.body['status']) {
       return Future.error(response.body["message"]);
     } else {
       return addOrderModelFromJson(response.bodyString.toString());
+    }
+  }
+
+  Future<dynamic> verification(int id) async {
+    var response = await get('orders/$id');
+
+    print(response.body.toString());
+
+    if (!response.body['status']) {
+      return Future.error(response.body["message"]);
+    } else {
+      return orderDetailModelFromJson(response.bodyString.toString());
     }
   }
 }

@@ -37,7 +37,7 @@ class ItemGridHome extends StatelessWidget {
                   image:
                       NetworkImage(Consts.urlImg + model.imageProducts[0].src),
                 ),
-                color: Colors.amberAccent),
+                color: Colors.white),
           ),
           const SizedBox(
             height: 2,

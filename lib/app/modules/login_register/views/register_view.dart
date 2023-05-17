@@ -57,6 +57,7 @@ class RegisterView extends GetView {
                 TextFieldGlobal(
                   title: "Password",
                   value: lrController.passwordRegisTF,
+                  obsTxt: true,
                 ),
                 const SizedBox(
                   height: 20,
@@ -64,6 +65,7 @@ class RegisterView extends GetView {
                 TextFieldGlobal(
                   title: "Confirm Password",
                   value: lrController.confirmPassRegisTF,
+                  obsTxt: true,
                 ),
                 const SizedBox(
                   height: 20,

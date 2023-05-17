@@ -28,7 +28,7 @@ class Strings {
     "payment",
     "verification",
     "success",
-    "rejected",
-    "cancelled"
+    "reject",
+    "cancel"
   ];
 }

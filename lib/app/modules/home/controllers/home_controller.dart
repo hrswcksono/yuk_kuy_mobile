@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:yuk_kuy_mobile/app/data/models/product_model.dart';
@@ -22,8 +23,11 @@ class HomeController extends GetxController with StateMixin<ProductModel> {
 
   var listFilter = List<ProductItem>.empty(growable: true);
 
+  late TextEditingController search;
+
   @override
   void onInit() {
+    search = TextEditingController();
     getProduct();
     super.onInit();
   }
@@ -112,6 +116,28 @@ class HomeController extends GetxController with StateMixin<ProductModel> {
     try {
       change(null, status: RxStatus.loading());
       productProvider.filterProduct(key).then((value) {
+        print(value);
+        change(value, status: RxStatus.success());
+      }).onError((error, stackTrace) {
+        print('error');
+        change(null, status: RxStatus.error());
+        if (kDebugMode) {
+          print(error);
+        }
+      }).whenComplete(() {
+        log("List product complete!");
+      });
+    } catch (e) {
+      if (kDebugMode) {
+        print("gagal");
+      }
+    }
+  }
+
+  void searchProduct() {
+    try {
+      change(null, status: RxStatus.loading());
+      productProvider.searchProduct(search.text).then((value) {
         print(value);
         change(value, status: RxStatus.success());
       }).onError((error, stackTrace) {

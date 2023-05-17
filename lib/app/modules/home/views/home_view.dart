@@ -3,6 +3,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie_player/lottie_player.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../../../../core/themes/colors.dart';
@@ -60,23 +61,27 @@ class HomeView extends GetView {
                         children: [
                           SizedBox(
                             width: Get.width * 0.77,
-                            child: const TextField(
-                              decoration: InputDecoration(
+                            child: TextField(
+                              controller: homeC.search,
+                              decoration: const InputDecoration(
                                 hintText: "Search...",
                               ),
                             ),
                           ),
-                          Container(
-                            height: 47,
-                            width: 46,
-                            decoration: BoxDecoration(
-                              color: CustomColor.mainGreen,
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(10)),
-                            ),
-                            child: const Icon(
-                              Icons.search,
-                              color: Colors.white,
+                          InkWell(
+                            onTap: () => homeC.searchProduct(),
+                            child: Container(
+                              height: 47,
+                              width: 46,
+                              decoration: BoxDecoration(
+                                color: CustomColor.mainGreen,
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(10)),
+                              ),
+                              child: const Icon(
+                                Icons.search,
+                                color: Colors.white,
+                              ),
                             ),
                           )
                         ],
@@ -133,23 +138,31 @@ class HomeView extends GetView {
                     )),
                   ),
                 ),
-                homeC.obx((data) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 10),
-                    child: StaggeredGrid.count(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 15,
-                      crossAxisSpacing: 25,
-                      children: List.generate(
-                        data!.data.length,
-                        (index) => ItemGridHome(
-                          model: data.data[index],
+                homeC.obx(
+                  (data) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 10),
+                      child: StaggeredGrid.count(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 15,
+                        crossAxisSpacing: 25,
+                        children: List.generate(
+                          data!.data.length,
+                          (index) => ItemGridHome(
+                            model: data.data[index],
+                          ),
                         ),
                       ),
-                    ),
-                  );
-                }),
+                    );
+                  },
+                  onEmpty: const LottiePlayer(
+                    networkUrl:
+                        'https://assets10.lottiefiles.com/packages/lf20_NeuXI2OPLG.json',
+                    width: 200,
+                    height: 200,
+                  ),
+                ),
               ],
             ),
           ),

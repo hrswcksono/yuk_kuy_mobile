@@ -127,6 +127,7 @@ class Product {
   int? guideId;
   DateTime? createdAt;
   DateTime? updatedAt;
+  List<ImageProduct>? imageProducts;
 
   Product({
     this.id,
@@ -147,6 +148,7 @@ class Product {
     this.guideId,
     this.createdAt,
     this.updatedAt,
+    this.imageProducts,
   });
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(
@@ -175,6 +177,10 @@ class Product {
         updatedAt: json["updatedAt"] == null
             ? null
             : DateTime.parse(json["updatedAt"]),
+        imageProducts: json["imageProducts"] == null
+            ? []
+            : List<ImageProduct>.from(
+                json["imageProducts"]!.map((x) => ImageProduct.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -196,13 +202,52 @@ class Product {
         "guideId": guideId,
         "createdAt": createdAt?.toIso8601String(),
         "updatedAt": updatedAt?.toIso8601String(),
+        "imageProducts": imageProducts == null
+            ? []
+            : List<dynamic>.from(imageProducts!.map((x) => x.toJson())),
+      };
+}
+
+class ImageProduct {
+  int? id;
+  String? src;
+  int? productId;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+
+  ImageProduct({
+    this.id,
+    this.src,
+    this.productId,
+    this.createdAt,
+    this.updatedAt,
+  });
+
+  factory ImageProduct.fromJson(Map<String, dynamic> json) => ImageProduct(
+        id: json["id"],
+        src: json["src"],
+        productId: json["productId"],
+        createdAt: json["createdAt"] == null
+            ? null
+            : DateTime.parse(json["createdAt"]),
+        updatedAt: json["updatedAt"] == null
+            ? null
+            : DateTime.parse(json["updatedAt"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "src": src,
+        "productId": productId,
+        "createdAt": createdAt?.toIso8601String(),
+        "updatedAt": updatedAt?.toIso8601String(),
       };
 }
 
 class StatusOrder {
   int? id;
   String? status;
-  String? reason;
+  dynamic reason;
   int? orderId;
   DateTime? createdAt;
   DateTime? updatedAt;

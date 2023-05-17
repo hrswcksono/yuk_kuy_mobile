@@ -1,7 +1,10 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie_player/lottie_player.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:yuk_kuy_mobile/app/modules/payment/views/payment_information_view.dart';
 import 'package:yuk_kuy_mobile/app/modules/payment/views/payment_view.dart';
@@ -12,6 +15,7 @@ import 'package:yuk_kuy_mobile/app/modules/transaction/views/verification_succes
 import 'package:yuk_kuy_mobile/core/themes/colors.dart';
 import 'package:yuk_kuy_mobile/core/values/strings.dart';
 
+import '../../../../core/values/consts.dart';
 import '../../../../core/values/strings/dummy_string.dart';
 import '../controllers/transaction_controller.dart';
 
@@ -27,58 +31,60 @@ class TransactionView extends GetView {
       child: SmartRefresher(
         controller: transactionC.refreshController,
         onRefresh: transactionC.onRefresh,
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(20),
-                child: Text(
-                  "Transaction",
-                  style: GoogleFonts.inter(
-                      textStyle: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                  )),
-                ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: Text(
+                "Transaction",
+                style: GoogleFonts.inter(
+                    textStyle: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
+                )),
               ),
-              GetBuilder<TransactionController>(
-                  init: TransactionController(),
-                  builder: (ctx) => SizedBox(
-                        height: 40,
-                        child: ListView.separated(
-                          physics: const ClampingScrollPhysics(),
-                          shrinkWrap: true,
-                          scrollDirection: Axis.horizontal,
-                          itemCount: Strings.filterTransaction.length + 1,
-                          itemBuilder: (BuildContext context, int index) {
-                            if (index == 0 ||
-                                index == (Strings.filterTransaction.length)) {
-                              return const SizedBox(
-                                width: 20,
-                              );
-                            } else {
-                              return const SizedBox(
-                                width: 5,
-                              );
-                            }
-                          },
-                          separatorBuilder: (BuildContext context, int index) =>
-                              filterTransaction(
-                            index,
-                            transactionC.stateFilter[index],
-                            ctx,
-                          ),
+            ),
+            GetBuilder<TransactionController>(
+                init: TransactionController(),
+                builder: (ctx) => SizedBox(
+                      height: 40,
+                      child: ListView.separated(
+                        physics: const ClampingScrollPhysics(),
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemCount: Strings.filterTransaction.length + 1,
+                        itemBuilder: (BuildContext context, int index) {
+                          if (index == 0 ||
+                              index == (Strings.filterTransaction.length)) {
+                            return const SizedBox(
+                              width: 20,
+                            );
+                          } else {
+                            return const SizedBox(
+                              width: 5,
+                            );
+                          }
+                        },
+                        separatorBuilder: (BuildContext context, int index) =>
+                            filterTransaction(
+                          index,
+                          transactionC.stateFilter[index],
+                          ctx,
                         ),
-                      )),
-              const SizedBox(
-                height: 15,
-              ),
-              transactionC.obx((data) => ListView.separated(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                      ),
+                    )),
+            const SizedBox(
+              height: 15,
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: transactionC.obx(
+                  (data) => ListView.separated(
                     itemCount: data!.data!.length,
                     shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
+                    // physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (BuildContext context, int index) {
                       return itemTransaction(
                           data.data![index].id!,
@@ -89,15 +95,31 @@ class TransactionView extends GetView {
                           data.data![index].totalPackage!.toInt(),
                           data.data![index].totalPrice!.toInt(),
                           data.data![index].statusOrder!.status.toString(),
-                          DummyString.listTransaction[index]["image"]);
+                          data.data![index].product!.imageProducts![0].src
+                              .toString());
                     },
                     separatorBuilder: (BuildContext context, int index) =>
                         const SizedBox(
                       height: 10,
                     ),
-                  )),
-            ],
-          ),
+                  ),
+                  onEmpty: SizedBox(
+                    height: Get.height / 2,
+                    child: const Center(
+                      child: Material(
+                        child: LottiePlayer(
+                          networkUrl:
+                              'https://assets10.lottiefiles.com/datafiles/vhvOcuUkH41HdrL/data.json',
+                          width: 200,
+                          height: 200,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     ));
@@ -154,9 +176,9 @@ class TransactionView extends GetView {
           Get.to(const VerificationPendingView());
         } else if (status == "success") {
           Get.to(const VerificationSuccessView());
-        } else if (status == "rejected") {
+        } else if (status == "reject") {
           Get.to(const VerificationRejectedView());
-        } else if (status == "cancelled") {
+        } else if (status == "cancel") {
           Get.to(const OrderCanceledView());
         }
       },
@@ -167,11 +189,11 @@ class TransactionView extends GetView {
           borderRadius: BorderRadius.circular(10),
           color: Colors.white,
           boxShadow: <BoxShadow>[
-            BoxShadow(
-              color: const Color(0x73000000),
+            const BoxShadow(
+              color: Color(0x73000000),
               blurRadius: 2.0,
               spreadRadius: 1,
-              offset: const Offset(0.0, 2.0),
+              offset: Offset(0.0, 2.0),
             ),
           ],
         ),
@@ -192,9 +214,9 @@ class TransactionView extends GetView {
                       alignment: Alignment.center,
                       matchTextDirection: true,
                       repeat: ImageRepeat.noRepeat,
-                      image: AssetImage(image),
+                      image: NetworkImage('${Consts.urlImg}$image'),
                     ),
-                    color: Colors.amberAccent),
+                    color: Colors.white),
               ),
               const SizedBox(
                 width: 8.5,
@@ -222,18 +244,18 @@ class TransactionView extends GetView {
                           decoration: BoxDecoration(
                             color: (() {
                               if (status == 'payment') {
-                                return Color.fromRGBO(4, 193, 234, 1);
+                                return const Color.fromRGBO(4, 193, 234, 1);
                               } else if (status == 'verification') {
-                                return Color.fromRGBO(255, 217, 63, 1);
+                                return const Color.fromRGBO(255, 217, 63, 1);
                               } else if (status == 'success') {
-                                return Color.fromRGBO(83, 177, 117, 1);
-                              } else if (status == 'rejected') {
-                                return Color.fromRGBO(255, 79, 7, 1);
-                              } else if (status == 'cancelled') {
-                                return Color.fromRGBO(159, 64, 64, 1);
+                                return const Color.fromRGBO(83, 177, 117, 1);
+                              } else if (status == 'reject') {
+                                return const Color.fromRGBO(255, 79, 7, 1);
+                              } else if (status == 'cancel') {
+                                return const Color.fromRGBO(159, 64, 64, 1);
                               }
                             }()),
-                            borderRadius: BorderRadius.only(
+                            borderRadius: const BorderRadius.only(
                                 topRight: Radius.circular(8),
                                 bottomRight: Radius.circular(8),
                                 topLeft: Radius.circular(8),

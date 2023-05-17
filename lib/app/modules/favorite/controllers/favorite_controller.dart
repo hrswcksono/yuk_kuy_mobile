@@ -1,11 +1,16 @@
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../../../../core/utils/helpers.dart';
+import '../../../data/models/favorite_model.dart';
 import '../../../data/models/product_detail_model.dart';
 
 class FavoriteController extends GetxController
-    with StateMixin<List<ProductDetailItem>> {
-  var listFavorite = List<ProductDetailItem>.empty();
+    with StateMixin<List<FavoriteModel>> {
+  RefreshController refreshController =
+      RefreshController(initialRefresh: false);
+
+  bool isLoading = true;
 
   final count = 0.obs;
   @override
@@ -15,7 +20,32 @@ class FavoriteController extends GetxController
   }
 
   void initData() {
-    listFavorite = readListFavorite();
-    change(listFavorite, status: RxStatus.success());
+    var listFavorite = readFavorite();
+    var listFavModel = List<FavoriteModel>.empty(growable: true);
+    print(listFavorite);
+    listFavorite.forEach((data) => {
+          listFavModel.add(FavoriteModel(
+              id: data[0]!,
+              name: data[1].toString(),
+              price: data[5]!,
+              dateStart: data[2].toString(),
+              dateEnd: data[3].toString(),
+              image: data[4].toString()))
+        });
+    change(listFavModel, status: RxStatus.success());
+  }
+
+  void onRefresh() async {
+    isLoading = false;
+    update();
+    // monitor network fetch
+    await Future.delayed(const Duration(milliseconds: 1000), () {
+      initData();
+      update();
+      return refreshController.refreshCompleted();
+    });
+    // is_Loading = true;
+    // if failed,use refreshFailed()
+    // update();
   }
 }

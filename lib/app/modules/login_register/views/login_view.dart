@@ -46,6 +46,7 @@ class LoginView extends GetView {
                 TextFieldGlobal(
                   title: "Password",
                   value: controllerLR.passwordLoginTF,
+                  obsTxt: true,
                 ),
                 const SizedBox(
                   height: 20,

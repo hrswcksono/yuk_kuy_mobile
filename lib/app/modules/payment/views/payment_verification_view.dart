@@ -11,10 +11,12 @@ import '../../../data/models/bank_model.dart';
 import 'components/payment_header.dart';
 
 class PaymentVerificationView extends GetView {
-  PaymentVerificationView(this.item, {Key? key}) : super(key: key);
+  PaymentVerificationView(this.item, this.orderId, {Key? key})
+      : super(key: key);
   var paymentC = Get.put(PaymentController());
 
   final List<BankItem> item;
+  final int? orderId;
   @override
   Widget build(BuildContext context) {
     paymentC.initVerification();
@@ -90,7 +92,7 @@ class PaymentVerificationView extends GetView {
                               child: Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  "BRI",
+                                  ctx.nameBankSelected,
                                   style: GoogleFonts.inter(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w600,
@@ -108,7 +110,8 @@ class PaymentVerificationView extends GetView {
                           itemCount: item.length,
                           shrinkWrap: true,
                           itemBuilder: (BuildContext context, int index) {
-                            return chooseBank(item[index].bank!);
+                            return chooseBank(
+                                item[index].bank!, ctx, item[index].id!);
                           })
                       : SizedBox(),
                 ),
@@ -117,7 +120,7 @@ class PaymentVerificationView extends GetView {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    Get.to(const BaseView());
+                    paymentC.verifOrder(orderId!);
                   },
                   child: Text("Submit",
                       textAlign: TextAlign.center,
@@ -135,9 +138,14 @@ class PaymentVerificationView extends GetView {
     );
   }
 
-  InkWell chooseBank(String name) {
+  InkWell chooseBank(String name, PaymentController ctx, int idBank) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        ctx.nameBankSelected = name;
+        ctx.idBank = idBank;
+        ctx.update();
+        ctx.stateListBank();
+      },
       child: Container(
         height: 33,
         width: double.infinity,

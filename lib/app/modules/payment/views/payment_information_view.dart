@@ -17,7 +17,9 @@ class PaymentInformationView extends GetView {
   @override
   Widget build(BuildContext context) {
     paymentC.detailOrder(id!, accountId!);
+    paymentC.initPaymentVerification();
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: SmartRefresher(
           controller: paymentC.refreshController,
@@ -94,7 +96,8 @@ class PaymentInformationView extends GetView {
                       const Spacer(),
                       ElevatedButton(
                         onPressed: () {
-                          Get.to(PaymentVerificationView(data.item2.data!));
+                          Get.to(PaymentVerificationView(
+                              data.item2.data!, data.item1.data!.id));
                         },
                         child: Text("Payment Verification",
                             textAlign: TextAlign.center,
@@ -108,7 +111,9 @@ class PaymentInformationView extends GetView {
                         height: 10,
                       ),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          paymentC.showDialogCancel();
+                        },
                         child: Text("Cancel Book",
                             textAlign: TextAlign.center,
                             style: GoogleFonts.inter(

@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:tuple/tuple.dart';
@@ -11,6 +12,9 @@ import 'package:yuk_kuy_mobile/app/data/models/bank_model.dart';
 import 'package:yuk_kuy_mobile/app/data/models/order_detail_model.dart';
 import 'package:yuk_kuy_mobile/app/data/providers/bank_provider.dart';
 import 'package:yuk_kuy_mobile/app/data/providers/order_provider.dart';
+import 'package:yuk_kuy_mobile/app/widgets/custom_alert.dart';
+
+import '../../../data/providers/verification_provider.dart';
 
 class PaymentController extends GetxController
     with StateMixin<Tuple2<OrderDetailModel, BankModel>> {
@@ -20,6 +24,7 @@ class PaymentController extends GetxController
   int totalPrice = 0;
   var orderProvider = Get.put(OrderProvider());
   var bankProvider = Get.put(BankProvider());
+  var verifProvider = Get.put(VerificationProvider());
 
   late TextEditingController name;
   late TextEditingController phone;
@@ -38,18 +43,27 @@ class PaymentController extends GetxController
   final ImagePicker _picker = ImagePicker();
   File? imgVerification;
 
+  String nameBankSelected = "Choose Bank :";
+
+  int idBank = 0;
+  int productId = 0;
+
+  late TextEditingController reason;
+
   @override
   void onInit() {
     super.onInit();
   }
 
   void initData(data) {
+    numPeople = 1;
     name = TextEditingController();
     phone = TextEditingController();
     email = TextEditingController();
     title = data.name;
     price = data.price;
     totalPrice = price;
+    productId = data.id;
   }
 
   void addPeople() {
@@ -60,6 +74,12 @@ class PaymentController extends GetxController
 
   void initVerification() {
     imgVerification = null;
+    showListBank = false;
+    // update();
+  }
+
+  void initPaymentVerification() {
+    reason = TextEditingController();
   }
 
   void reducePeople() {
@@ -92,11 +112,18 @@ class PaymentController extends GetxController
   }
 
   void addOrder() {
+    print("name : ${name.text}");
+    print("phone : ${phone.text}");
+    print("email : ${email.text}");
+    print("totalPrice : ${totalPrice}");
+    print("numpeople : ${numPeople}");
+    print("argumen : ${argumentData["data"].id}");
     try {
       orderProvider
           .addOder(name.text, phone.text, email.text, totalPrice, numPeople,
-              argumentData["data"].id)
+              productId)
           .then((value) {
+        CustomAlert.success(Get.context!, "Order");
         print("berhasil");
         print(value);
       }).onError((error, stackTrace) {
@@ -161,6 +188,44 @@ class PaymentController extends GetxController
     }
   }
 
+  void verifOrder(int idOrd) {
+    try {
+      verifProvider.verifOrder(imgVerification!, idBank, idOrd).then((value) {
+        print(value);
+      }).onError((error, stackTrace) {
+        print('error');
+        if (kDebugMode) {
+          print(error);
+        }
+      }).whenComplete(() {
+        log("Verif complete!");
+      });
+    } catch (e) {
+      if (kDebugMode) {
+        print("gagal");
+      }
+    }
+  }
+
+  void cancelOrder(int idOrd) {
+    try {
+      verifProvider.cancelOrder(idOrd, reason.text).then((value) {
+        print(value);
+      }).onError((error, stackTrace) {
+        print('error');
+        if (kDebugMode) {
+          print(error);
+        }
+      }).whenComplete(() {
+        log("Verif complete!");
+      });
+    } catch (e) {
+      if (kDebugMode) {
+        print("gagal");
+      }
+    }
+  }
+
   void onRefresh() async {
     isLoading = false;
     update();
@@ -173,5 +238,70 @@ class PaymentController extends GetxController
     // is_Loading = true;
     // if failed,use refreshFailed()
     // update();
+  }
+
+  void showDialogCancel() {
+    Get.dialog(Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 20, right: 20, bottom: 150),
+          child: Container(
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(
+                Radius.circular(10),
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Material(
+                color: Colors.white,
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      width: 180,
+                      child: Divider(
+                        thickness: 2,
+                      ),
+                    ),
+                    Text(
+                      "Reason for Cancel",
+                      style: GoogleFonts.inter(
+                          textStyle: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      )),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    TextField(
+                      controller: reason,
+                    ),
+                    const SizedBox(height: 20),
+                    //Buttons
+                    ElevatedButton(
+                      onPressed: () {
+                        if (reason.text != "") {
+                          cancelOrder(idOrder);
+                        }
+                      },
+                      child: Text("Cancel",
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.inter(
+                              textStyle: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ))),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    ));
   }
 }

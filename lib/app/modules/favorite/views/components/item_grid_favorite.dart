@@ -1,19 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:yuk_kuy_mobile/app/data/models/favorite_model.dart';
+import 'package:yuk_kuy_mobile/core/utils/extensions/string_extensions.dart';
 
+import '../../../../../core/values/consts.dart';
 import '../../../../routes/app_pages.dart';
 
 class ItemGridFavorite extends StatelessWidget {
-  const ItemGridFavorite({super.key});
+  const ItemGridFavorite({super.key, required this.model});
+
+  final FavoriteModel model;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Get.toNamed(AppPages.INITIAL_DP);
+        Get.toNamed(
+          AppPages.INITIAL_DP,
+          arguments: {"id": model.id},
+        );
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -22,8 +28,8 @@ class ItemGridFavorite extends StatelessWidget {
             children: [
               Container(
                 height: 178.69,
-                decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(
+                decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(
                       Radius.circular(15),
                     ),
                     image: DecorationImage(
@@ -31,7 +37,7 @@ class ItemGridFavorite extends StatelessWidget {
                       alignment: Alignment.center,
                       matchTextDirection: true,
                       repeat: ImageRepeat.noRepeat,
-                      image: AssetImage("assets/images/image_trip.jpg"),
+                      image: NetworkImage('${Consts.urlImg}${model.image}'),
                     ),
                     color: Colors.amberAccent),
               ),
@@ -49,7 +55,7 @@ class ItemGridFavorite extends StatelessWidget {
             height: 2,
           ),
           Text(
-            "Komodo Island",
+            model.name.toString(),
             style: GoogleFonts.inter(
                 textStyle: const TextStyle(
               fontSize: 11,
@@ -60,7 +66,7 @@ class ItemGridFavorite extends StatelessWidget {
             height: 3,
           ),
           Text(
-            '3 Mei 2023 - 5 Mei 2023',
+            "${model.dateStart.toFormatedDate} - ${model.dateEnd.toFormatedDate}",
             style: GoogleFonts.inter(
                 textStyle: const TextStyle(
                     fontSize: 10,
@@ -71,7 +77,7 @@ class ItemGridFavorite extends StatelessWidget {
             height: 3,
           ),
           Text(
-            "IDR. 7jt/pax",
+            model.price.toString(),
             style: GoogleFonts.inter(
                 textStyle: const TextStyle(
               fontSize: 10,

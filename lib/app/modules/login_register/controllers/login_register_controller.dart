@@ -1,3 +1,4 @@
+import 'package:art_sweetalert/art_sweetalert.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -57,6 +58,12 @@ class LoginRegisterController extends GetxController {
           .then((value) {
         getService.write(GetStorageKey.userToken, value.data.accessToken);
         getService.write(GetStorageKey.userName, value.data.username);
+        ArtSweetAlert.show(
+            context: Get.context!,
+            artDialogArgs: ArtDialogArgs(
+                type: ArtSweetAlertType.success,
+                title: "Success",
+                text: "Login Success"));
         Future.delayed(const Duration(seconds: 2), () {
           Get.back();
           Get.toNamed(AppPages.INITIAL_B);
@@ -82,6 +89,12 @@ class LoginRegisterController extends GetxController {
           .register(usernameRegisTF.text, nameRegisTF.text, emailRegisTF.text,
               passwordRegisTF.text, confirmPassRegisTF.text)
           .then((value) {
+        ArtSweetAlert.show(
+            context: Get.context!,
+            artDialogArgs: ArtDialogArgs(
+                type: ArtSweetAlertType.success,
+                title: "Success",
+                text: "Register Success"));
         print(value);
       }).onError((error, stackTrace) {
         if (kDebugMode) {
