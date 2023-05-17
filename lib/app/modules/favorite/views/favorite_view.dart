@@ -44,6 +44,7 @@ class FavoriteView extends GetView<FavoriteController> {
                         data!.length,
                         (index) => ItemGridFavorite(
                           model: data[index],
+                          state: index,
                         ),
                       ),
                     )

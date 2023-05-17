@@ -66,6 +66,9 @@ class HomeView extends GetView {
                               decoration: const InputDecoration(
                                 hintText: "Search...",
                               ),
+                              onSubmitted: (_) {
+                                homeC.search;
+                              },
                             ),
                           ),
                           InkWell(

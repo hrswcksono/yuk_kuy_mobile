@@ -12,6 +12,8 @@ class FavoriteController extends GetxController
 
   bool isLoading = true;
 
+  List<bool> stateFavorited = [];
+
   final count = 0.obs;
   @override
   void onInit() {
@@ -23,6 +25,7 @@ class FavoriteController extends GetxController
     var listFavorite = readFavorite();
     var listFavModel = List<FavoriteModel>.empty(growable: true);
     print(listFavorite);
+    stateFavorited.clear();
     listFavorite.forEach((data) => {
           listFavModel.add(FavoriteModel(
               id: data[0]!,
@@ -30,9 +33,21 @@ class FavoriteController extends GetxController
               price: data[5]!,
               dateStart: data[2].toString(),
               dateEnd: data[3].toString(),
-              image: data[4].toString()))
+              image: data[4].toString())),
+          stateFavorited.add(true),
+          update()
         });
+
     change(listFavModel, status: RxStatus.success());
+  }
+
+  void unFavorited(FavoriteModel data, int index) {
+    stateFavorited[index] = false;
+    update();
+    deleteFavorite(data);
+    Future.delayed(const Duration(seconds: 2), () {
+      initData();
+    });
   }
 
   void onRefresh() async {
