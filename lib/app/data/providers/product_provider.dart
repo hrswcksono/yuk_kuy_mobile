@@ -24,8 +24,10 @@ class ProductProvider extends BaseProvider {
     }
   }
 
-  Future<ProductModel> filterProduct(String name) async {
-    var response = await get('products/mobile?city=$name');
+  Future<ProductModel> filterProduct(
+      String name, int page, int numPerPage) async {
+    var response =
+        await get('products/mobile?city=$name&$page&limit=$numPerPage');
 
     if (!response.body['status']) {
       return Future.error(response.body["message"]);
@@ -34,8 +36,10 @@ class ProductProvider extends BaseProvider {
     }
   }
 
-  Future<ProductModel> searchProduct(String name) async {
-    var response = await get('products/search?key=$name');
+  Future<ProductModel> searchProduct(
+      String name, int page, int numPerPage) async {
+    var response =
+        await get('products/search?key=$name&$page&limit=$numPerPage');
 
     if (!response.body['status']) {
       return Future.error(response.body["message"]);

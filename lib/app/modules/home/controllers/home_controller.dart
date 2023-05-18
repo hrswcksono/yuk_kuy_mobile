@@ -9,13 +9,22 @@ import 'package:yuk_kuy_mobile/app/data/models/product_model.dart';
 import 'package:yuk_kuy_mobile/app/data/providers/product_provider.dart';
 import 'package:collection/collection.dart';
 
-class HomeController extends GetxController with StateMixin<List<ProductItem>> {
+class HomeController extends GetxController
+    with StateMixin<List<ProductItem>>, ScrollMixin {
   List<bool> stateFilterHome = [];
 
   var productProvider = Get.put(ProductProvider());
 
   RefreshController refreshController =
       RefreshController(initialRefresh: false);
+
+  ScrollController scrollController = ScrollController();
+
+  void test() {
+    scrollController.addListener(() {
+      print("position : ${scrollController.offset}");
+    });
+  }
 
   bool isLoading = true;
 
@@ -24,6 +33,7 @@ class HomeController extends GetxController with StateMixin<List<ProductItem>> {
   var listFilter = List<ProductItem>.empty(growable: true);
 
   late TextEditingController search;
+  int pageSearch = 1;
 
   int page = 1;
   bool getFirstData = false;
@@ -39,6 +49,7 @@ class HomeController extends GetxController with StateMixin<List<ProductItem>> {
   @override
   void onInit() {
     search = TextEditingController();
+    // test();
     getProductPagination();
     super.onInit();
   }
@@ -102,14 +113,9 @@ class HomeController extends GetxController with StateMixin<List<ProductItem>> {
   //   }
   // }
 
-  void nextPage() {
-    page += 1;
-    getProductPagination();
-  }
-
   void getProductPagination() {
     try {
-      productProvider.listProductPagination(page, 8).then((value) {
+      productProvider.listProductPagination(page, 6).then((value) {
         print(value);
         listFilter.addAll(value.data);
         if (!getFirstData && value.count == 0) {
@@ -141,7 +147,7 @@ class HomeController extends GetxController with StateMixin<List<ProductItem>> {
   void getFilterProduct(String key) {
     try {
       change(null, status: RxStatus.loading());
-      productProvider.filterProduct(key).then((value) {
+      productProvider.filterProduct(key, page, 6).then((value) {
         print(value);
         change(value.data, status: RxStatus.success());
       }).onError((error, stackTrace) {
@@ -163,7 +169,7 @@ class HomeController extends GetxController with StateMixin<List<ProductItem>> {
   void searchProduct() {
     try {
       change(null, status: RxStatus.loading());
-      productProvider.searchProduct(search.text).then((value) {
+      productProvider.searchProduct(search.text, page, 6).then((value) {
         print(value);
         change(value.data, status: RxStatus.success());
       }).onError((error, stackTrace) {
@@ -203,25 +209,28 @@ class HomeController extends GetxController with StateMixin<List<ProductItem>> {
   // @override
   // Future<void> onEndScroll() async {
   //   print('onEndScroll');
-  //   if (!lastPage) {
-  //     page += 1;
-  //     Get.dialog(Center(child: LinearProgressIndicator()));
-  //     getProductPagination();
-  //     Get.back();
-  //   } else {
-  //     Get.snackbar('Alert', 'End of Product');
-  //   }
   // }
 
   // @override
   // Future<void> onTopScroll() async {
-  //   if (page > 0) {
-  //     page -= 1;
-  //     lastPage = false;
-  //     Get.dialog(Center(child: LinearProgressIndicator()));
-  //     getProductPagination();
-  //     Get.back();
-  //   }
   //   print('onTopScroll');
   // }
+
+  @override
+  Future<void> onEndScroll() async {
+    print('onEndScroll');
+    if (!lastPage) {
+      page += 1;
+      Get.dialog(Center(child: LinearProgressIndicator()));
+      getProductPagination();
+      Get.back();
+    } else {
+      Get.snackbar('Alert', 'End of Product');
+    }
+  }
+
+  @override
+  Future<void> onTopScroll() async {
+    print('onTopScroll');
+  }
 }
