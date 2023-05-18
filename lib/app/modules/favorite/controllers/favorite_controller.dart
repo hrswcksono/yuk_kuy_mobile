@@ -37,8 +37,11 @@ class FavoriteController extends GetxController
           stateFavorited.add(true),
           update()
         });
-
-    change(listFavModel, status: RxStatus.success());
+    if (listFavModel.isNotEmpty) {
+      change(listFavModel, status: RxStatus.success());
+    } else {
+      change(null, status: RxStatus.empty());
+    }
   }
 
   void unFavorited(FavoriteModel data, int index) {

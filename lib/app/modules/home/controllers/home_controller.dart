@@ -9,8 +9,7 @@ import 'package:yuk_kuy_mobile/app/data/models/product_model.dart';
 import 'package:yuk_kuy_mobile/app/data/providers/product_provider.dart';
 import 'package:collection/collection.dart';
 
-class HomeController extends GetxController
-    with StateMixin<ProductModel>, ScrollMixin {
+class HomeController extends GetxController with StateMixin<List<ProductItem>> {
   List<bool> stateFilterHome = [];
 
   var productProvider = Get.put(ProductProvider());
@@ -29,6 +28,8 @@ class HomeController extends GetxController
   int page = 1;
   bool getFirstData = false;
   bool lastPage = false;
+
+  var productItem = List<ProductItem>.empty(growable: true);
 
   // static const _pageSize = 20;
 
@@ -101,18 +102,25 @@ class HomeController extends GetxController
   //   }
   // }
 
+  void nextPage() {
+    page += 1;
+    getProductPagination();
+  }
+
   void getProductPagination() {
     try {
-      productProvider.listProductPagination(page, 6).then((value) {
+      productProvider.listProductPagination(page, 8).then((value) {
         print(value);
         listFilter.addAll(value.data);
         if (!getFirstData && value.count == 0) {
           change(null, status: RxStatus.empty());
         } else if (getFirstData && value.count == 0) {
           lastPage = true;
+          update();
         } else {
           getFirstData = true;
-          change(value, status: RxStatus.success());
+          productItem.addAll(value.data);
+          change(productItem, status: RxStatus.success());
         }
       }).onError((error, stackTrace) {
         print('error');
@@ -135,7 +143,7 @@ class HomeController extends GetxController
       change(null, status: RxStatus.loading());
       productProvider.filterProduct(key).then((value) {
         print(value);
-        change(value, status: RxStatus.success());
+        change(value.data, status: RxStatus.success());
       }).onError((error, stackTrace) {
         print('error');
         change(null, status: RxStatus.error());
@@ -157,7 +165,7 @@ class HomeController extends GetxController
       change(null, status: RxStatus.loading());
       productProvider.searchProduct(search.text).then((value) {
         print(value);
-        change(value, status: RxStatus.success());
+        change(value.data, status: RxStatus.success());
       }).onError((error, stackTrace) {
         print('error');
         change(null, status: RxStatus.error());
@@ -181,6 +189,8 @@ class HomeController extends GetxController
     await Future.delayed(const Duration(milliseconds: 1000), () {
       page = 1;
       listFilter.clear();
+      productItem.clear();
+      lastPage = false;
       getProductPagination();
       update();
       return refreshController.refreshCompleted();
@@ -190,21 +200,28 @@ class HomeController extends GetxController
     // update();
   }
 
-  @override
-  Future<void> onEndScroll() async {
-    print('onEndScroll');
-    if (!lastPage) {
-      page += 1;
-      Get.dialog(Center(child: LinearProgressIndicator()));
-      getProductPagination();
-      Get.back();
-    } else {
-      Get.snackbar('Alert', 'End of Product');
-    }
-  }
+  // @override
+  // Future<void> onEndScroll() async {
+  //   print('onEndScroll');
+  //   if (!lastPage) {
+  //     page += 1;
+  //     Get.dialog(Center(child: LinearProgressIndicator()));
+  //     getProductPagination();
+  //     Get.back();
+  //   } else {
+  //     Get.snackbar('Alert', 'End of Product');
+  //   }
+  // }
 
-  @override
-  Future<void> onTopScroll() async {
-    print('onTopScroll');
-  }
+  // @override
+  // Future<void> onTopScroll() async {
+  //   if (page > 0) {
+  //     page -= 1;
+  //     lastPage = false;
+  //     Get.dialog(Center(child: LinearProgressIndicator()));
+  //     getProductPagination();
+  //     Get.back();
+  //   }
+  //   print('onTopScroll');
+  // }
 }

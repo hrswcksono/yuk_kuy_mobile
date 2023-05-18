@@ -18,47 +18,53 @@ class FavoriteView extends GetView<FavoriteController> {
         child: SmartRefresher(
           controller: favC.refreshController,
           onRefresh: favC.onRefresh,
-          child: controller.obx(
-            (data) => Padding(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Favorite",
-                    style: GoogleFonts.inter(
-                        textStyle: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
-                    )),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: StaggeredGrid.count(
-                        crossAxisCount: 2,
-                        mainAxisSpacing: 15,
-                        crossAxisSpacing: 25,
-                        children: List.generate(
-                          data!.length,
-                          (index) => ItemGridFavorite(
-                            model: data[index],
-                            state: index,
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Favorite",
+                  style: GoogleFonts.inter(
+                      textStyle: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                  )),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: controller.obx(
+                        (data) => StaggeredGrid.count(
+                              crossAxisCount: 2,
+                              mainAxisSpacing: 15,
+                              crossAxisSpacing: 25,
+                              children: List.generate(
+                                data!.length,
+                                (index) => ItemGridFavorite(
+                                  model: data[index],
+                                  state: index,
+                                ),
+                              ),
+                            ),
+                        onEmpty: SizedBox(
+                          height: Get.height / 2,
+                          child: const Center(
+                            child: Material(
+                              child: LottiePlayer(
+                                networkUrl:
+                                    'https://assets10.lottiefiles.com/datafiles/vhvOcuUkH41HdrL/data.json',
+                                width: 200,
+                                height: 200,
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-            onEmpty: const LottiePlayer(
-              networkUrl:
-                  'https://assets10.lottiefiles.com/packages/lf20_NeuXI2OPLG.json',
-              width: 200,
-              height: 200,
+                        )),
+                  ),
+                )
+              ],
             ),
           ),
         ),

@@ -91,6 +91,7 @@ class TransactionController extends GetxController
       orderProvider.filterOrder(filter, page, 7).then((value) {
         print("list order");
         print(value);
+        getFirstData = false;
         if (!getFirstData && value.count == 0) {
           change(null, status: RxStatus.empty());
         } else if (getFirstData && value.count == 0) {

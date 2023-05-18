@@ -24,158 +24,183 @@ class HomeView extends GetView {
         child: SmartRefresher(
           controller: homeC.refreshController,
           onRefresh: homeC.onRefresh,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: 20,
-                  right: 20,
-                  top: 30,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      readUsername(),
-                      style: GoogleFonts.inter(
-                          textStyle: const TextStyle(
-                              fontSize: 28, fontWeight: FontWeight.w500)),
+          child: NotificationListener<ScrollNotification>(
+            onNotification: (scrollState) {
+              if (scrollState is ScrollEndNotification) {
+                homeC.nextPage();
+                print("test");
+              }
+              return false;
+            },
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 20,
+                      right: 20,
+                      top: 30,
                     ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                      "Welcome to YukKuy.",
-                      style: GoogleFonts.inter(
-                          textStyle: const TextStyle(
-                              fontSize: 15,
-                              color: Color.fromRGBO(143, 149, 158, 1))),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(
-                          width: Get.width * 0.77,
-                          child: TextField(
-                            controller: homeC.search,
-                            decoration: const InputDecoration(
-                              hintText: "Search...",
-                            ),
-                            onSubmitted: (_) {
-                              homeC.search;
-                            },
-                          ),
+                        Text(
+                          readUsername(),
+                          style: GoogleFonts.inter(
+                              textStyle: const TextStyle(
+                                  fontSize: 28, fontWeight: FontWeight.w500)),
                         ),
-                        InkWell(
-                          onTap: () => homeC.searchProduct(),
-                          child: Container(
-                            height: 47,
-                            width: 46,
-                            decoration: BoxDecoration(
-                              color: CustomColor.mainGreen,
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(10)),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          "Welcome to YukKuy.",
+                          style: GoogleFonts.inter(
+                              textStyle: const TextStyle(
+                                  fontSize: 15,
+                                  color: Color.fromRGBO(143, 149, 158, 1))),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(
+                              width: Get.width * 0.77,
+                              child: TextField(
+                                controller: homeC.search,
+                                decoration: const InputDecoration(
+                                  hintText: "Search...",
+                                ),
+                                onSubmitted: (_) {
+                                  homeC.search;
+                                },
+                              ),
                             ),
-                            child: const Icon(
-                              Icons.search,
-                              color: Colors.white,
-                            ),
-                          ),
-                        )
+                            InkWell(
+                              onTap: () => homeC.searchProduct(),
+                              child: Container(
+                                height: 47,
+                                width: 46,
+                                decoration: BoxDecoration(
+                                  color: CustomColor.mainGreen,
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(10)),
+                                ),
+                                child: const Icon(
+                                  Icons.search,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
                       ],
                     ),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 6,
-              ),
-              GetBuilder<HomeController>(
-                  init: HomeController(),
-                  builder: (ctx) => SizedBox(
-                        height: 40,
-                        child: ListView.separated(
-                          physics: const ClampingScrollPhysics(),
-                          shrinkWrap: true,
-                          scrollDirection: Axis.horizontal,
-                          // itemCount: DummyString.listProduct.length + 1,
-                          itemCount: homeC.toFilterList().length + 1,
-                          itemBuilder: (BuildContext context, int index) {
-                            if (index == 0 ||
-                                index == (homeC.toFilterList().length)) {
-                              return const SizedBox(
-                                width: 20,
-                              );
-                            } else {
-                              return const SizedBox(
-                                width: 5,
-                              );
-                            }
-                          },
-                          separatorBuilder: (BuildContext context, int index) =>
-                              itemFilterHome(
-                            homeC.toFilterList()[index],
-                            index,
-                            ctx.stateFilterHome[index],
-                            ctx,
-                          ),
-                        ),
-                      )),
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: 20,
-                  top: 5,
-                ),
-                child: Text(
-                  "Product",
-                  style: GoogleFonts.inter(
-                      textStyle: const TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.w600,
-                  )),
-                ),
-              ),
-              homeC.obx(
-                (data) {
-                  return SizedBox(
-                    height: Get.height * 0.6,
-                    width: Get.height - 40,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: MediaQuery.removePadding(
-                        context: context,
-                        removeTop: true,
-                        child: GridView.builder(
-                            physics: ScrollPhysics(),
-                            controller: homeC.scroll,
-                            shrinkWrap: true,
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 2,
-                                    crossAxisSpacing: 10,
-                                    childAspectRatio:
-                                        Get.width / (Get.height / 1.6),
-                                    mainAxisSpacing: 10),
-                            itemCount: data!.count,
-                            itemBuilder: (BuildContext context, int index) {
-                              return ItemGridHome(model: data.data[index]);
-                            }),
-                      ),
+                  ),
+                  const SizedBox(
+                    height: 6,
+                  ),
+                  GetBuilder<HomeController>(
+                      init: HomeController(),
+                      builder: (ctx) => SizedBox(
+                            height: 40,
+                            child: ListView.separated(
+                              physics: const ClampingScrollPhysics(),
+                              shrinkWrap: true,
+                              scrollDirection: Axis.horizontal,
+                              // itemCount: DummyString.listProduct.length + 1,
+                              itemCount: homeC.toFilterList().length + 1,
+                              itemBuilder: (BuildContext context, int index) {
+                                if (index == 0 ||
+                                    index == (homeC.toFilterList().length)) {
+                                  return const SizedBox(
+                                    width: 20,
+                                  );
+                                } else {
+                                  return const SizedBox(
+                                    width: 5,
+                                  );
+                                }
+                              },
+                              separatorBuilder:
+                                  (BuildContext context, int index) =>
+                                      itemFilterHome(
+                                homeC.toFilterList()[index],
+                                index,
+                                ctx.stateFilterHome[index],
+                                ctx,
+                              ),
+                            ),
+                          )),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 20,
+                      top: 5,
                     ),
-                  );
-                },
-                onEmpty: const LottiePlayer(
-                  networkUrl:
-                      'https://assets10.lottiefiles.com/packages/lf20_NeuXI2OPLG.json',
-                  width: 200,
-                  height: 200,
-                ),
+                    child: Text(
+                      "Product",
+                      style: GoogleFonts.inter(
+                          textStyle: const TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w600,
+                      )),
+                    ),
+                  ),
+                  homeC.obx(
+                    (data) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: MediaQuery.removePadding(
+                          context: context,
+                          removeTop: true,
+                          child: GridView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              // controller: homeC.scroll,
+                              shrinkWrap: true,
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                      crossAxisSpacing: 10,
+                                      childAspectRatio:
+                                          Get.width / (Get.height / 1.6),
+                                      mainAxisSpacing: 10),
+                              itemCount: data!.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return ItemGridHome(model: data[index]);
+                              }),
+                        ),
+                      );
+                    },
+                    onLoading: const Center(child: LinearProgressIndicator()),
+                    onEmpty: const LottiePlayer(
+                      networkUrl:
+                          'https://assets10.lottiefiles.com/packages/lf20_NeuXI2OPLG.json',
+                      width: 200,
+                      height: 200,
+                    ),
+                  ),
+                  GetBuilder<HomeController>(
+                    init: HomeController(),
+                    builder: (ctx) {
+                      return !ctx.lastPage
+                          ? Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 10),
+                              child: InkWell(
+                                onTap: () => homeC.nextPage(),
+                                child: const Center(
+                                  child: Text("Load More"),
+                                ),
+                              ),
+                            )
+                          : const SizedBox();
+                    },
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),

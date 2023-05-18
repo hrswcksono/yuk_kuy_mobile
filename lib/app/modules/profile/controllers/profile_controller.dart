@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:art_sweetalert/art_sweetalert.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -80,9 +81,27 @@ class ProfileController extends GetxController with StateMixin<ProfileModel> {
     editAddress.text = data.profile!.address.toString();
   }
 
-  void logout() {
-    removeToken();
-    Get.offNamed(AppPages.INITIAL_LR);
+  void logout() async {
+    ArtDialogResponse response = await ArtSweetAlert.show(
+        barrierDismissible: false,
+        context: Get.context!,
+        artDialogArgs: ArtDialogArgs(
+            denyButtonText: "Cancel",
+            title: "Are you sure?",
+            text: "You want to logout?",
+            confirmButtonText: "Logout",
+            type: ArtSweetAlertType.warning));
+
+    // ignore: unnecessary_null_comparison
+    if (response == null) {
+      return;
+    }
+
+    if (response.isTapConfirmButton) {
+      removeToken();
+      Get.offNamed(AppPages.INITIAL_LR);
+      return;
+    }
   }
 
   void initData() {

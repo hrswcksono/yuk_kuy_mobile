@@ -66,7 +66,7 @@ class LoginRegisterController extends GetxController {
                 text: "Login Success"));
         Future.delayed(const Duration(seconds: 2), () {
           Get.back();
-          Get.toNamed(AppPages.INITIAL_B);
+          Get.offNamed(AppPages.INITIAL_B);
           // print(readUserData()['id_user']);
           // print(readToken());
           // print("Timeout");
