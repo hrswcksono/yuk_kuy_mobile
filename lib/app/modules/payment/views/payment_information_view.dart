@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:yuk_kuy_mobile/app/modules/payment/controllers/payment_controller.dart';
 import 'package:yuk_kuy_mobile/app/modules/payment/views/payment_verification_view.dart';
+import 'package:yuk_kuy_mobile/core/utils/extensions/int_extentions.dart';
 
 import '../../../../core/themes/colors.dart';
 import 'components/payment_header.dart';
@@ -60,7 +61,7 @@ class PaymentInformationView extends GetView {
                                     fontWeight: FontWeight.w500,
                                     color: Colors.white,
                                   ))),
-                              Text("Rp. ${data!.item1.data!.totalPrice}",
+                              Text(data!.item1.data!.totalPrice!.toRupiah,
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.inter(
                                       textStyle: const TextStyle(
@@ -75,25 +76,26 @@ class PaymentInformationView extends GetView {
                       const SizedBox(
                         height: 10,
                       ),
-                      ListView.separated(
-                        padding: const EdgeInsets.all(20),
-                        itemCount: data.item2.data!.length,
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (BuildContext context, int index) {
-                          return BankInformation(
-                            data.item2.data![index].bank.toString(),
-                            data.item2.data![index].name.toString(),
-                            data.item2.data![index].number.toString(),
-                          );
-                        },
-                        separatorBuilder: (BuildContext context, int index) {
-                          return const SizedBox(
-                            height: 5,
-                          );
-                        },
+                      Expanded(
+                        child: ListView.separated(
+                          padding: const EdgeInsets.all(20),
+                          itemCount: data.item2.data!.length,
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: (BuildContext context, int index) {
+                            return BankInformation(
+                              data.item2.data![index].bank.toString(),
+                              data.item2.data![index].name.toString(),
+                              data.item2.data![index].number.toString(),
+                            );
+                          },
+                          separatorBuilder: (BuildContext context, int index) {
+                            return const SizedBox(
+                              height: 5,
+                            );
+                          },
+                        ),
                       ),
-                      const Spacer(),
                       ElevatedButton(
                         onPressed: () {
                           Get.to(PaymentVerificationView(

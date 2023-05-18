@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:yuk_kuy_mobile/app/data/models/favorite_model.dart';
 import 'package:yuk_kuy_mobile/app/modules/favorite/controllers/favorite_controller.dart';
+import 'package:yuk_kuy_mobile/core/utils/extensions/int_extentions.dart';
 import 'package:yuk_kuy_mobile/core/utils/extensions/string_extensions.dart';
 
 import '../../../../../core/values/consts.dart';
@@ -43,7 +44,7 @@ class ItemGridFavorite extends StatelessWidget {
                       repeat: ImageRepeat.noRepeat,
                       image: NetworkImage('${Consts.urlImg}${model.image}'),
                     ),
-                    color: Colors.amberAccent),
+                    color: Colors.white),
               ),
               Positioned(
                 top: 5,
@@ -95,7 +96,7 @@ class ItemGridFavorite extends StatelessWidget {
             height: 3,
           ),
           Text(
-            model.price.toString(),
+            model.price.toPrice,
             style: GoogleFonts.inter(
                 textStyle: const TextStyle(
               fontSize: 10,

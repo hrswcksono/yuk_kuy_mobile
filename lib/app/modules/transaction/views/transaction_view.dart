@@ -7,16 +7,15 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie_player/lottie_player.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:yuk_kuy_mobile/app/modules/payment/views/payment_information_view.dart';
-import 'package:yuk_kuy_mobile/app/modules/payment/views/payment_view.dart';
 import 'package:yuk_kuy_mobile/app/modules/transaction/views/order_canceled_view.dart';
 import 'package:yuk_kuy_mobile/app/modules/transaction/views/verification_pending_view.dart';
 import 'package:yuk_kuy_mobile/app/modules/transaction/views/verification_rejected_view.dart';
 import 'package:yuk_kuy_mobile/app/modules/transaction/views/verification_success_view.dart';
 import 'package:yuk_kuy_mobile/core/themes/colors.dart';
+import 'package:yuk_kuy_mobile/core/utils/extensions/int_extentions.dart';
 import 'package:yuk_kuy_mobile/core/values/strings.dart';
 
 import '../../../../core/values/consts.dart';
-import '../../../../core/values/strings/dummy_string.dart';
 import '../controllers/transaction_controller.dart';
 
 class TransactionView extends GetView {
@@ -82,6 +81,7 @@ class TransactionView extends GetView {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: transactionC.obx(
                   (data) => ListView.separated(
+                    controller: transactionC.scroll,
                     itemCount: data!.data!.length,
                     shrinkWrap: true,
                     // physics: const NeverScrollableScrollPhysics(),
@@ -310,7 +310,7 @@ class TransactionView extends GetView {
                         ),
                         const Spacer(),
                         Text(
-                          "Price : IDR. $price",
+                          "Price : ${price.toRupiah}",
                           style: GoogleFonts.inter(
                               textStyle: const TextStyle(
                             fontSize: 10,

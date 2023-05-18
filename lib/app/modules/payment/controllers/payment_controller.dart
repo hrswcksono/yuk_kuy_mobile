@@ -10,8 +10,11 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:tuple/tuple.dart';
 import 'package:yuk_kuy_mobile/app/data/models/bank_model.dart';
 import 'package:yuk_kuy_mobile/app/data/models/order_detail_model.dart';
+import 'package:yuk_kuy_mobile/app/data/models/product_detail_model.dart';
 import 'package:yuk_kuy_mobile/app/data/providers/bank_provider.dart';
 import 'package:yuk_kuy_mobile/app/data/providers/order_provider.dart';
+import 'package:yuk_kuy_mobile/app/modules/payment/views/payment_information_view.dart';
+import 'package:yuk_kuy_mobile/app/modules/payment/views/payment_verification_view.dart';
 import 'package:yuk_kuy_mobile/app/widgets/custom_alert.dart';
 
 import '../../../data/providers/verification_provider.dart';
@@ -47,6 +50,7 @@ class PaymentController extends GetxController
 
   int idBank = 0;
   int productId = 0;
+  int idTour = 0;
 
   late TextEditingController reason;
 
@@ -55,15 +59,16 @@ class PaymentController extends GetxController
     super.onInit();
   }
 
-  void initData(data) {
+  void initData(ProductDetailItem data) {
     numPeople = 1;
     name = TextEditingController();
     phone = TextEditingController();
     email = TextEditingController();
-    title = data.name;
-    price = data.price;
+    title = data.name.toString();
+    price = data.price!;
     totalPrice = price;
-    productId = data.id;
+    productId = data.id!;
+    idTour = data.accountId!;
   }
 
   void addPeople() {
@@ -124,6 +129,7 @@ class PaymentController extends GetxController
               productId)
           .then((value) {
         CustomAlert.success(Get.context!, "Order");
+        Get.off(PaymentInformationView(productId, idTour));
         print("berhasil");
         print(value);
       }).onError((error, stackTrace) {

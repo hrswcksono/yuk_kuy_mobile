@@ -82,7 +82,7 @@ class ProfileController extends GetxController with StateMixin<ProfileModel> {
 
   void logout() {
     removeToken();
-    Get.toNamed(AppPages.INITIAL_LR);
+    Get.offNamed(AppPages.INITIAL_LR);
   }
 
   void initData() {

@@ -14,8 +14,8 @@ class ProductProvider extends BaseProvider {
     }
   }
 
-  Future<ProductModel> listProductPagination(int page) async {
-    var response = await get('products/mobile?page=$page&limit=6');
+  Future<ProductModel> listProductPagination(int page, int numPerPage) async {
+    var response = await get('products/mobile?page=$page&limit=$numPerPage');
 
     if (!response.body['status']) {
       return Future.error(response.body["message"]);

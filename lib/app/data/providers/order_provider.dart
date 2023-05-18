@@ -5,8 +5,8 @@ import '../models/order_detail_model.dart';
 import '../models/order_model.dart';
 
 class OrderProvider extends BaseProvider {
-  Future<OrderModel> listOrder() async {
-    var response = await get('orders/mobile');
+  Future<OrderModel> listOrder(int page, int limit) async {
+    var response = await get('orders/mobile?page=$page&limit=$limit');
 
     print(response.body.toString());
 
@@ -17,8 +17,9 @@ class OrderProvider extends BaseProvider {
     }
   }
 
-  Future<OrderModel> filterOrder(String status) async {
-    var response = await get('orders/mobile?status=$status');
+  Future<OrderModel> filterOrder(String status, int page, int limit) async {
+    var response =
+        await get('orders/mobile?status=$status&page=$page&limit=$limit');
 
     print(response.body.toString());
 

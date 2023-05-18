@@ -3,12 +3,14 @@ import 'dart:developer';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:yuk_kuy_mobile/app/data/models/product_model.dart';
 import 'package:yuk_kuy_mobile/app/data/providers/product_provider.dart';
 import 'package:collection/collection.dart';
 
-class HomeController extends GetxController with StateMixin<ProductModel> {
+class HomeController extends GetxController
+    with StateMixin<ProductModel>, ScrollMixin {
   List<bool> stateFilterHome = [];
 
   var productProvider = Get.put(ProductProvider());
@@ -18,24 +20,32 @@ class HomeController extends GetxController with StateMixin<ProductModel> {
 
   bool isLoading = true;
 
-  int page = 1;
   String keyword = "";
 
   var listFilter = List<ProductItem>.empty(growable: true);
 
   late TextEditingController search;
 
+  int page = 1;
+  bool getFirstData = false;
+  bool lastPage = false;
+
+  // static const _pageSize = 20;
+
+  // final PagingController<int, ProductModel> _pagingController =
+  //     PagingController(firstPageKey: 0);
+
   @override
   void onInit() {
     search = TextEditingController();
-    getProduct();
+    getProductPagination();
     super.onInit();
   }
 
   void changeState(int index, String filterKey) {
     bool temp = stateFilterHome[index];
     if (temp) {
-      getProduct();
+      getProductPagination();
     } else {
       getFilterProduct(filterKey);
     }
@@ -47,7 +57,7 @@ class HomeController extends GetxController with StateMixin<ProductModel> {
   }
 
   void initData() {
-    getProduct();
+    getProductPagination();
     listFilter.clear();
   }
 
@@ -62,40 +72,48 @@ class HomeController extends GetxController with StateMixin<ProductModel> {
     return temp;
   }
 
-  void getProduct() {
-    try {
-      change(null, status: RxStatus.loading());
-      productProvider.listProduct().then((value) {
-        print(value);
-        listFilter.clear();
-        listFilter.addAll(value.data);
-        // if (listFilter.isEmpty) {
-        //   // stateFilterHome.forEachIndexed((index, _) {
-        //   //   stateFilterHome[index] = false;
-        //   // });
-        // }
-        change(value, status: RxStatus.success());
-      }).onError((error, stackTrace) {
-        print('error');
-        change(null, status: RxStatus.error());
-        if (kDebugMode) {
-          print(error);
-        }
-      }).whenComplete(() {
-        log("List product complete!");
-      });
-    } catch (e) {
-      if (kDebugMode) {
-        print("gagal");
-      }
-    }
-  }
+  // void getProduct() {
+  //   try {
+  //     change(null, status: RxStatus.loading());
+  //     productProvider.listProduct().then((value) {
+  //       print(value);
+  //       listFilter.clear();
+  //       listFilter.addAll(value.data);
+  //       // if (listFilter.isEmpty) {
+  //       //   // stateFilterHome.forEachIndexed((index, _) {
+  //       //   //   stateFilterHome[index] = false;
+  //       //   // });
+  //       // }
+  //       change(value, status: RxStatus.success());
+  //     }).onError((error, stackTrace) {
+  //       print('error');
+  //       change(null, status: RxStatus.error());
+  //       if (kDebugMode) {
+  //         print(error);
+  //       }
+  //     }).whenComplete(() {
+  //       log("List product complete!");
+  //     });
+  //   } catch (e) {
+  //     if (kDebugMode) {
+  //       print("gagal");
+  //     }
+  //   }
+  // }
 
   void getProductPagination() {
     try {
-      productProvider.listProductPagination(page).then((value) {
+      productProvider.listProductPagination(page, 6).then((value) {
         print(value);
-        change(value, status: RxStatus.success());
+        listFilter.addAll(value.data);
+        if (!getFirstData && value.count == 0) {
+          change(null, status: RxStatus.empty());
+        } else if (getFirstData && value.count == 0) {
+          lastPage = true;
+        } else {
+          getFirstData = true;
+          change(value, status: RxStatus.success());
+        }
       }).onError((error, stackTrace) {
         print('error');
         change(null, status: RxStatus.error());
@@ -161,12 +179,32 @@ class HomeController extends GetxController with StateMixin<ProductModel> {
     update();
     // monitor network fetch
     await Future.delayed(const Duration(milliseconds: 1000), () {
-      getProduct();
+      page = 1;
+      listFilter.clear();
+      getProductPagination();
       update();
       return refreshController.refreshCompleted();
     });
     // is_Loading = true;
     // if failed,use refreshFailed()
     // update();
+  }
+
+  @override
+  Future<void> onEndScroll() async {
+    print('onEndScroll');
+    if (!lastPage) {
+      page += 1;
+      Get.dialog(Center(child: LinearProgressIndicator()));
+      getProductPagination();
+      Get.back();
+    } else {
+      Get.snackbar('Alert', 'End of Product');
+    }
+  }
+
+  @override
+  Future<void> onTopScroll() async {
+    print('onTopScroll');
   }
 }

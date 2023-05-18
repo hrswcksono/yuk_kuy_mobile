@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:yuk_kuy_mobile/app/data/models/product_model.dart';
 import 'package:yuk_kuy_mobile/app/routes/app_pages.dart';
+import 'package:yuk_kuy_mobile/core/utils/extensions/int_extentions.dart';
 import 'package:yuk_kuy_mobile/core/utils/extensions/string_extensions.dart';
 import 'package:yuk_kuy_mobile/core/values/consts.dart';
 
@@ -65,7 +66,7 @@ class ItemGridHome extends StatelessWidget {
             height: 3,
           ),
           Text(
-            model.price.toString(),
+            model.price.toPrice,
             style: GoogleFonts.inter(
                 textStyle: const TextStyle(
               fontSize: 10,

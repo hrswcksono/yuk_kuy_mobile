@@ -1,3 +1,4 @@
+import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -17,14 +18,19 @@ class BaseView extends GetView<BaseController> {
         init: BaseController(),
         builder: (bcontroller) {
           return Scaffold(
-            body: IndexedStack(
-              index: bcontroller.indexTab,
-              children: [
-                HomeView(),
-                TransactionView(),
-                FavoriteView(),
-                ProfileView()
-              ],
+            body: DoubleBackToCloseApp(
+              snackBar: const SnackBar(
+                content: Text("Tekan sekali lagi untuk keluar"),
+              ),
+              child: IndexedStack(
+                index: bcontroller.indexTab,
+                children: [
+                  HomeView(),
+                  TransactionView(),
+                  FavoriteView(),
+                  ProfileView()
+                ],
+              ),
             ),
             bottomNavigationBar: Container(
               height: 64,

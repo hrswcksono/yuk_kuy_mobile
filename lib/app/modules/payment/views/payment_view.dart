@@ -6,6 +6,7 @@ import 'package:yuk_kuy_mobile/app/modules/payment/views/components/payment_text
 import 'package:yuk_kuy_mobile/app/modules/payment/views/payment_information_view.dart';
 import 'package:yuk_kuy_mobile/app/widgets/text_field_global.dart';
 import 'package:yuk_kuy_mobile/core/themes/colors.dart';
+import 'package:yuk_kuy_mobile/core/utils/extensions/int_extentions.dart';
 
 import '../controllers/payment_controller.dart';
 import 'components/payment_header.dart';
@@ -43,7 +44,7 @@ class PaymentView extends GetView<PaymentController> {
                     )),
                   ),
                   Text(
-                    "IDR. ${controller.price}M/pax",
+                    controller.price.toPrice,
                     style: GoogleFonts.inter(
                         textStyle: const TextStyle(
                             fontSize: 16,
@@ -190,7 +191,7 @@ class PaymentView extends GetView<PaymentController> {
                       init: PaymentController(),
                       builder: (context) {
                         return Text(
-                          "IDR. ${controller.totalPrice}",
+                          controller.totalPrice.toRupiah,
                           style: GoogleFonts.inter(
                               textStyle: const TextStyle(
                             fontSize: 16,
