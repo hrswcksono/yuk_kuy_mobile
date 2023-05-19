@@ -11,7 +11,7 @@ abstract class Routes {
   static const BASE = _Paths.BASE;
   static const FAVORITE = _Paths.FAVORITE;
   static const PAYMENT = _Paths.PAYMENT;
-  static const TOUR_PROFILE = _Paths.TOUR_PROFILE;
+  static const SELLER_PROFILE = _Paths.SELLER_PROFILE;
 }
 
 abstract class _Paths {
@@ -24,5 +24,5 @@ abstract class _Paths {
   static const BASE = '/base';
   static const FAVORITE = '/favorite';
   static const PAYMENT = '/payment';
-  static const TOUR_PROFILE = '/tour-profile';
+  static const SELLER_PROFILE = '/seller-profile';
 }

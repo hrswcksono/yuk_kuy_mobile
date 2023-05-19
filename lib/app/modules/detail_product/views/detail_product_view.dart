@@ -135,7 +135,10 @@ class DetailProductView extends GetView<DetailProductController> {
                           height: 5,
                         ),
                         InkWell(
-                          onTap: () => Get.toNamed(AppPages.INITIAL_TP),
+                          onTap: () => Get.toNamed(AppPages.INITIAL_SP,
+                              arguments: {
+                                "data": data.data!.seller!.username.toString()
+                              }),
                           child: Row(
                             children: [
                               Container(
