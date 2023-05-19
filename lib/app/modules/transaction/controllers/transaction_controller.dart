@@ -11,7 +11,7 @@ import '../../../data/providers/order_provider.dart';
 import 'package:collection/collection.dart';
 
 class TransactionController extends GetxController
-    with StateMixin<OrderModel>, ScrollMixin {
+    with StateMixin<List<OrderItem>>, ScrollMixin {
   List<bool> stateFilter = [true, false, false, false, false, false];
   var orderProvider = Get.put(OrderProvider());
 
@@ -25,6 +25,8 @@ class TransactionController extends GetxController
   bool getFirstData = false;
   bool lastPage = false;
 
+  var orderItem = List<OrderItem>.empty(growable: true);
+
   @override
   void onInit() {
     initData();
@@ -32,6 +34,7 @@ class TransactionController extends GetxController
   }
 
   void changeState(int index) {
+    orderItem.clear();
     bool temp = stateFilter[index];
     stateIndex = index;
     stateFilter.forEachIndexed((idx, _) {
@@ -49,26 +52,31 @@ class TransactionController extends GetxController
 
   void dataChange(int index) {
     if (index != 0) {
+      page = 0;
       filterOrder(Strings.queryTransaction[index]);
     } else {
       initData();
     }
   }
 
+  void changeData(OrderModel value) {
+    // listFilter.addAll(value.data);
+    if (!getFirstData && value.count == 0) {
+      change(null, status: RxStatus.empty());
+    } else if (getFirstData && value.count == 0) {
+      lastPage = true;
+      update();
+    } else {
+      getFirstData = true;
+      orderItem.addAll(value.data!);
+      change(orderItem, status: RxStatus.success());
+    }
+  }
+
   void initData() {
-    change(null, status: RxStatus.loading());
     try {
       orderProvider.listOrder(page, 7).then((value) {
-        print("list order");
-        print(value);
-        if (!getFirstData && value.count == 0) {
-          change(null, status: RxStatus.empty());
-        } else if (getFirstData && value.count == 0) {
-          lastPage = true;
-        } else {
-          getFirstData = true;
-          change(value, status: RxStatus.success());
-        }
+        changeData(value);
       }).onError((error, stackTrace) {
         print('error');
         change(null, status: RxStatus.error());
@@ -86,20 +94,9 @@ class TransactionController extends GetxController
   }
 
   void filterOrder(String filter) {
-    change(null, status: RxStatus.loading());
     try {
       orderProvider.filterOrder(filter, page, 7).then((value) {
-        print("list order");
-        print(value);
-        getFirstData = false;
-        if (!getFirstData && value.count == 0) {
-          change(null, status: RxStatus.empty());
-        } else if (getFirstData && value.count == 0) {
-          lastPage = true;
-        } else {
-          getFirstData = true;
-          change(value, status: RxStatus.success());
-        }
+        changeData(value);
       }).onError((error, stackTrace) {
         print('error');
         change(null, status: RxStatus.error());
@@ -121,6 +118,8 @@ class TransactionController extends GetxController
     update();
     // monitor network fetch
     await Future.delayed(const Duration(milliseconds: 1000), () {
+      page = 0;
+      orderItem.clear();
       dataChange(stateIndex);
       update();
       return refreshController.refreshCompleted();

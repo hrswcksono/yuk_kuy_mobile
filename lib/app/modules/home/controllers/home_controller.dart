@@ -59,6 +59,7 @@ class HomeController extends GetxController
     } else {
       stateData = 2;
       resetList();
+      keyword = filterKey;
       getFilterProduct(filterKey);
     }
     stateFilterHome.forEachIndexed((idx, _) {
@@ -176,36 +177,22 @@ class HomeController extends GetxController
 
   @override
   Future<void> onEndScroll() async {
-    if (stateData == 1) {
-      print('onEndScrollAll');
-      if (!lastPage) {
-        page += 1;
-        Get.dialog(Center(child: LinearProgressIndicator()));
+    if (!lastPage) {
+      page += 1;
+      Get.dialog(Center(child: LinearProgressIndicator()));
+      if (stateData == 1) {
+        print('onEndScrollAll');
         getProductPagination();
-        Get.back();
-      } else {
-        Get.snackbar('Alert', 'End of All Product');
+      } else if (stateData == 2) {
+        print('onEndScrollFilter');
+        getFilterProduct(keyword);
+      } else if (stateData == 3) {
+        print('onEndScrollSearch');
+        searchProduct();
       }
-    } else if (stateData == 2) {
-      print('onEndScrollFilter');
-      if (!lastPage) {
-        page += 1;
-        Get.dialog(Center(child: LinearProgressIndicator()));
-        getProductPagination();
-        Get.back();
-      } else {
-        Get.snackbar('Alert', 'End of Filter Product');
-      }
-    } else if (stateData == 3) {
-      print('onEndScrollSearch');
-      if (!lastPage) {
-        page += 1;
-        Get.dialog(Center(child: LinearProgressIndicator()));
-        getProductPagination();
-        Get.back();
-      } else {
-        Get.snackbar('Alert', 'End of Search Product');
-      }
+      Get.back();
+    } else {
+      Get.snackbar('Alert', 'End of Product');
     }
   }
 

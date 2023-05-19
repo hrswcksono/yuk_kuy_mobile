@@ -13,7 +13,7 @@ class OrderModel {
   bool? status;
   int? page;
   int? count;
-  List<Datum>? data;
+  List<OrderItem>? data;
 
   OrderModel({
     this.status,
@@ -28,7 +28,8 @@ class OrderModel {
         count: json["count"],
         data: json["data"] == null
             ? []
-            : List<Datum>.from(json["data"]!.map((x) => Datum.fromJson(x))),
+            : List<OrderItem>.from(
+                json["data"]!.map((x) => OrderItem.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -41,7 +42,7 @@ class OrderModel {
       };
 }
 
-class Datum {
+class OrderItem {
   int? id;
   int? totalPackage;
   int? totalPrice;
@@ -55,7 +56,7 @@ class Datum {
   StatusOrder? statusOrder;
   Product? product;
 
-  Datum({
+  OrderItem({
     this.id,
     this.totalPackage,
     this.totalPrice,
@@ -70,7 +71,7 @@ class Datum {
     this.product,
   });
 
-  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+  factory OrderItem.fromJson(Map<String, dynamic> json) => OrderItem(
         id: json["id"],
         totalPackage: json["totalPackage"],
         totalPrice: json["totalPrice"],

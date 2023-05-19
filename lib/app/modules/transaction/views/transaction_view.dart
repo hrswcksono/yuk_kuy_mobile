@@ -82,20 +82,23 @@ class TransactionView extends GetView {
                 child: transactionC.obx(
                   (data) => ListView.separated(
                     controller: transactionC.scroll,
-                    itemCount: data!.data!.length,
+                    itemCount: data!.length,
                     shrinkWrap: true,
                     // physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (BuildContext context, int index) {
                       return itemTransaction(
-                          data.data![index].id!,
-                          data.data![index].product!.accountId!,
-                          data.data![index].product!.name.toString(),
-                          data.data![index].name.toString(),
-                          data.data![index].createdAt.toString(),
-                          data.data![index].totalPackage!.toInt(),
-                          data.data![index].totalPrice!.toInt(),
-                          data.data![index].statusOrder!.status.toString(),
-                          data.data![index].product!.imageProducts![0].src
+                          data[index].id!,
+                          data[index].product!.accountId!,
+                          data[index].product!.name.toString(),
+                          data[index].name.toString(),
+                          data[index].createdAt.toString(),
+                          data[index].totalPackage!.toInt(),
+                          data[index].totalPrice!.toInt(),
+                          data[index].statusOrder!.status.toString(),
+                          data[index]
+                              .product!
+                              .imageProducts![0]
+                              .src
                               .toString());
                     },
                     separatorBuilder: (BuildContext context, int index) =>
