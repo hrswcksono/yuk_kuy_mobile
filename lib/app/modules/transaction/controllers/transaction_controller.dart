@@ -35,6 +35,9 @@ class TransactionController extends GetxController
 
   void changeState(int index) {
     orderItem.clear();
+    page = 1;
+    lastPage = false;
+    getFirstData = false;
     bool temp = stateFilter[index];
     stateIndex = index;
     stateFilter.forEachIndexed((idx, _) {
@@ -52,7 +55,6 @@ class TransactionController extends GetxController
 
   void dataChange(int index) {
     if (index != 0) {
-      page = 0;
       filterOrder(Strings.queryTransaction[index]);
     } else {
       initData();
@@ -78,7 +80,6 @@ class TransactionController extends GetxController
       orderProvider.listOrder(page, 7).then((value) {
         changeData(value);
       }).onError((error, stackTrace) {
-        print('error');
         change(null, status: RxStatus.error());
         if (kDebugMode) {
           print(error);
@@ -98,7 +99,6 @@ class TransactionController extends GetxController
       orderProvider.filterOrder(filter, page, 7).then((value) {
         changeData(value);
       }).onError((error, stackTrace) {
-        print('error');
         change(null, status: RxStatus.error());
         if (kDebugMode) {
           print(error);
@@ -118,8 +118,10 @@ class TransactionController extends GetxController
     update();
     // monitor network fetch
     await Future.delayed(const Duration(milliseconds: 1000), () {
-      page = 0;
       orderItem.clear();
+      page = 1;
+      lastPage = false;
+      getFirstData = false;
       dataChange(stateIndex);
       update();
       return refreshController.refreshCompleted();
@@ -132,11 +134,13 @@ class TransactionController extends GetxController
   @override
   Future<void> onEndScroll() async {
     print('onEndScroll');
+    print('page $page');
+    print(lastPage);
     if (!lastPage) {
       page += 1;
-      Get.dialog(Center(child: LinearProgressIndicator()));
+      // Get.dialog(Center(child: LinearProgressIndicator()));
       dataChange(stateIndex);
-      Get.back();
+      // Get.back();
     } else {
       Get.snackbar('Alert', 'End of Product');
     }
@@ -144,14 +148,6 @@ class TransactionController extends GetxController
 
   @override
   Future<void> onTopScroll() async {
-    if (page != 0) {
-      page -= 1;
-      Get.dialog(Center(child: LinearProgressIndicator()));
-      dataChange(stateIndex);
-      Get.back();
-    } else {
-      Get.snackbar('Alert', 'Top of Product');
-    }
     print('onTopScroll');
   }
 }

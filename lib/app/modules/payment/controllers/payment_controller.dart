@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:art_sweetalert/art_sweetalert.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,11 +14,14 @@ import 'package:yuk_kuy_mobile/app/data/models/order_detail_model.dart';
 import 'package:yuk_kuy_mobile/app/data/models/product_detail_model.dart';
 import 'package:yuk_kuy_mobile/app/data/providers/bank_provider.dart';
 import 'package:yuk_kuy_mobile/app/data/providers/order_provider.dart';
+import 'package:yuk_kuy_mobile/app/modules/base/controllers/base_controller.dart';
+import 'package:yuk_kuy_mobile/app/modules/base/views/base_view.dart';
 import 'package:yuk_kuy_mobile/app/modules/payment/views/payment_information_view.dart';
-import 'package:yuk_kuy_mobile/app/modules/payment/views/payment_verification_view.dart';
+import 'package:yuk_kuy_mobile/app/modules/transaction/controllers/transaction_controller.dart';
 import 'package:yuk_kuy_mobile/app/widgets/custom_alert.dart';
 
 import '../../../data/providers/verification_provider.dart';
+import '../../../routes/app_pages.dart';
 
 class PaymentController extends GetxController
     with StateMixin<Tuple2<OrderDetailModel, BankModel>> {
@@ -28,6 +32,8 @@ class PaymentController extends GetxController
   var orderProvider = Get.put(OrderProvider());
   var bankProvider = Get.put(BankProvider());
   var verifProvider = Get.put(VerificationProvider());
+  var baseController = Get.put(BaseController());
+  var transController = Get.put(TransactionController());
 
   late TextEditingController name;
   late TextEditingController phone;
@@ -117,12 +123,12 @@ class PaymentController extends GetxController
   }
 
   void addOrder() {
-    print("name : ${name.text}");
-    print("phone : ${phone.text}");
-    print("email : ${email.text}");
-    print("totalPrice : ${totalPrice}");
-    print("numpeople : ${numPeople}");
-    print("argumen : ${argumentData["data"].id}");
+    // print("name : ${name.text}");
+    // print("phone : ${phone.text}");
+    // print("email : ${email.text}");
+    // print("totalPrice : ${totalPrice}");
+    // print("numpeople : ${numPeople}");
+    // print("argumen : ${argumentData["data"].id}");
     try {
       orderProvider
           .addOder(name.text, phone.text, email.text, totalPrice, numPeople,
@@ -198,6 +204,15 @@ class PaymentController extends GetxController
     try {
       verifProvider.verifOrder(imgVerification!, idBank, idOrd).then((value) {
         print(value);
+        ArtSweetAlert.show(
+            context: Get.context!,
+            artDialogArgs: ArtDialogArgs(
+                type: ArtSweetAlertType.success,
+                title: "Success",
+                text: "Login Success"));
+        Future.delayed(const Duration(seconds: 2), () {
+          baseController.moved();
+        });
       }).onError((error, stackTrace) {
         print('error');
         if (kDebugMode) {
@@ -217,6 +232,18 @@ class PaymentController extends GetxController
     try {
       verifProvider.cancelOrder(idOrd, reason.text).then((value) {
         print(value);
+        ArtSweetAlert.show(
+            context: Get.context!,
+            artDialogArgs: ArtDialogArgs(
+                type: ArtSweetAlertType.info,
+                title: "Success",
+                text: "Order Cancel"));
+        Future.delayed(const Duration(seconds: 2), () {
+          Get.back();
+          Get.back();
+          Get.back();
+          transController.initData();
+        });
       }).onError((error, stackTrace) {
         print('error');
         if (kDebugMode) {

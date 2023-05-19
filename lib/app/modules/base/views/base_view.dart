@@ -33,7 +33,7 @@ class BaseView extends GetView<BaseController> {
               ),
             ),
             bottomNavigationBar: Container(
-              height: 64,
+              height: Get.height * 0.08,
               decoration: BoxDecoration(
                 color: Colors.white,
                 boxShadow: [

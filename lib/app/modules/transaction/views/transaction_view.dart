@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -33,78 +34,106 @@ class TransactionView extends GetView {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: Text(
-                "Transaction",
-                style: GoogleFonts.inter(
-                    textStyle: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
-                )),
+            SizedBox(
+              height: Get.height * 0.08,
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Text(
+                  "Transaction",
+                  style: GoogleFonts.inter(
+                      textStyle: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                  )),
+                ),
               ),
             ),
-            GetBuilder<TransactionController>(
-                init: TransactionController(),
-                builder: (ctx) => SizedBox(
-                      height: 40,
-                      child: ListView.separated(
-                        physics: const ClampingScrollPhysics(),
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        itemCount: Strings.filterTransaction.length + 1,
-                        itemBuilder: (BuildContext context, int index) {
-                          if (index == 0 ||
-                              index == (Strings.filterTransaction.length)) {
-                            return const SizedBox(
-                              width: 20,
-                            );
-                          } else {
-                            return const SizedBox(
-                              width: 5,
-                            );
-                          }
-                        },
-                        separatorBuilder: (BuildContext context, int index) =>
-                            filterTransaction(
-                          index,
-                          transactionC.stateFilter[index],
-                          ctx,
+            SizedBox(
+              height: Get.height * 0.05,
+              child: GetBuilder<TransactionController>(
+                  init: TransactionController(),
+                  builder: (ctx) => SizedBox(
+                        height: 40,
+                        child: ListView.separated(
+                          physics: const ClampingScrollPhysics(),
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          itemCount: Strings.filterTransaction.length + 1,
+                          itemBuilder: (BuildContext context, int index) {
+                            if (index == 0 ||
+                                index == (Strings.filterTransaction.length)) {
+                              return const SizedBox(
+                                width: 20,
+                              );
+                            } else {
+                              return const SizedBox(
+                                width: 5,
+                              );
+                            }
+                          },
+                          separatorBuilder: (BuildContext context, int index) =>
+                              filterTransaction(
+                            index,
+                            transactionC.stateFilter[index],
+                            ctx,
+                          ),
                         ),
-                      ),
-                    )),
-            const SizedBox(
-              height: 15,
+                      )),
             ),
-            Expanded(
+            SizedBox(
+              height: Get.height * 0.78 - (Get.mediaQuery.viewPadding.top),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: transactionC.obx(
-                  (data) => ListView.separated(
+                  (data) => ListView(
                     controller: transactionC.scroll,
-                    itemCount: data!.length,
-                    shrinkWrap: true,
-                    // physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (BuildContext context, int index) {
-                      return itemTransaction(
-                          data[index].id!,
-                          data[index].product!.accountId!,
-                          data[index].product!.name.toString(),
-                          data[index].name.toString(),
-                          data[index].createdAt.toString(),
-                          data[index].totalPackage!.toInt(),
-                          data[index].totalPrice!.toInt(),
-                          data[index].statusOrder!.status.toString(),
-                          data[index]
-                              .product!
-                              .imageProducts![0]
-                              .src
-                              .toString());
-                    },
-                    separatorBuilder: (BuildContext context, int index) =>
-                        const SizedBox(
-                      height: 10,
-                    ),
+                    children: [
+                      SizedBox(
+                        height: 10,
+                      ),
+                      StaggeredGrid.count(
+                        crossAxisCount: 1,
+                        mainAxisSpacing: 5,
+                        crossAxisSpacing: 10,
+                        children: List.generate(
+                          data!.length,
+                          (index) => itemTransaction(
+                              data[index].id!,
+                              data[index].product!.accountId!,
+                              data[index].product!.name.toString(),
+                              data[index].name.toString(),
+                              data[index].createdAt.toString(),
+                              data[index].totalPackage!.toInt(),
+                              data[index].totalPrice!.toInt(),
+                              data[index].statusOrder!.status.toString(),
+                              data[index]
+                                  .product!
+                                  .imageProducts![0]
+                                  .src
+                                  .toString()),
+                        ),
+                      )
+                      // SizedBox(
+                      //   child: Column(
+                      //     children: List.generate(
+                      //         data!.length,
+                      //         (index) => itemTransaction(
+                      //             data[index].id!,
+                      //             data[index].product!.accountId!,
+                      //             data[index].product!.name.toString(),
+                      //             data[index].name.toString(),
+                      //             data[index].createdAt.toString(),
+                      //             data[index].totalPackage!.toInt(),
+                      //             data[index].totalPrice!.toInt(),
+                      //             data[index].statusOrder!.status.toString(),
+                      //             data[index]
+                      //                 .product!
+                      //                 .imageProducts![0]
+                      //                 .src
+                      //                 .toString())),
+                      //   ),
+                      // )
+                    ],
                   ),
                   onEmpty: SizedBox(
                     height: Get.height / 2,

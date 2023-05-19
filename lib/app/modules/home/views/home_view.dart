@@ -168,6 +168,9 @@ class HomeView extends GetView {
                   height: 200,
                 ),
               ),
+              SizedBox(
+                height: 20,
+              )
             ],
           ),
         ),
