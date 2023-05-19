@@ -134,39 +134,42 @@ class DetailProductView extends GetView<DetailProductController> {
                         SizedBox(
                           height: 5,
                         ),
-                        Row(
-                          children: [
-                            Container(
-                              height: 28,
-                              width: 28,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Color.fromRGBO(245, 246, 250, 1),
-                                  width: 1,
-                                ),
-                                shape: BoxShape.circle,
-                                image: const DecorationImage(
-                                  fit: BoxFit.cover,
-                                  alignment: Alignment.center,
-                                  matchTextDirection: true,
-                                  repeat: ImageRepeat.noRepeat,
-                                  image: AssetImage(
-                                      "assets/images/image_trip.jpg"),
+                        InkWell(
+                          onTap: () => Get.toNamed(AppPages.INITIAL_TP),
+                          child: Row(
+                            children: [
+                              Container(
+                                height: 28,
+                                width: 28,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Color.fromRGBO(245, 246, 250, 1),
+                                    width: 1,
+                                  ),
+                                  shape: BoxShape.circle,
+                                  image: const DecorationImage(
+                                    fit: BoxFit.cover,
+                                    alignment: Alignment.center,
+                                    matchTextDirection: true,
+                                    repeat: ImageRepeat.noRepeat,
+                                    image: AssetImage(
+                                        "assets/images/image_trip.jpg"),
+                                  ),
                                 ),
                               ),
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              data.data!.seller!.name.toString(),
-                              style: GoogleFonts.inter(
-                                  textStyle: const TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w600,
-                              )),
-                            )
-                          ],
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                data.data!.seller!.name.toString(),
+                                style: GoogleFonts.inter(
+                                    textStyle: const TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                )),
+                              )
+                            ],
+                          ),
                         ),
                         SizedBox(
                           height: 5,

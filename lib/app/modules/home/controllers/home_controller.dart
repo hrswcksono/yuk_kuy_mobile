@@ -33,7 +33,6 @@ class HomeController extends GetxController
   var listFilter = List<ProductItem>.empty(growable: true);
 
   late TextEditingController search;
-  int pageSearch = 1;
 
   int page = 1;
   bool getFirstData = false;
@@ -41,10 +40,7 @@ class HomeController extends GetxController
 
   var productItem = List<ProductItem>.empty(growable: true);
 
-  // static const _pageSize = 20;
-
-  // final PagingController<int, ProductModel> _pagingController =
-  //     PagingController(firstPageKey: 0);
+  int stateData = 1;
 
   @override
   void onInit() {
@@ -57,8 +53,12 @@ class HomeController extends GetxController
   void changeState(int index, String filterKey) {
     bool temp = stateFilterHome[index];
     if (temp) {
+      stateData = 1;
+      resetList();
       getProductPagination();
     } else {
+      stateData = 2;
+      resetList();
       getFilterProduct(filterKey);
     }
     stateFilterHome.forEachIndexed((idx, _) {
@@ -73,6 +73,27 @@ class HomeController extends GetxController
     listFilter.clear();
   }
 
+  void resetList() {
+    productItem.clear();
+    page = 1;
+    getFirstData = false;
+    lastPage = false;
+  }
+
+  void changeData(ProductModel value) {
+    listFilter.addAll(value.data);
+    if (!getFirstData && value.count == 0) {
+      change(null, status: RxStatus.empty());
+    } else if (getFirstData && value.count == 0) {
+      lastPage = true;
+      update();
+    } else {
+      getFirstData = true;
+      productItem.addAll(value.data);
+      change(productItem, status: RxStatus.success());
+    }
+  }
+
   List<dynamic> toFilterList() {
     var temp = [];
     for (int i = 0; i < listFilter.length; i++) {
@@ -84,56 +105,12 @@ class HomeController extends GetxController
     return temp;
   }
 
-  // void getProduct() {
-  //   try {
-  //     change(null, status: RxStatus.loading());
-  //     productProvider.listProduct().then((value) {
-  //       print(value);
-  //       listFilter.clear();
-  //       listFilter.addAll(value.data);
-  //       // if (listFilter.isEmpty) {
-  //       //   // stateFilterHome.forEachIndexed((index, _) {
-  //       //   //   stateFilterHome[index] = false;
-  //       //   // });
-  //       // }
-  //       change(value, status: RxStatus.success());
-  //     }).onError((error, stackTrace) {
-  //       print('error');
-  //       change(null, status: RxStatus.error());
-  //       if (kDebugMode) {
-  //         print(error);
-  //       }
-  //     }).whenComplete(() {
-  //       log("List product complete!");
-  //     });
-  //   } catch (e) {
-  //     if (kDebugMode) {
-  //       print("gagal");
-  //     }
-  //   }
-  // }
-
   void getProductPagination() {
     try {
       productProvider.listProductPagination(page, 6).then((value) {
-        print(value);
-        listFilter.addAll(value.data);
-        if (!getFirstData && value.count == 0) {
-          change(null, status: RxStatus.empty());
-        } else if (getFirstData && value.count == 0) {
-          lastPage = true;
-          update();
-        } else {
-          getFirstData = true;
-          productItem.addAll(value.data);
-          change(productItem, status: RxStatus.success());
-        }
+        changeData(value);
       }).onError((error, stackTrace) {
-        print('error');
         change(null, status: RxStatus.error());
-        if (kDebugMode) {
-          print(error);
-        }
       }).whenComplete(() {
         log("List product complete!");
       });
@@ -148,14 +125,9 @@ class HomeController extends GetxController
     try {
       change(null, status: RxStatus.loading());
       productProvider.filterProduct(key, page, 6).then((value) {
-        print(value);
-        change(value.data, status: RxStatus.success());
+        changeData(value);
       }).onError((error, stackTrace) {
-        print('error');
         change(null, status: RxStatus.error());
-        if (kDebugMode) {
-          print(error);
-        }
       }).whenComplete(() {
         log("List product complete!");
       });
@@ -170,14 +142,9 @@ class HomeController extends GetxController
     try {
       change(null, status: RxStatus.loading());
       productProvider.searchProduct(search.text, page, 6).then((value) {
-        print(value);
-        change(value.data, status: RxStatus.success());
+        changeData(value);
       }).onError((error, stackTrace) {
-        print('error');
         change(null, status: RxStatus.error());
-        if (kDebugMode) {
-          print(error);
-        }
       }).whenComplete(() {
         log("List product complete!");
       });
@@ -193,6 +160,7 @@ class HomeController extends GetxController
     update();
     // monitor network fetch
     await Future.delayed(const Duration(milliseconds: 1000), () {
+      stateData = 1;
       page = 1;
       listFilter.clear();
       productItem.clear();
@@ -206,26 +174,38 @@ class HomeController extends GetxController
     // update();
   }
 
-  // @override
-  // Future<void> onEndScroll() async {
-  //   print('onEndScroll');
-  // }
-
-  // @override
-  // Future<void> onTopScroll() async {
-  //   print('onTopScroll');
-  // }
-
   @override
   Future<void> onEndScroll() async {
-    print('onEndScroll');
-    if (!lastPage) {
-      page += 1;
-      Get.dialog(Center(child: LinearProgressIndicator()));
-      getProductPagination();
-      Get.back();
-    } else {
-      Get.snackbar('Alert', 'End of Product');
+    if (stateData == 1) {
+      print('onEndScrollAll');
+      if (!lastPage) {
+        page += 1;
+        Get.dialog(Center(child: LinearProgressIndicator()));
+        getProductPagination();
+        Get.back();
+      } else {
+        Get.snackbar('Alert', 'End of All Product');
+      }
+    } else if (stateData == 2) {
+      print('onEndScrollFilter');
+      if (!lastPage) {
+        page += 1;
+        Get.dialog(Center(child: LinearProgressIndicator()));
+        getProductPagination();
+        Get.back();
+      } else {
+        Get.snackbar('Alert', 'End of Filter Product');
+      }
+    } else if (stateData == 3) {
+      print('onEndScrollSearch');
+      if (!lastPage) {
+        page += 1;
+        Get.dialog(Center(child: LinearProgressIndicator()));
+        getProductPagination();
+        Get.back();
+      } else {
+        Get.snackbar('Alert', 'End of Search Product');
+      }
     }
   }
 

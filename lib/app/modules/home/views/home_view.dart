@@ -71,7 +71,11 @@ class HomeView extends GetView {
                           ),
                         ),
                         InkWell(
-                          onTap: () => homeC.searchProduct(),
+                          onTap: () {
+                            homeC.resetList();
+                            homeC.stateData = 3;
+                            homeC.searchProduct();
+                          },
                           child: Container(
                             height: 47,
                             width: 46,
@@ -168,6 +172,7 @@ class HomeView extends GetView {
           ),
         ),
       ),
+      // floatingActionButton: ,
     );
   }
 

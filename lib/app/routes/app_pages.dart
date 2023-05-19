@@ -17,6 +17,8 @@ import '../modules/payment/bindings/payment_binding.dart';
 import '../modules/payment/views/payment_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
+import '../modules/tour_profile/bindings/tour_profile_binding.dart';
+import '../modules/tour_profile/views/tour_profile_view.dart';
 import '../modules/transaction/bindings/transaction_binding.dart';
 import '../modules/transaction/views/transaction_view.dart';
 
@@ -30,6 +32,7 @@ class AppPages {
   static const INITIAL_LR = Routes.LOGIN_REGISTER;
   static const INITIAL_DP = Routes.DETAIL_PRODUCT;
   static const INITIAL_P = Routes.PAYMENT;
+  static const INITIAL_TP = Routes.TOUR_PROFILE;
 
   static final routes = [
     GetPage(
@@ -72,6 +75,11 @@ class AppPages {
       name: _Paths.PAYMENT,
       page: () => PaymentView(),
       binding: PaymentBinding(),
+    ),
+    GetPage(
+      name: _Paths.TOUR_PROFILE,
+      page: () => const TourProfileView(),
+      binding: TourProfileBinding(),
     ),
   ];
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -10,7 +11,8 @@ import 'app/routes/app_pages.dart';
 import 'services/storage_services.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   Get.lazyPut(() => StorageService());
   await initialConfig();
   SystemChrome.setSystemUIOverlayStyle(
@@ -18,6 +20,7 @@ void main() async {
       statusBarColor: Colors.transparent,
     ),
   );
+  FlutterNativeSplash.remove();
   runApp(MyApp());
 }
 
