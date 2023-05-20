@@ -66,7 +66,7 @@ class LoginRegisterController extends GetxController {
                 text: "Login Success"));
         Future.delayed(const Duration(seconds: 2), () {
           Get.back();
-          Get.offAllNamed(AppPages.INITIAL_B);
+          Get.offAllNamed(AppPages.initialB);
         });
       }).onError((error, stackTrace) {
         ArtSweetAlert.show(

@@ -10,6 +10,7 @@ import 'package:yuk_kuy_mobile/core/utils/extensions/int_extentions.dart';
 import '../../../../core/themes/colors.dart';
 import 'components/payment_header.dart';
 
+// ignore: must_be_immutable
 class PaymentInformationView extends GetView {
   PaymentInformationView(this.id, this.accountId, {Key? key}) : super(key: key);
   final int? id;
@@ -83,7 +84,7 @@ class PaymentInformationView extends GetView {
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
                           itemBuilder: (BuildContext context, int index) {
-                            return BankInformation(
+                            return bankInformation(
                               data.item2.data![index].bank.toString(),
                               data.item2.data![index].name.toString(),
                               data.item2.data![index].number.toString(),
@@ -116,14 +117,6 @@ class PaymentInformationView extends GetView {
                         onPressed: () {
                           paymentC.showDialogCancel();
                         },
-                        child: Text("Cancel Book",
-                            textAlign: TextAlign.center,
-                            style: GoogleFonts.inter(
-                                textStyle: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              color: Color.fromRGBO(255, 79, 79, 1),
-                            ))),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white,
                           shape: RoundedRectangleBorder(
@@ -135,6 +128,14 @@ class PaymentInformationView extends GetView {
                                   255, 79, 79, 1) // the color of the border
                               ),
                         ),
+                        child: Text("Cancel Book",
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.inter(
+                                textStyle: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              color: Color.fromRGBO(255, 79, 79, 1),
+                            ))),
                       ),
                       const SizedBox(
                         height: 30,
@@ -148,7 +149,7 @@ class PaymentInformationView extends GetView {
     );
   }
 
-  Row BankInformation(String bankName, String name, String number) {
+  Row bankInformation(String bankName, String name, String number) {
     return Row(
       children: [
         Text(bankName,

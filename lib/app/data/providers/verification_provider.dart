@@ -23,8 +23,6 @@ class VerificationProvider extends BaseProvider {
       body,
     );
 
-    print(response.body.toString());
-
     return response.body.toString();
   }
 
@@ -38,8 +36,6 @@ class VerificationProvider extends BaseProvider {
       jsonBody,
       contentType: "application/x-www-form-urlencoded",
     );
-
-    print(response.body.toString());
 
     return response.body.toString();
   }

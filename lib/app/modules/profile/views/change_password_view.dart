@@ -7,6 +7,7 @@ import 'package:yuk_kuy_mobile/app/modules/profile/controllers/profile_controlle
 import '../../../widgets/header_global.dart';
 import '../../../widgets/text_field_global.dart';
 
+// ignore: must_be_immutable
 class ChangePasswordView extends GetView {
   ChangePasswordView({Key? key}) : super(key: key);
   var profileC = Get.put(ProfileController());

@@ -8,10 +8,10 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../../../../core/themes/colors.dart';
 import '../../../../core/utils/helpers.dart';
-import '../../../../core/values/strings/dummy_string.dart';
 import '../controllers/home_controller.dart';
 import 'components/item_grid_home.dart';
 
+// ignore: must_be_immutable
 class HomeView extends GetView {
   HomeView({Key? key}) : super(key: key);
 
@@ -167,7 +167,7 @@ class HomeView extends GetView {
                   height: 200,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               )
             ],

@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:yuk_kuy_mobile/app/modules/login_register/controllers/login_register_controller.dart';
-import 'package:yuk_kuy_mobile/app/modules/login_register/views/components/login_daftar_text_field.dart';
 import 'package:yuk_kuy_mobile/app/modules/login_register/views/login_view.dart';
 import 'package:yuk_kuy_mobile/app/widgets/text_field_global.dart';
 import 'package:yuk_kuy_mobile/core/themes/colors.dart';
 
+// ignore: must_be_immutable
 class RegisterView extends GetView {
   RegisterView({Key? key}) : super(key: key);
   var lrController = Get.put(LoginRegisterController());

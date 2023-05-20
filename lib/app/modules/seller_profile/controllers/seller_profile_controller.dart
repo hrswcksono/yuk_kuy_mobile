@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
@@ -15,16 +14,13 @@ class SellerProfileController extends GetxController
 
   @override
   void onInit() {
-    print("init seler");
     initData();
     super.onInit();
   }
 
   void initData() {
-    print("test");
     try {
       selProv.detailProfile(args["data"]).then((value) {
-        print(value);
         change(value.data, status: RxStatus.success());
       }).onError((error, stackTrace) {
         change(null, status: RxStatus.error());
@@ -35,7 +31,7 @@ class SellerProfileController extends GetxController
         log("Profile complete!");
       });
     } catch (e) {
-      print(e);
+      log(e.toString());
     }
   }
 }

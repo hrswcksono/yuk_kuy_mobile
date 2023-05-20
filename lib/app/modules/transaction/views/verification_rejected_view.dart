@@ -19,10 +19,10 @@ class VerificationRejectedView extends GetView {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                HeaderGlobal(
+                const HeaderGlobal(
                   title: "Verification Rejected",
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Image.asset(
@@ -30,7 +30,7 @@ class VerificationRejectedView extends GetView {
                   height: 160,
                   width: 184,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Align(
@@ -59,7 +59,7 @@ class VerificationRejectedView extends GetView {
                     )),
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
                 ElevatedButton(
                   onPressed: () {
                     // Get.to(PaymentVerificationView());
@@ -72,19 +72,11 @@ class VerificationRejectedView extends GetView {
                         fontWeight: FontWeight.w500,
                       ))),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 ElevatedButton(
                   onPressed: () {},
-                  child: Text("Cancel Book",
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.inter(
-                          textStyle: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: Color.fromRGBO(255, 79, 79, 1),
-                      ))),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
@@ -96,6 +88,14 @@ class VerificationRejectedView extends GetView {
                             255, 79, 79, 1) // the color of the border
                         ),
                   ),
+                  child: Text("Cancel Book",
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.inter(
+                          textStyle: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: Color.fromRGBO(255, 79, 79, 1),
+                      ))),
                 )
               ],
             ),

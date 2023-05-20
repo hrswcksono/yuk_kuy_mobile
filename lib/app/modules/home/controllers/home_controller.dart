@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:yuk_kuy_mobile/app/data/models/product_model.dart';
 import 'package:yuk_kuy_mobile/app/data/providers/product_provider.dart';
@@ -21,12 +20,6 @@ class HomeController extends GetxController
       RefreshController(initialRefresh: false);
 
   ScrollController scrollController = ScrollController();
-
-  void test() {
-    scrollController.addListener(() {
-      print("position : ${scrollController.offset}");
-    });
-  }
 
   bool isLoading = true;
 
@@ -119,7 +112,6 @@ class HomeController extends GetxController
   void getListCity() {
     try {
       productProvider.listCity().then((value) {
-        print(value.toString());
         listFilter.addAll(value.data!);
       }).onError((error, stackTrace) {
         if (kDebugMode) {
@@ -209,15 +201,12 @@ class HomeController extends GetxController
   Future<void> onEndScroll() async {
     if (!lastPage) {
       page += 1;
-      Get.dialog(Center(child: LinearProgressIndicator()));
+      Get.dialog(const Center(child: LinearProgressIndicator()));
       if (stateData == 1) {
-        print('onEndScrollAll');
         getProductPagination();
       } else if (stateData == 2) {
-        print('onEndScrollFilter');
         getFilterProduct(keyword);
       } else if (stateData == 3) {
-        print('onEndScrollSearch');
         searchProduct();
       }
       Get.back();
@@ -227,7 +216,5 @@ class HomeController extends GetxController
   }
 
   @override
-  Future<void> onTopScroll() async {
-    print('onTopScroll');
-  }
+  Future<void> onTopScroll() async {}
 }

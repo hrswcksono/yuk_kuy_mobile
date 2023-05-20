@@ -3,13 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:yuk_kuy_mobile/app/modules/login_register/controllers/login_register_controller.dart';
-import 'package:yuk_kuy_mobile/app/modules/login_register/views/components/login_daftar_text_field.dart';
 import 'package:yuk_kuy_mobile/app/modules/login_register/views/register_view.dart';
-import 'package:yuk_kuy_mobile/app/routes/app_pages.dart';
 import 'package:yuk_kuy_mobile/app/widgets/text_field_global.dart';
 
 import '../../../../core/themes/colors.dart';
 
+// ignore: must_be_immutable
 class LoginView extends GetView {
   LoginView({Key? key}) : super(key: key);
 

@@ -19,10 +19,10 @@ class VerificationPendingView extends GetView {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                HeaderGlobal(
+                const HeaderGlobal(
                   title: "Verification Pending",
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Image.asset(
@@ -30,7 +30,7 @@ class VerificationPendingView extends GetView {
                   height: 160,
                   width: 184,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Align(

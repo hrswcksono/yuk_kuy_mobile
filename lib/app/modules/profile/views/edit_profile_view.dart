@@ -4,13 +4,11 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:yuk_kuy_mobile/app/data/models/profile_model.dart';
 import 'package:yuk_kuy_mobile/app/modules/profile/controllers/profile_controller.dart';
-import 'package:yuk_kuy_mobile/app/modules/profile/views/change_password_view.dart';
 import 'package:yuk_kuy_mobile/app/widgets/header_global.dart';
 
-import '../../../../core/themes/colors.dart';
 import '../../../widgets/text_field_global.dart';
-import '../../payment/views/components/payment_header.dart';
 
+// ignore: must_be_immutable
 class EditProfileView extends GetView {
   EditProfileView(this.data, {Key? key}) : super(key: key);
   final ProfileItem data;
@@ -25,51 +23,51 @@ class EditProfileView extends GetView {
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
             child: Column(
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
-                HeaderGlobal(
+                const HeaderGlobal(
                   title: "Edit Profile",
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 TextFieldGlobal(
                   title: "Name",
                   value: profileC.editName,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 TextFieldGlobal(
                   title: "Username",
                   value: profileC.editUsername,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 TextFieldGlobal(
                   title: "Email",
                   value: profileC.editEmail,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 TextFieldGlobal(
                   title: "Phone",
                   value: profileC.editPhone,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 TextFieldGlobal(
                   title: "Address",
                   value: profileC.editAddress,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 ElevatedButton(

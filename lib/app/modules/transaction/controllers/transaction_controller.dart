@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:yuk_kuy_mobile/core/values/strings.dart';
@@ -143,9 +142,6 @@ class TransactionController extends GetxController
 
   @override
   Future<void> onEndScroll() async {
-    print('onEndScroll');
-    print('page $page');
-    print(lastPage);
     if (!lastPage) {
       page += 1;
       // Get.dialog(Center(child: LinearProgressIndicator()));
@@ -157,7 +153,5 @@ class TransactionController extends GetxController
   }
 
   @override
-  Future<void> onTopScroll() async {
-    print('onTopScroll');
-  }
+  Future<void> onTopScroll() async {}
 }

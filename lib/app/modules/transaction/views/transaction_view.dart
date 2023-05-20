@@ -197,8 +197,8 @@ class TransactionView extends GetView {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: Colors.white,
-          boxShadow: <BoxShadow>[
-            const BoxShadow(
+          boxShadow: const <BoxShadow>[
+            BoxShadow(
               color: Color(0x73000000),
               blurRadius: 2.0,
               spreadRadius: 1,

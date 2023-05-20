@@ -24,9 +24,8 @@ class BaseController extends GetxController {
   }
 
   void moved() {
-    Get.offAllNamed(AppPages.INITIAL_B);
+    Get.offAllNamed(AppPages.initialB);
     indexTab = 1;
-    print('indextab $indexTab');
     update();
   }
 

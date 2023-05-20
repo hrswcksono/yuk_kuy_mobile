@@ -9,7 +9,7 @@ import 'package:yuk_kuy_mobile/app/modules/favorite/views/components/item_grid_f
 import '../controllers/favorite_controller.dart';
 
 class FavoriteView extends GetView<FavoriteController> {
-  FavoriteView({Key? key}) : super(key: key);
+  const FavoriteView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -96,7 +96,7 @@ class DetailProductView extends GetView<DetailProductController> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           height: 7,
                         ),
                         Text(
@@ -107,7 +107,7 @@ class DetailProductView extends GetView<DetailProductController> {
                             fontWeight: FontWeight.w600,
                           )),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 7,
                         ),
                         Row(
@@ -131,11 +131,11 @@ class DetailProductView extends GetView<DetailProductController> {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
                         InkWell(
-                          onTap: () => Get.toNamed(AppPages.INITIAL_SP,
+                          onTap: () => Get.toNamed(AppPages.initialSP,
                               arguments: {
                                 "data": data.data!.seller!.username.toString()
                               }),
@@ -146,7 +146,8 @@ class DetailProductView extends GetView<DetailProductController> {
                                 width: 28,
                                 decoration: BoxDecoration(
                                   border: Border.all(
-                                    color: Color.fromRGBO(245, 246, 250, 1),
+                                    color:
+                                        const Color.fromRGBO(245, 246, 250, 1),
                                     width: 1,
                                   ),
                                   shape: BoxShape.circle,
@@ -160,7 +161,7 @@ class DetailProductView extends GetView<DetailProductController> {
                                   ),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 5,
                               ),
                               Text(
@@ -174,7 +175,7 @@ class DetailProductView extends GetView<DetailProductController> {
                             ],
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
                         Text(
@@ -185,7 +186,7 @@ class DetailProductView extends GetView<DetailProductController> {
                             fontWeight: FontWeight.w600,
                           )),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
                         Text(
@@ -209,10 +210,8 @@ class DetailProductView extends GetView<DetailProductController> {
         ),
         bottomNavigationBar: ElevatedButton(
           onPressed: () {
-            Get.toNamed(AppPages.INITIAL_P, arguments: {"data": data.data});
-            print("data: ${data.data!.name}");
+            Get.toNamed(AppPages.initialP, arguments: {"data": data.data});
           },
-          child: Text("Book Now"),
           style: ElevatedButton.styleFrom(
             minimumSize: const Size(
               double.infinity,
@@ -228,6 +227,7 @@ class DetailProductView extends GetView<DetailProductController> {
               borderRadius: BorderRadius.circular(0),
             ),
           ),
+          child: const Text("Book Now"),
         ),
       ),
       onError: (error) {

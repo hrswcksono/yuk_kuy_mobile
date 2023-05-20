@@ -59,7 +59,7 @@ class ProductProvider extends BaseProvider {
     }
   }
 
-  Future<ProductDetailModel> detail_product(int id) async {
+  Future<ProductDetailModel> detailProduct(int id) async {
     var response = await get('products/mobile/detail/$id');
 
     if (!response.body['status']) {

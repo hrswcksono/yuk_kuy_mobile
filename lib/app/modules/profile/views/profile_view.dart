@@ -12,7 +12,7 @@ import '../../../../core/values/consts.dart';
 import '../controllers/profile_controller.dart';
 
 class ProfileView extends GetView<ProfileController> {
-  ProfileView({Key? key}) : super(key: key);
+  const ProfileView({Key? key}) : super(key: key);
 
   // var controller = Get.put(ProfileController());
 
@@ -212,7 +212,7 @@ class ProfileView extends GetView<ProfileController> {
                           ],
                         ),
                       ),
-                      Spacer(),
+                      const Spacer(),
                       ElevatedButton(
                           onPressed: () {
                             Get.to(EditProfileView(data.data!));

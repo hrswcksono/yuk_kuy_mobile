@@ -19,10 +19,10 @@ class VerificationSuccessView extends GetView {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  HeaderGlobal(
+                  const HeaderGlobal(
                     title: "Verification Success",
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Image.asset(
@@ -30,7 +30,7 @@ class VerificationSuccessView extends GetView {
                     height: 160,
                     width: 184,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Text(
@@ -45,31 +45,31 @@ class VerificationSuccessView extends GetView {
                   const SizedBox(
                     height: 7,
                   ),
-                  ItemData("Product Name :", "FASXXX"),
+                  itemData("Product Name :", "FASXXX"),
                   const SizedBox(
                     height: 7,
                   ),
-                  ItemData("Date Tour :", "29 Feb 22, 09.00 WIB"),
+                  itemData("Date Tour :", "29 Feb 22, 09.00 WIB"),
                   const SizedBox(
                     height: 7,
                   ),
-                  ItemData("Order By :", "HAXXXX"),
+                  itemData("Order By :", "HAXXXX"),
                   const SizedBox(
                     height: 7,
                   ),
-                  ItemData("Amount Ticket :", "5"),
+                  itemData("Amount Ticket :", "5"),
                   const SizedBox(
                     height: 7,
                   ),
-                  ItemData("Date Order :", "29 Feb 22, 09.00 WIB"),
+                  itemData("Date Order :", "29 Feb 22, 09.00 WIB"),
                   const SizedBox(
                     height: 7,
                   ),
-                  ItemData("Amount Price :", "IDR. 12.000.000"),
+                  itemData("Amount Price :", "IDR. 12.000.000"),
                   const SizedBox(
                     height: 7,
                   ),
-                  ItemData("Vendor :", "INDO"),
+                  itemData("Vendor :", "INDO"),
                   const SizedBox(
                     height: 7,
                   ),
@@ -96,11 +96,11 @@ class VerificationSuccessView extends GetView {
                   const SizedBox(
                     height: 15,
                   ),
-                  ItemData("Tour Guide :", "HAXXXX"),
+                  itemData("Tour Guide :", "HAXXXX"),
                   const SizedBox(
                     height: 7,
                   ),
-                  ItemData("Phone :", "8787932XXX")
+                  itemData("Phone :", "8787932XXX")
                 ],
               ),
             ),
@@ -110,7 +110,7 @@ class VerificationSuccessView extends GetView {
     );
   }
 
-  Row ItemData(String tag, String content) {
+  Row itemData(String tag, String content) {
     return Row(
       children: [
         Text(

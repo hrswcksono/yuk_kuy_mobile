@@ -9,8 +9,6 @@ class ProfileProvider extends BaseProvider {
   Future<ProfileModel> detailProfile(String username) async {
     var response = await get('accounts/$username');
 
-    print(response.body.toString());
-
     if (!response.body['status']) {
       return Future.error(response.body["message"]);
     } else {
@@ -69,8 +67,6 @@ class ProfileProvider extends BaseProvider {
       'accounts/edit/avatar',
       body,
     );
-
-    print(response.body.toString());
 
     return response.body.toString();
   }
