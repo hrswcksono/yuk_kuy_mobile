@@ -1,7 +1,6 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -27,134 +26,112 @@ class TransactionView extends GetView {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         body: SafeArea(
-      child: SmartRefresher(
-        controller: transactionC.refreshController,
-        onRefresh: transactionC.onRefresh,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: Get.height * 0.08,
-              child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: Text(
-                  "Transaction",
-                  style: GoogleFonts.inter(
-                      textStyle: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                  )),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: Get.height * 0.05,
-              child: GetBuilder<TransactionController>(
-                  init: TransactionController(),
-                  builder: (ctx) => SizedBox(
-                        height: 40,
-                        child: ListView.separated(
-                          physics: const ClampingScrollPhysics(),
-                          shrinkWrap: true,
-                          scrollDirection: Axis.horizontal,
-                          itemCount: Strings.filterTransaction.length + 1,
-                          itemBuilder: (BuildContext context, int index) {
-                            if (index == 0 ||
-                                index == (Strings.filterTransaction.length)) {
-                              return const SizedBox(
-                                width: 20,
-                              );
-                            } else {
-                              return const SizedBox(
-                                width: 5,
-                              );
-                            }
-                          },
-                          separatorBuilder: (BuildContext context, int index) =>
-                              filterTransaction(
-                            index,
-                            transactionC.stateFilter[index],
-                            ctx,
-                          ),
-                        ),
+          child: SmartRefresher(
+            controller: transactionC.refreshController,
+            onRefresh: transactionC.onRefresh,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: Get.height * 0.08,
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Text(
+                      "Transaction",
+                      style: GoogleFonts.inter(
+                          textStyle: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
                       )),
-            ),
-            SizedBox(
-              height: Get.height * 0.78 - (Get.mediaQuery.viewPadding.top),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: transactionC.obx(
-                  (data) => ListView(
-                    controller: transactionC.scroll,
-                    children: [
-                      SizedBox(
-                        height: 10,
-                      ),
-                      StaggeredGrid.count(
-                        crossAxisCount: 1,
-                        mainAxisSpacing: 5,
-                        crossAxisSpacing: 10,
-                        children: List.generate(
-                          data!.length,
-                          (index) => itemTransaction(
-                              data[index].id!,
-                              data[index].product!.accountId!,
-                              data[index].product!.name.toString(),
-                              data[index].name.toString(),
-                              data[index].createdAt.toString(),
-                              data[index].totalPackage!.toInt(),
-                              data[index].totalPrice!.toInt(),
-                              data[index].statusOrder!.status.toString(),
-                              data[index]
-                                  .product!
-                                  .imageProducts![0]
-                                  .src
-                                  .toString()),
-                        ),
-                      )
-                      // SizedBox(
-                      //   child: Column(
-                      //     children: List.generate(
-                      //         data!.length,
-                      //         (index) => itemTransaction(
-                      //             data[index].id!,
-                      //             data[index].product!.accountId!,
-                      //             data[index].product!.name.toString(),
-                      //             data[index].name.toString(),
-                      //             data[index].createdAt.toString(),
-                      //             data[index].totalPackage!.toInt(),
-                      //             data[index].totalPrice!.toInt(),
-                      //             data[index].statusOrder!.status.toString(),
-                      //             data[index]
-                      //                 .product!
-                      //                 .imageProducts![0]
-                      //                 .src
-                      //                 .toString())),
-                      //   ),
-                      // )
-                    ],
+                    ),
                   ),
-                  onEmpty: SizedBox(
-                    height: Get.height / 2,
-                    child: const Center(
-                      child: Material(
-                        child: LottiePlayer(
-                          networkUrl:
-                              'https://assets10.lottiefiles.com/datafiles/vhvOcuUkH41HdrL/data.json',
-                          width: 200,
-                          height: 200,
+                ),
+                SizedBox(
+                  height: Get.height * 0.05,
+                  child: GetBuilder<TransactionController>(
+                      init: TransactionController(),
+                      builder: (ctx) => SizedBox(
+                            height: 40,
+                            child: ListView.separated(
+                              physics: const ClampingScrollPhysics(),
+                              shrinkWrap: true,
+                              scrollDirection: Axis.horizontal,
+                              itemCount: Strings.filterTransaction.length + 1,
+                              itemBuilder: (BuildContext context, int index) {
+                                if (index == 0 ||
+                                    index ==
+                                        (Strings.filterTransaction.length)) {
+                                  return const SizedBox(
+                                    width: 20,
+                                  );
+                                } else {
+                                  return const SizedBox(
+                                    width: 5,
+                                  );
+                                }
+                              },
+                              separatorBuilder:
+                                  (BuildContext context, int index) =>
+                                      filterTransaction(
+                                index,
+                                transactionC.stateFilter[index],
+                                ctx,
+                              ),
+                            ),
+                          )),
+                ),
+                SizedBox(
+                  height: Get.height * 0.78 - (Get.mediaQuery.viewPadding.top),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: transactionC.obx(
+                      (data) => ListView.separated(
+                          padding:
+                              const EdgeInsets.only(top: 10, left: 5, right: 5),
+                          shrinkWrap: true,
+                          physics: const BouncingScrollPhysics(),
+                          controller: transactionC.scroll,
+                          itemCount: data!.length,
+                          itemBuilder: (BuildContext context, int index) =>
+                              itemTransaction(
+                                  data[index].id!,
+                                  data[index].product!.accountId!,
+                                  data[index].product!.name.toString(),
+                                  data[index].name.toString(),
+                                  data[index].createdAt.toString(),
+                                  data[index].totalPackage!.toInt(),
+                                  data[index].totalPrice!.toInt(),
+                                  data[index].statusOrder!.status.toString(),
+                                  data[index]
+                                      .product!
+                                      .imageProducts![0]
+                                      .src
+                                      .toString()),
+                          separatorBuilder: (_, __) => const SizedBox(
+                                height: 5,
+                              )),
+                      onEmpty: SizedBox(
+                        height: Get.height / 2,
+                        child: const Center(
+                          child: Material(
+                            child: LottiePlayer(
+                              networkUrl:
+                                  'https://assets10.lottiefiles.com/datafiles/vhvOcuUkH41HdrL/data.json',
+                              width: 200,
+                              height: 200,
+                            ),
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
-              ),
+              ],
             ),
-          ],
-        ),
-      ),
-    ));
+          ),
+        ));
   }
 
   ActionChip filterTransaction(

@@ -8,7 +8,7 @@ import '../../../data/models/profile_selller.dart';
 import '../../../data/providers/profile_seller_provider.dart';
 
 class SellerProfileController extends GetxController
-    with StateMixin<ProfileSellerModel> {
+    with StateMixin<ProfileSellerItem> {
   var selProv = Get.put(ProfileSellerProvider());
 
   dynamic args = Get.arguments;
@@ -25,7 +25,7 @@ class SellerProfileController extends GetxController
     try {
       selProv.detailProfile(args["data"]).then((value) {
         print(value);
-        change(value, status: RxStatus.success());
+        change(value.data, status: RxStatus.success());
       }).onError((error, stackTrace) {
         change(null, status: RxStatus.error());
         if (kDebugMode) {

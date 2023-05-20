@@ -5,7 +5,6 @@ import 'package:art_sweetalert/art_sweetalert.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:yuk_kuy_mobile/app/data/models/profile_model.dart';
@@ -98,9 +97,11 @@ class ProfileController extends GetxController with StateMixin<ProfileModel> {
     }
 
     if (response.isTapConfirmButton) {
-      removeToken();
-      Get.offNamed(AppPages.INITIAL_LR);
-      return;
+      Future.delayed(const Duration(seconds: 2), () {
+        removeToken();
+        Get.offNamed(AppPages.INITIAL_LR);
+        return;
+      });
     }
   }
 

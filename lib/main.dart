@@ -21,7 +21,7 @@ void main() async {
     ),
   );
   FlutterNativeSplash.remove();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -44,10 +44,10 @@ class MyApp extends StatelessWidget {
               borderSide: BorderSide.none,
             ),
             filled: true,
-            fillColor: Color.fromRGBO(245, 246, 250, 1),
+            fillColor: const Color.fromRGBO(245, 246, 250, 1),
             hintStyle: GoogleFonts.inter(
               fontSize: 15,
-              color: Color.fromRGBO(143, 149, 158, 1),
+              color: const Color.fromRGBO(143, 149, 158, 1),
             ),
             // errorStyle: CustomFonts.poppinsRegular12.copyWith(
             //   color: CustomColor.red,

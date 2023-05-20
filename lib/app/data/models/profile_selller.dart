@@ -12,7 +12,7 @@ String profileSellerModelToJson(ProfileSellerModel data) =>
 
 class ProfileSellerModel {
   bool? status;
-  Data? data;
+  ProfileSellerItem? data;
 
   ProfileSellerModel({
     this.status,
@@ -22,7 +22,9 @@ class ProfileSellerModel {
   factory ProfileSellerModel.fromJson(Map<String, dynamic> json) =>
       ProfileSellerModel(
         status: json["status"],
-        data: json["data"] == null ? null : Data.fromJson(json["data"]),
+        data: json["data"] == null
+            ? null
+            : ProfileSellerItem.fromJson(json["data"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -31,7 +33,7 @@ class ProfileSellerModel {
       };
 }
 
-class Data {
+class ProfileSellerItem {
   int? id;
   String? username;
   String? name;
@@ -44,7 +46,7 @@ class Data {
   List<SocialAccount>? socialAccounts;
   List<Product>? products;
 
-  Data({
+  ProfileSellerItem({
     this.id,
     this.username,
     this.name,
@@ -58,7 +60,8 @@ class Data {
     this.products,
   });
 
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
+  factory ProfileSellerItem.fromJson(Map<String, dynamic> json) =>
+      ProfileSellerItem(
         id: json["id"],
         username: json["username"],
         name: json["name"],

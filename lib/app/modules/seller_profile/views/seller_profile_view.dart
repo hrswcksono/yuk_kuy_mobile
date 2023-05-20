@@ -21,7 +21,7 @@ class SellerProfileView extends GetView<SellerProfileController> {
         child: controller.obx((data) => Column(
               children: [
                 HeaderGlobal(
-                  title: data!.data!.name.toString(),
+                  title: data!.name.toString(),
                 ).margin(horizontal: 20, vertical: 5),
                 SizedBox(
                   width: Get.width,
@@ -29,8 +29,7 @@ class SellerProfileView extends GetView<SellerProfileController> {
                   child: Stack(
                     children: [
                       Image.network(
-                        Consts.urlImg +
-                            data!.data!.profile!.bannerImage.toString(),
+                        Consts.urlImg + data.profile!.bannerImage.toString(),
                         fit: BoxFit.fitWidth,
                         width: double.infinity,
                         height: 128,
@@ -47,7 +46,7 @@ class SellerProfileView extends GetView<SellerProfileController> {
                               image: DecorationImage(
                                   fit: BoxFit.cover,
                                   image: NetworkImage(Consts.urlImg +
-                                      data.data!.profile!.avatar.toString()))),
+                                      data.profile!.avatar.toString()))),
                         ),
                       ),
                     ],
@@ -59,7 +58,7 @@ class SellerProfileView extends GetView<SellerProfileController> {
                       height: 5,
                     ),
                     Text(
-                      data.data!.username.toString(),
+                      data.username.toString(),
                       style: GoogleFonts.inter(
                           textStyle: const TextStyle(
                         fontSize: 20,
@@ -86,7 +85,7 @@ class SellerProfileView extends GetView<SellerProfileController> {
                               SizedBox(
                                 width: Get.width * 0.5,
                                 child: Text(
-                                  "dsadasdas",
+                                  data.profile!.address.toString(),
                                   style: GoogleFonts.inter(
                                       textStyle: const TextStyle(
                                     fontSize: 12,
@@ -110,7 +109,7 @@ class SellerProfileView extends GetView<SellerProfileController> {
                                 width: 15,
                               ),
                               Text(
-                                "hjdgahsdas",
+                                data.email.toString(),
                                 style: GoogleFonts.inter(
                                     textStyle: const TextStyle(
                                   fontSize: 12,
@@ -133,7 +132,7 @@ class SellerProfileView extends GetView<SellerProfileController> {
                                 width: 15,
                               ),
                               Text(
-                                "hdghasdas",
+                                data.profile!.phone.toString(),
                                 style: GoogleFonts.inter(
                                     textStyle: const TextStyle(
                                   fontSize: 12,
@@ -146,19 +145,31 @@ class SellerProfileView extends GetView<SellerProfileController> {
                         ],
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 30,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: List.generate(4, (index) {
-                        return SizedBox(
-                          width: 50,
-                          child: SignInButton.mini(
-                            buttonType: ButtonType.facebook,
-                            onPressed: () {},
-                          ),
-                        );
+                      children:
+                          List.generate(data.socialAccounts!.length, (index) {
+                        if (data.socialAccounts![index].platform ==
+                            "facebook") {
+                          return SizedBox(
+                            width: 50,
+                            child: SignInButton.mini(
+                              buttonType: ButtonType.facebook,
+                              onPressed: () {},
+                            ),
+                          );
+                        } else {
+                          return SizedBox(
+                            width: 50,
+                            child: SignInButton.mini(
+                              buttonType: ButtonType.instagram,
+                              onPressed: () {},
+                            ),
+                          );
+                        }
                       }),
                     ),
                   ],
