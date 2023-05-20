@@ -15,13 +15,11 @@ import 'package:yuk_kuy_mobile/app/data/models/product_detail_model.dart';
 import 'package:yuk_kuy_mobile/app/data/providers/bank_provider.dart';
 import 'package:yuk_kuy_mobile/app/data/providers/order_provider.dart';
 import 'package:yuk_kuy_mobile/app/modules/base/controllers/base_controller.dart';
-import 'package:yuk_kuy_mobile/app/modules/base/views/base_view.dart';
 import 'package:yuk_kuy_mobile/app/modules/payment/views/payment_information_view.dart';
 import 'package:yuk_kuy_mobile/app/modules/transaction/controllers/transaction_controller.dart';
 import 'package:yuk_kuy_mobile/app/widgets/custom_alert.dart';
 
 import '../../../data/providers/verification_provider.dart';
-import '../../../routes/app_pages.dart';
 
 class PaymentController extends GetxController
     with StateMixin<Tuple2<OrderDetailModel, BankModel>> {
@@ -135,7 +133,7 @@ class PaymentController extends GetxController
               productId)
           .then((value) {
         CustomAlert.success(Get.context!, "Order");
-        Get.off(PaymentInformationView(productId, idTour));
+        Get.off(PaymentInformationView(productId, idTour, true));
         print("berhasil");
         print(value);
       }).onError((error, stackTrace) {

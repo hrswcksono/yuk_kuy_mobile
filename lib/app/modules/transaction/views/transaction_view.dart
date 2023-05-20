@@ -183,7 +183,7 @@ class TransactionView extends GetView {
     return InkWell(
       onTap: () {
         if (status == "payment") {
-          Get.to(PaymentInformationView(orderId, sellerId));
+          Get.to(PaymentInformationView(orderId, sellerId, true));
         } else if (status == "verification") {
           Get.to(const VerificationPendingView());
         } else if (status == "success") {

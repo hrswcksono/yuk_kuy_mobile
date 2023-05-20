@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:yuk_kuy_mobile/app/modules/payment/views/payment_verification_view.dart';
+import 'package:yuk_kuy_mobile/app/modules/payment/views/payment_information_view.dart';
 
 import '../../../widgets/header_global.dart';
 
@@ -70,7 +70,7 @@ class VerificationRejectedView extends GetView {
                 const Spacer(),
                 ElevatedButton(
                   onPressed: () {
-                    // Get.to(PaymentVerificationView(orderId, sellerId));
+                    Get.to(PaymentInformationView(orderId, sellerId, false));
                   },
                   child: Text("Verification Again",
                       textAlign: TextAlign.center,
