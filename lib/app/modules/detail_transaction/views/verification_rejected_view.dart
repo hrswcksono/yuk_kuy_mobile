@@ -2,11 +2,19 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:yuk_kuy_mobile/app/modules/payment/views/payment_verification_view.dart';
 
 import '../../../widgets/header_global.dart';
 
 class VerificationRejectedView extends GetView {
-  const VerificationRejectedView({Key? key}) : super(key: key);
+  final int orderId;
+  final int sellerId;
+  final String reason;
+
+  const VerificationRejectedView(this.orderId, this.sellerId, this.reason,
+      {Key? key})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,19 +27,19 @@ class VerificationRejectedView extends GetView {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                HeaderGlobal(
+                const HeaderGlobal(
                   title: "Verification Rejected",
                 ),
-                SizedBox(
-                  height: 20,
+                const SizedBox(
+                  height: 50,
                 ),
                 Image.asset(
                   "assets/images/img_rejected.png",
                   height: 160,
                   width: 184,
                 ),
-                SizedBox(
-                  height: 20,
+                const SizedBox(
+                  height: 50,
                 ),
                 Align(
                   alignment: Alignment.centerLeft,
@@ -51,7 +59,7 @@ class VerificationRejectedView extends GetView {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    "Your xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+                    reason,
                     style: GoogleFonts.inter(
                         textStyle: const TextStyle(
                       fontSize: 16,
@@ -59,10 +67,10 @@ class VerificationRejectedView extends GetView {
                     )),
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
                 ElevatedButton(
                   onPressed: () {
-                    // Get.to(PaymentVerificationView());
+                    // Get.to(PaymentVerificationView(orderId, sellerId));
                   },
                   child: Text("Verification Again",
                       textAlign: TextAlign.center,
@@ -72,19 +80,11 @@ class VerificationRejectedView extends GetView {
                         fontWeight: FontWeight.w500,
                       ))),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 ElevatedButton(
                   onPressed: () {},
-                  child: Text("Cancel Book",
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.inter(
-                          textStyle: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: Color.fromRGBO(255, 79, 79, 1),
-                      ))),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
@@ -96,6 +96,14 @@ class VerificationRejectedView extends GetView {
                             255, 79, 79, 1) // the color of the border
                         ),
                   ),
+                  child: Text("Cancel Book",
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.inter(
+                          textStyle: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: Color.fromRGBO(255, 79, 79, 1),
+                      ))),
                 )
               ],
             ),

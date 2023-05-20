@@ -5,8 +5,9 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../../widgets/header_global.dart';
 
-class OrderCanceledView extends GetView {
-  const OrderCanceledView({Key? key}) : super(key: key);
+class VerificationPendingView extends GetView {
+  const VerificationPendingView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,19 +20,19 @@ class OrderCanceledView extends GetView {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                HeaderGlobal(
-                  title: "Order Cancelled",
+                const HeaderGlobal(
+                  title: "Verification Pending",
                 ),
-                SizedBox(
-                  height: 20,
+                const SizedBox(
+                  height: 50,
                 ),
                 Image.asset(
-                  "assets/images/img_rejected.png",
+                  "assets/images/img_pending.png",
                   height: 160,
                   width: 184,
                 ),
-                SizedBox(
-                  height: 20,
+                const SizedBox(
+                  height: 50,
                 ),
                 Align(
                   alignment: Alignment.centerLeft,
@@ -51,7 +52,7 @@ class OrderCanceledView extends GetView {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    "Your xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+                    "Please wait a moment, we are processing your transaction.",
                     style: GoogleFonts.inter(
                         textStyle: const TextStyle(
                       fontSize: 16,

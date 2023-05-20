@@ -12,6 +12,7 @@ abstract class Routes {
   static const FAVORITE = _Paths.FAVORITE;
   static const PAYMENT = _Paths.PAYMENT;
   static const SELLER_PROFILE = _Paths.SELLER_PROFILE;
+  static const DETAIL_TRANSACTION = _Paths.DETAIL_TRANSACTION;
 }
 
 abstract class _Paths {
@@ -25,4 +26,5 @@ abstract class _Paths {
   static const FAVORITE = '/favorite';
   static const PAYMENT = '/payment';
   static const SELLER_PROFILE = '/seller-profile';
+  static const DETAIL_TRANSACTION = '/detail-transaction';
 }

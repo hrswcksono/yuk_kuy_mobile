@@ -6,16 +6,16 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie_player/lottie_player.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:yuk_kuy_mobile/app/modules/detail_transaction/views/order_canceled_view.dart';
+import 'package:yuk_kuy_mobile/app/modules/detail_transaction/views/verification_rejected_view.dart';
 import 'package:yuk_kuy_mobile/app/modules/payment/views/payment_information_view.dart';
-import 'package:yuk_kuy_mobile/app/modules/transaction/views/order_canceled_view.dart';
-import 'package:yuk_kuy_mobile/app/modules/transaction/views/verification_pending_view.dart';
-import 'package:yuk_kuy_mobile/app/modules/transaction/views/verification_rejected_view.dart';
-import 'package:yuk_kuy_mobile/app/modules/transaction/views/verification_success_view.dart';
+import 'package:yuk_kuy_mobile/app/modules/detail_transaction/views/verification_pending_view.dart';
 import 'package:yuk_kuy_mobile/core/themes/colors.dart';
 import 'package:yuk_kuy_mobile/core/utils/extensions/int_extentions.dart';
 import 'package:yuk_kuy_mobile/core/values/strings.dart';
 
 import '../../../../core/values/consts.dart';
+import '../../../routes/app_pages.dart';
 import '../controllers/transaction_controller.dart';
 
 class TransactionView extends GetView {
@@ -96,19 +96,21 @@ class TransactionView extends GetView {
                           itemCount: data!.length,
                           itemBuilder: (BuildContext context, int index) =>
                               itemTransaction(
-                                  data[index].id!,
-                                  data[index].product!.accountId!,
-                                  data[index].product!.name.toString(),
-                                  data[index].name.toString(),
-                                  data[index].createdAt.toString(),
-                                  data[index].totalPackage!.toInt(),
-                                  data[index].totalPrice!.toInt(),
-                                  data[index].statusOrder!.status.toString(),
-                                  data[index]
-                                      .product!
-                                      .imageProducts![0]
-                                      .src
-                                      .toString()),
+                                data[index].id!,
+                                data[index].product!.accountId!,
+                                data[index].product!.name.toString(),
+                                data[index].name.toString(),
+                                data[index].createdAt.toString(),
+                                data[index].totalPackage!.toInt(),
+                                data[index].totalPrice!.toInt(),
+                                data[index].statusOrder!.status.toString(),
+                                data[index]
+                                    .product!
+                                    .imageProducts![0]
+                                    .src
+                                    .toString(),
+                                data[index].statusOrder!.reason.toString(),
+                              ),
                           separatorBuilder: (_, __) => const SizedBox(
                                 height: 5,
                               )),
@@ -167,28 +169,29 @@ class TransactionView extends GetView {
   }
 
   InkWell itemTransaction(
-    int id,
-    int accountId,
-    String title,
+    int orderId,
+    int sellerId,
+    String productName,
     String user,
     String date,
     int pax,
     int price,
     String status,
     String image,
+    String reason,
   ) {
     return InkWell(
       onTap: () {
         if (status == "payment") {
-          Get.to(PaymentInformationView(id, accountId));
+          Get.to(PaymentInformationView(orderId, sellerId));
         } else if (status == "verification") {
           Get.to(const VerificationPendingView());
         } else if (status == "success") {
-          Get.to(const VerificationSuccessView());
+          Get.toNamed(AppPages.INITIAL_DT, arguments: {"orderId": orderId});
         } else if (status == "reject") {
-          Get.to(const VerificationRejectedView());
+          Get.to(VerificationRejectedView(orderId, sellerId, reason));
         } else if (status == "cancel") {
-          Get.to(const OrderCanceledView());
+          Get.to(OrderCanceledView(reason));
         }
       },
       child: Container(
@@ -197,8 +200,8 @@ class TransactionView extends GetView {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: Colors.white,
-          boxShadow: <BoxShadow>[
-            const BoxShadow(
+          boxShadow: const <BoxShadow>[
+            BoxShadow(
               color: Color(0x73000000),
               blurRadius: 2.0,
               spreadRadius: 1,
@@ -240,7 +243,7 @@ class TransactionView extends GetView {
                       // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          title,
+                          productName,
                           style: GoogleFonts.inter(
                               textStyle: const TextStyle(
                             fontSize: 14,

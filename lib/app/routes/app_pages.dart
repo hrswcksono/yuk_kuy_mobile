@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:yuk_kuy_mobile/app/modules/detail_transaction/binding/detail_transaction_binding.dart';
+import 'package:yuk_kuy_mobile/app/modules/detail_transaction/views/verification_success_view.dart';
 
 import '../middlewares/auth_middleware.dart';
 import '../modules/base/bindings/base_binding.dart';
@@ -10,9 +12,7 @@ import '../modules/favorite/views/favorite_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/login_register/bindings/login_register_binding.dart';
-import '../modules/login_register/views/login_register_view.dart';
 import '../modules/login_register/views/login_view.dart';
-import '../modules/login_register/views/register_view.dart';
 import '../modules/payment/bindings/payment_binding.dart';
 import '../modules/payment/views/payment_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
@@ -33,6 +33,7 @@ class AppPages {
   static const INITIAL_DP = Routes.DETAIL_PRODUCT;
   static const INITIAL_P = Routes.PAYMENT;
   static const INITIAL_SP = Routes.SELLER_PROFILE;
+  static const INITIAL_DT = Routes.DETAIL_TRANSACTION;
 
   static final routes = [
     GetPage(
@@ -80,6 +81,11 @@ class AppPages {
       name: _Paths.SELLER_PROFILE,
       page: () => SellerProfileView(),
       binding: SellerProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.DETAIL_TRANSACTION,
+      page: () => VerificationSuccessView(),
+      binding: DetailTransactionBinding(),
     ),
   ];
 }
