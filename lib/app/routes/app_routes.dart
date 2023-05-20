@@ -4,9 +4,25 @@ part of 'app_pages.dart';
 abstract class Routes {
   Routes._();
   static const HOME = _Paths.HOME;
+  static const DETAIL_PRODUCT = _Paths.DETAIL_PRODUCT;
+  static const LOGIN_REGISTER = _Paths.LOGIN_REGISTER;
+  static const PROFILE = _Paths.PROFILE;
+  static const TRANSACTION = _Paths.TRANSACTION;
+  static const BASE = _Paths.BASE;
+  static const FAVORITE = _Paths.FAVORITE;
+  static const PAYMENT = _Paths.PAYMENT;
+  static const SELLER_PROFILE = _Paths.SELLER_PROFILE;
 }
 
 abstract class _Paths {
   _Paths._();
   static const HOME = '/home';
+  static const DETAIL_PRODUCT = '/detail-product';
+  static const LOGIN_REGISTER = '/login-register';
+  static const PROFILE = '/profile';
+  static const TRANSACTION = '/transaction';
+  static const BASE = '/base';
+  static const FAVORITE = '/favorite';
+  static const PAYMENT = '/payment';
+  static const SELLER_PROFILE = '/seller-profile';
 }
