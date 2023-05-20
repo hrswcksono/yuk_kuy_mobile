@@ -33,6 +33,16 @@ class TransactionController extends GetxController
     super.onInit();
   }
 
+  void moveData() {
+    orderItem.clear();
+    stateIndex = 0;
+    page = 1;
+    lastPage = false;
+    getFirstData = false;
+    dataChange(stateIndex);
+    update();
+  }
+
   void changeState(int index) {
     orderItem.clear();
     page = 1;

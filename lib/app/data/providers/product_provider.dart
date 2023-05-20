@@ -1,9 +1,20 @@
 import 'package:yuk_kuy_mobile/app/data/models/product_detail_model.dart';
 import 'package:yuk_kuy_mobile/app/data/models/product_model.dart';
 
+import '../models/city_model.dart';
 import 'base_provider.dart';
 
 class ProductProvider extends BaseProvider {
+  Future<CityModel> listCity() async {
+    var response = await get('products/city');
+
+    if (!response.body['status']) {
+      return Future.error(response.body["message"]);
+    } else {
+      return cityModelFromJson(response.bodyString.toString());
+    }
+  }
+
   Future<ProductModel> listProduct() async {
     var response = await get('products/mobile');
 

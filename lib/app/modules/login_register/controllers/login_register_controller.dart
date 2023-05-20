@@ -67,14 +67,14 @@ class LoginRegisterController extends GetxController {
         Future.delayed(const Duration(seconds: 2), () {
           Get.back();
           Get.offNamed(AppPages.INITIAL_B);
-          // print(readUserData()['id_user']);
-          // print(readToken());
-          // print("Timeout");
         });
       }).onError((error, stackTrace) {
-        if (kDebugMode) {
-          print(error);
-        }
+        ArtSweetAlert.show(
+            context: Get.context!,
+            artDialogArgs: ArtDialogArgs(
+                type: ArtSweetAlertType.danger,
+                title: "Failed",
+                text: error.toString()));
       });
     } catch (e) {
       if (kDebugMode) {
@@ -95,11 +95,13 @@ class LoginRegisterController extends GetxController {
                 type: ArtSweetAlertType.success,
                 title: "Success",
                 text: "Register Success"));
-        print(value);
       }).onError((error, stackTrace) {
-        if (kDebugMode) {
-          print(error);
-        }
+        ArtSweetAlert.show(
+            context: Get.context!,
+            artDialogArgs: ArtDialogArgs(
+                type: ArtSweetAlertType.danger,
+                title: "Failed",
+                text: error.toString()));
       });
     } catch (e) {
       if (kDebugMode) {

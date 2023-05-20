@@ -106,7 +106,6 @@ class HomeView extends GetView {
                           physics: const ClampingScrollPhysics(),
                           shrinkWrap: true,
                           scrollDirection: Axis.horizontal,
-                          // itemCount: DummyString.listProduct.length + 1,
                           itemCount: homeC.toFilterList().length + 1,
                           itemBuilder: (BuildContext context, int index) {
                             if (index == 0 ||

@@ -31,15 +31,17 @@ dev_dependencies:
     sdk: flutter
 
 flutter_native_splash:
-  color: "#32a885"
+  color: "#ffffff"
   image: assets/images/splash.png
-  android_gravity: fill
-  ios_content_mode: scaleAspectFill
+  android_gravity: center
+  image_dark: assets/images/splash.png
+  color_dark: "#ffffff"
   android_12:
+    android_gravity: center
     image: assets/images/splash.png
-    color: "#32a885"
+    color: "#ffffff"
     image_dark: assets/images/splash.png
-    color_dark: "#32a885"
+    color_dark: "#ffffff"
   android: true
   ios: true
 

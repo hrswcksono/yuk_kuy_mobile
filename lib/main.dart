@@ -20,8 +20,8 @@ void main() async {
       statusBarColor: Colors.transparent,
     ),
   );
-  FlutterNativeSplash.remove();
   runApp(const MyApp());
+  FlutterNativeSplash.remove();
 }
 
 class MyApp extends StatelessWidget {

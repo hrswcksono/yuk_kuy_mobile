@@ -14,7 +14,7 @@ import '../controllers/profile_controller.dart';
 class ProfileView extends GetView<ProfileController> {
   ProfileView({Key? key}) : super(key: key);
 
-  var profileC = Get.put(ProfileController());
+  // var controller = Get.put(ProfileController());
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +22,8 @@ class ProfileView extends GetView<ProfileController> {
       body: SafeArea(
         child: controller.obx(
           (data) => SmartRefresher(
-              controller: profileC.refreshController,
-              onRefresh: profileC.onRefresh,
+              controller: controller.refreshController,
+              onRefresh: controller.onRefresh,
               child: SizedBox(
                 width: double.infinity,
                 child: Padding(
@@ -43,7 +43,7 @@ class ProfileView extends GetView<ProfileController> {
                             )),
                           ),
                           InkWell(
-                            onTap: () => profileC.logout(),
+                            onTap: () => controller.logout(),
                             child: Container(
                               height: 30,
                               width: 33,
@@ -84,7 +84,8 @@ class ProfileView extends GetView<ProfileController> {
                             bottom: 12,
                             child: InkWell(
                               onTap: () {
-                                Get.dialog(changeAvatarDialog(data, profileC));
+                                Get.dialog(
+                                    changeAvatarDialog(data, controller));
                               },
                               child: Container(
                                 height: 30,
