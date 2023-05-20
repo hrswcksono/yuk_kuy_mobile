@@ -66,7 +66,7 @@ class LoginRegisterController extends GetxController {
                 text: "Login Success"));
         Future.delayed(const Duration(seconds: 2), () {
           Get.back();
-          Get.offNamed(AppPages.INITIAL_B);
+          Get.offAllNamed(AppPages.INITIAL_B);
         });
       }).onError((error, stackTrace) {
         ArtSweetAlert.show(
@@ -95,6 +95,11 @@ class LoginRegisterController extends GetxController {
                 type: ArtSweetAlertType.success,
                 title: "Success",
                 text: "Register Success"));
+        Future.delayed(const Duration(seconds: 2), () {
+          clearTextRegister();
+          Get.back();
+          Get.back();
+        });
       }).onError((error, stackTrace) {
         ArtSweetAlert.show(
             context: Get.context!,
@@ -108,5 +113,13 @@ class LoginRegisterController extends GetxController {
         print("gagal");
       }
     }
+  }
+
+  void clearTextRegister() {
+    usernameRegisTF.clear();
+    nameRegisTF.clear();
+    emailRegisTF.clear();
+    passwordRegisTF.clear();
+    confirmPassRegisTF.clear();
   }
 }
