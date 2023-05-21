@@ -2,18 +2,20 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:yuk_kuy_mobile/app/modules/payment/controllers/payment_controller.dart';
 import 'package:yuk_kuy_mobile/app/modules/payment/views/payment_information_view.dart';
 
 import '../../../widgets/header_global.dart';
 
+// ignore: must_be_immutable
 class VerificationRejectedView extends GetView {
   final int orderId;
   final int sellerId;
   final String reason;
 
-  const VerificationRejectedView(this.orderId, this.sellerId, this.reason,
-      {Key? key})
+  VerificationRejectedView(this.orderId, this.sellerId, this.reason, {Key? key})
       : super(key: key);
+  var paymentC = Get.put(PaymentController());
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +86,9 @@ class VerificationRejectedView extends GetView {
                   height: 10,
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    paymentC.showDialogCancel();
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,
                     shape: RoundedRectangleBorder(

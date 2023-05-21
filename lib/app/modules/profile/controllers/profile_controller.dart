@@ -99,7 +99,7 @@ class ProfileController extends GetxController with StateMixin<ProfileModel> {
     if (response.isTapConfirmButton) {
       Future.delayed(const Duration(seconds: 2), () {
         removeToken();
-        Get.offNamed(AppPages.INITIAL_LR);
+        Get.offNamed(AppPages.initialLR);
         return;
       });
     }
@@ -108,7 +108,6 @@ class ProfileController extends GetxController with StateMixin<ProfileModel> {
   void initData() {
     try {
       profileProvider.detailProfile(readUsername()).then((value) {
-        print(value);
         change(value, status: RxStatus.success());
       }).onError((error, stackTrace) {
         change(null, status: RxStatus.error());
@@ -131,8 +130,6 @@ class ProfileController extends GetxController with StateMixin<ProfileModel> {
           .editProfile(editUsername.text, editName.text, editEmail.text,
               editPhone.text, editAddress.text)
           .then((value) {
-            print('berhasil');
-            print(value);
             Get.back();
             initData();
           })
@@ -153,15 +150,13 @@ class ProfileController extends GetxController with StateMixin<ProfileModel> {
           .editPassword(
               oldPassword.text, newPassword.text, confirmPassword.text)
           .then((value) {
-        print('berhasil');
-        print(value);
-        Get.back();
-        // initData();
-      }).onError((error, stackTrace) {
-        print("error");
-      }).whenComplete(() {
-        log('selesai edit password');
-      });
+            Get.back();
+            initData();
+          })
+          .onError((error, stackTrace) {})
+          .whenComplete(() {
+            log('selesai edit password');
+          });
     } catch (e) {
       if (kDebugMode) {
         print("gagal");
@@ -171,17 +166,18 @@ class ProfileController extends GetxController with StateMixin<ProfileModel> {
 
   void changeAvatar() {
     try {
-      profileProvider.changeAvatar(imageProduct!).then((value) {
-        print(value);
-        imageProduct = null;
-        update();
-        Get.back();
-        initData();
-      }).onError((error, stackTrace) {
-        print("error");
-      }).whenComplete(() {
-        log('selesai change avatar');
-      });
+      profileProvider
+          .changeAvatar(imageProduct!)
+          .then((value) {
+            imageProduct = null;
+            update();
+            Get.back();
+            initData();
+          })
+          .onError((error, stackTrace) {})
+          .whenComplete(() {
+            log('selesai change avatar');
+          });
     } catch (e) {
       if (kDebugMode) {
         print("gagal");

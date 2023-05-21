@@ -10,6 +10,7 @@ import 'package:yuk_kuy_mobile/core/utils/extensions/int_extentions.dart';
 import '../../../../core/themes/colors.dart';
 import 'components/payment_header.dart';
 
+// ignore: must_be_immutable
 class PaymentInformationView extends GetView {
   PaymentInformationView(this.id, this.accountId, this.btnCancel, {Key? key})
       : super(key: key);

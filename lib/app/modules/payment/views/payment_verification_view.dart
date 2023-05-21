@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:yuk_kuy_mobile/app/modules/base/views/base_view.dart';
-import 'package:yuk_kuy_mobile/app/modules/home/views/home_view.dart';
 import 'package:yuk_kuy_mobile/app/modules/payment/controllers/payment_controller.dart';
 
 import '../../../../core/themes/colors.dart';
 import '../../../data/models/bank_model.dart';
 import 'components/payment_header.dart';
 
+// ignore: must_be_immutable
 class PaymentVerificationView extends GetView {
   PaymentVerificationView(this.item, this.orderId, {Key? key})
       : super(key: key);
@@ -69,7 +68,7 @@ class PaymentVerificationView extends GetView {
                         ),
                       );
                     }),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 GetBuilder<PaymentController>(
@@ -113,9 +112,9 @@ class PaymentVerificationView extends GetView {
                             return chooseBank(
                                 item[index].bank!, ctx, item[index].id!);
                           })
-                      : SizedBox(),
+                      : const SizedBox(),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 ElevatedButton(

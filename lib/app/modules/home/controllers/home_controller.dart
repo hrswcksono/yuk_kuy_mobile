@@ -3,11 +3,12 @@ import 'dart:developer';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:yuk_kuy_mobile/app/data/models/product_model.dart';
 import 'package:yuk_kuy_mobile/app/data/providers/product_provider.dart';
 import 'package:collection/collection.dart';
+
+import '../../../data/models/city_model.dart';
 
 class HomeController extends GetxController
     with StateMixin<List<ProductItem>>, ScrollMixin {
@@ -20,17 +21,11 @@ class HomeController extends GetxController
 
   ScrollController scrollController = ScrollController();
 
-  void test() {
-    scrollController.addListener(() {
-      print("position : ${scrollController.offset}");
-    });
-  }
-
   bool isLoading = true;
 
   String keyword = "";
 
-  var listFilter = List<ProductItem>.empty(growable: true);
+  var listFilter = List<CityItem>.empty(growable: true);
 
   late TextEditingController search;
 
@@ -45,9 +40,20 @@ class HomeController extends GetxController
   @override
   void onInit() {
     search = TextEditingController();
-    // test();
+    getListCity();
     getProductPagination();
     super.onInit();
+  }
+
+  void moveData() {
+    search.clear();
+    listFilter.clear();
+    productItem.clear();
+    stateData = 1;
+    page = 1;
+    lastPage = false;
+    getListCity();
+    getProductPagination();
   }
 
   void changeState(int index, String filterKey) {
@@ -69,6 +75,15 @@ class HomeController extends GetxController
     update();
   }
 
+  List<dynamic> toFilterList() {
+    var temp = [];
+    for (int i = 0; i < listFilter.length; i++) {
+      temp.add(listFilter[i].city);
+      stateFilterHome.add(false);
+    }
+    return temp;
+  }
+
   void initData() {
     getProductPagination();
     listFilter.clear();
@@ -82,7 +97,6 @@ class HomeController extends GetxController
   }
 
   void changeData(ProductModel value) {
-    listFilter.addAll(value.data);
     if (!getFirstData && value.count == 0) {
       change(null, status: RxStatus.empty());
     } else if (getFirstData && value.count == 0) {
@@ -95,15 +109,22 @@ class HomeController extends GetxController
     }
   }
 
-  List<dynamic> toFilterList() {
-    var temp = [];
-    for (int i = 0; i < listFilter.length; i++) {
-      if (!temp.contains(listFilter[i].city)) {
-        temp.add(listFilter[i].city);
-        stateFilterHome.add(false);
+  void getListCity() {
+    try {
+      productProvider.listCity().then((value) {
+        listFilter.addAll(value.data!);
+      }).onError((error, stackTrace) {
+        if (kDebugMode) {
+          print(error);
+        }
+      }).whenComplete(() {
+        log("List product complete!");
+      });
+    } catch (e) {
+      if (kDebugMode) {
+        print("gagal");
       }
     }
-    return temp;
   }
 
   void getProductPagination() {
@@ -167,6 +188,7 @@ class HomeController extends GetxController
       productItem.clear();
       lastPage = false;
       getProductPagination();
+      getListCity();
       update();
       return refreshController.refreshCompleted();
     });
@@ -179,15 +201,12 @@ class HomeController extends GetxController
   Future<void> onEndScroll() async {
     if (!lastPage) {
       page += 1;
-      Get.dialog(Center(child: LinearProgressIndicator()));
+      Get.dialog(const Center(child: LinearProgressIndicator()));
       if (stateData == 1) {
-        print('onEndScrollAll');
         getProductPagination();
       } else if (stateData == 2) {
-        print('onEndScrollFilter');
         getFilterProduct(keyword);
       } else if (stateData == 3) {
-        print('onEndScrollSearch');
         searchProduct();
       }
       Get.back();
@@ -197,7 +216,5 @@ class HomeController extends GetxController
   }
 
   @override
-  Future<void> onTopScroll() async {
-    print('onTopScroll');
-  }
+  Future<void> onTopScroll() async {}
 }

@@ -3,7 +3,6 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../../../../core/utils/helpers.dart';
 import '../../../data/models/favorite_model.dart';
-import '../../../data/models/product_detail_model.dart';
 
 class FavoriteController extends GetxController
     with StateMixin<List<FavoriteModel>> {
@@ -24,7 +23,6 @@ class FavoriteController extends GetxController
   void initData() {
     var listFavorite = readFavorite();
     var listFavModel = List<FavoriteModel>.empty(growable: true);
-    print(listFavorite);
     stateFavorited.clear();
     listFavorite.forEach((data) => {
           listFavModel.add(FavoriteModel(

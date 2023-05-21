@@ -121,12 +121,6 @@ class PaymentController extends GetxController
   }
 
   void addOrder() {
-    // print("name : ${name.text}");
-    // print("phone : ${phone.text}");
-    // print("email : ${email.text}");
-    // print("totalPrice : ${totalPrice}");
-    // print("numpeople : ${numPeople}");
-    // print("argumen : ${argumentData["data"].id}");
     try {
       orderProvider
           .addOder(name.text, phone.text, email.text, totalPrice, numPeople,
@@ -134,10 +128,7 @@ class PaymentController extends GetxController
           .then((value) {
         CustomAlert.success(Get.context!, "Order");
         Get.off(PaymentInformationView(productId, idTour, true));
-        print("berhasil");
-        print(value);
       }).onError((error, stackTrace) {
-        print('error');
         // change(null, status: RxStatus.error());
         if (kDebugMode) {
           print(error);
@@ -158,10 +149,7 @@ class PaymentController extends GetxController
     try {
       orderProvider.detailOrder(idOrder).then((value) {
         listBank(accountId, value);
-        print("berhasil");
-        print(value);
       }).onError((error, stackTrace) {
-        print('error');
         change(null, status: RxStatus.error());
         if (kDebugMode) {
           print(error);
@@ -177,13 +165,10 @@ class PaymentController extends GetxController
   }
 
   void listBank(int id, OrderDetailModel data) {
-    print('account id : $id');
     try {
       bankProvider.listBank(id).then((value) {
-        print(value.toString());
         change(Tuple2(data, value), status: RxStatus.success());
       }).onError((error, stackTrace) {
-        print('error');
         change(null, status: RxStatus.error());
         if (kDebugMode) {
           print(error);
@@ -201,7 +186,6 @@ class PaymentController extends GetxController
   void verifOrder(int idOrd) {
     try {
       verifProvider.verifOrder(imgVerification!, idBank, idOrd).then((value) {
-        print(value);
         ArtSweetAlert.show(
             context: Get.context!,
             artDialogArgs: ArtDialogArgs(
@@ -212,7 +196,6 @@ class PaymentController extends GetxController
           baseController.moved();
         });
       }).onError((error, stackTrace) {
-        print('error');
         if (kDebugMode) {
           print(error);
         }
@@ -229,7 +212,6 @@ class PaymentController extends GetxController
   void cancelOrder(int idOrd) {
     try {
       verifProvider.cancelOrder(idOrd, reason.text).then((value) {
-        print(value);
         ArtSweetAlert.show(
             context: Get.context!,
             artDialogArgs: ArtDialogArgs(
@@ -243,7 +225,6 @@ class PaymentController extends GetxController
           transController.initData();
         });
       }).onError((error, stackTrace) {
-        print('error');
         if (kDebugMode) {
           print(error);
         }
@@ -297,7 +278,7 @@ class PaymentController extends GetxController
                       ),
                     ),
                     Text(
-                      "Reason for Cancel",
+                      "Reason",
                       style: GoogleFonts.inter(
                           textStyle: const TextStyle(
                         fontSize: 16,
@@ -316,9 +297,16 @@ class PaymentController extends GetxController
                       onPressed: () {
                         if (reason.text != "") {
                           cancelOrder(idOrder);
+                        } else {
+                          ArtSweetAlert.show(
+                              context: Get.context!,
+                              artDialogArgs: ArtDialogArgs(
+                                  type: ArtSweetAlertType.warning,
+                                  title: "Cancel Verification",
+                                  text: "Reason cannot be empty"));
                         }
                       },
-                      child: Text("Cancel",
+                      child: Text("Submit",
                           textAlign: TextAlign.center,
                           style: GoogleFonts.inter(
                               textStyle: const TextStyle(

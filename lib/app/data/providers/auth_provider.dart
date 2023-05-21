@@ -37,6 +37,10 @@ class LoginProvider extends BaseProvider {
       contentType: "application/x-www-form-urlencoded",
     );
 
-    return response.body.toString();
+    if (!response.body['status']) {
+      return Future.error(response.body["message"]);
+    } else {
+      return response.body.toString();
+    }
   }
 }

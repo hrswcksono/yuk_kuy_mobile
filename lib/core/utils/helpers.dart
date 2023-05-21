@@ -1,10 +1,8 @@
 import 'package:get_storage/get_storage.dart';
 import 'package:yuk_kuy_mobile/app/data/models/favorite_model.dart';
-import 'package:yuk_kuy_mobile/app/data/models/product_detail_model.dart';
 import 'package:yuk_kuy_mobile/services/storage_services.dart';
 
 import '../values/keys/get_storage_key.dart';
-import 'package:collection/collection.dart';
 
 String readToken() {
   var result = GetStorage().read(GetStorageKey.userToken);

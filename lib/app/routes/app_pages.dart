@@ -1,6 +1,4 @@
 import 'package:get/get.dart';
-import 'package:yuk_kuy_mobile/app/modules/detail_transaction/binding/detail_transaction_binding.dart';
-import 'package:yuk_kuy_mobile/app/modules/detail_transaction/views/verification_success_view.dart';
 
 import '../middlewares/auth_middleware.dart';
 import '../modules/base/bindings/base_binding.dart';
@@ -21,69 +19,71 @@ import '../modules/seller_profile/bindings/seller_profile_binding.dart';
 import '../modules/seller_profile/views/seller_profile_view.dart';
 import '../modules/transaction/bindings/transaction_binding.dart';
 import '../modules/transaction/views/transaction_view.dart';
+import '../modules/detail_transaction/binding/detail_transaction_binding.dart';
+import '../modules/detail_transaction/views/verification_success_view.dart';
 
 part 'app_routes.dart';
 
 class AppPages {
   AppPages._();
 
-  static const INITIAL_B = Routes.BASE;
-  static const INITIAL = Routes.HOME;
-  static const INITIAL_LR = Routes.LOGIN_REGISTER;
-  static const INITIAL_DP = Routes.DETAIL_PRODUCT;
-  static const INITIAL_P = Routes.PAYMENT;
-  static const INITIAL_SP = Routes.SELLER_PROFILE;
-  static const INITIAL_DT = Routes.DETAIL_TRANSACTION;
+  static const initialB = Routes.base;
+  static const initial = Routes.home;
+  static const initialLR = Routes.loginRegister;
+  static const initialDP = Routes.detailProduct;
+  static const initialP = Routes.payment;
+  static const initialSP = Routes.sellerProfile;
+  static const initialDT = Routes.detailTransaction;
 
   static final routes = [
     GetPage(
-      name: _Paths.HOME,
+      name: _Paths.home,
       page: () => HomeView(),
       binding: HomeBinding(),
     ),
     GetPage(
-      name: _Paths.DETAIL_PRODUCT,
+      name: _Paths.detailProduct,
       page: () => const DetailProductView(),
       binding: DetailProductBinding(),
     ),
     GetPage(
-      name: _Paths.LOGIN_REGISTER,
+      name: _Paths.loginRegister,
       page: () => LoginView(),
       binding: LoginRegisterBinding(),
       middlewares: [AuthMiddleware()],
     ),
     GetPage(
-      name: _Paths.PROFILE,
-      page: () => ProfileView(),
+      name: _Paths.profile,
+      page: () => const ProfileView(),
       binding: ProfileBinding(),
     ),
     GetPage(
-      name: _Paths.TRANSACTION,
+      name: _Paths.transaction,
       page: () => TransactionView(),
       binding: TransactionBinding(),
     ),
     GetPage(
-      name: _Paths.BASE,
+      name: _Paths.base,
       page: () => const BaseView(),
       binding: BaseBinding(),
     ),
     GetPage(
-      name: _Paths.FAVORITE,
-      page: () => FavoriteView(),
+      name: _Paths.favorite,
+      page: () => const FavoriteView(),
       binding: FavoriteBinding(),
     ),
     GetPage(
-      name: _Paths.PAYMENT,
+      name: _Paths.payment,
       page: () => PaymentView(),
       binding: PaymentBinding(),
     ),
     GetPage(
-      name: _Paths.SELLER_PROFILE,
-      page: () => SellerProfileView(),
+      name: _Paths.sellerProfile,
+      page: () => const SellerProfileView(),
       binding: SellerProfileBinding(),
     ),
     GetPage(
-      name: _Paths.DETAIL_TRANSACTION,
+      name: _Paths.detailTransaction,
       page: () => VerificationSuccessView(),
       binding: DetailTransactionBinding(),
     ),

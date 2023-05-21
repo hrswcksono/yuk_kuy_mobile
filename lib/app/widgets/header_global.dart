@@ -25,7 +25,7 @@ class HeaderGlobal extends StatelessWidget {
                 // size: 16.35,
               )),
         ),
-        SizedBox(
+        const SizedBox(
           width: 25,
         ),
         Text(
