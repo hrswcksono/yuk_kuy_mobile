@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:yuk_kuy_mobile/app/data/models/profile_model.dart';
@@ -13,6 +12,7 @@ class EditProfileView extends GetView {
   EditProfileView(this.data, {Key? key}) : super(key: key);
   final ProfileItem data;
   var profileC = Get.put(ProfileController());
+
   @override
   Widget build(BuildContext context) {
     profileC.initEdit(data);

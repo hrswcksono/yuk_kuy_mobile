@@ -5,6 +5,8 @@ import '../modules/base/bindings/base_binding.dart';
 import '../modules/base/views/base_view.dart';
 import '../modules/detail_product/bindings/detail_product_binding.dart';
 import '../modules/detail_product/views/detail_product_view.dart';
+import '../modules/detail_transaction/binding/detail_transaction_binding.dart';
+import '../modules/detail_transaction/views/verification_success_view.dart';
 import '../modules/favorite/bindings/favorite_binding.dart';
 import '../modules/favorite/views/favorite_view.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -19,8 +21,6 @@ import '../modules/seller_profile/bindings/seller_profile_binding.dart';
 import '../modules/seller_profile/views/seller_profile_view.dart';
 import '../modules/transaction/bindings/transaction_binding.dart';
 import '../modules/transaction/views/transaction_view.dart';
-import '../modules/detail_transaction/binding/detail_transaction_binding.dart';
-import '../modules/detail_transaction/views/verification_success_view.dart';
 
 part 'app_routes.dart';
 

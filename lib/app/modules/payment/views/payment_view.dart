@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:yuk_kuy_mobile/app/modules/payment/views/components/payment_text_field.dart';
@@ -13,6 +12,7 @@ import 'components/payment_header.dart';
 class PaymentView extends GetView<PaymentController> {
   PaymentView({Key? key}) : super(key: key);
   dynamic argumentData = Get.arguments;
+
   @override
   Widget build(BuildContext context) {
     controller.initData(argumentData["data"]);

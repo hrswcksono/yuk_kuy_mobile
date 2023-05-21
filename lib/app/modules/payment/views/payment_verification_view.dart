@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:yuk_kuy_mobile/app/modules/payment/controllers/payment_controller.dart';
@@ -16,6 +15,7 @@ class PaymentVerificationView extends GetView {
 
   final List<BankItem> item;
   final int? orderId;
+
   @override
   Widget build(BuildContext context) {
     paymentC.initVerification();

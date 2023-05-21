@@ -14,6 +14,7 @@ class FavoriteController extends GetxController
   List<bool> stateFavorited = [];
 
   final count = 0.obs;
+
   @override
   void onInit() {
     initData();

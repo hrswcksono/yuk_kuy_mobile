@@ -20,6 +20,4 @@ extension WidgetExtention on Widget {
       child: this,
     );
   }
-
-  
 }

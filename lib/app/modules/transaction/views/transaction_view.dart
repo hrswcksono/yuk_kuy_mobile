@@ -1,15 +1,14 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie_player/lottie_player.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:yuk_kuy_mobile/app/modules/detail_transaction/views/order_canceled_view.dart';
+import 'package:yuk_kuy_mobile/app/modules/detail_transaction/views/verification_pending_view.dart';
 import 'package:yuk_kuy_mobile/app/modules/detail_transaction/views/verification_rejected_view.dart';
 import 'package:yuk_kuy_mobile/app/modules/payment/views/payment_information_view.dart';
-import 'package:yuk_kuy_mobile/app/modules/detail_transaction/views/verification_pending_view.dart';
 import 'package:yuk_kuy_mobile/core/themes/colors.dart';
 import 'package:yuk_kuy_mobile/core/utils/extensions/int_extentions.dart';
 import 'package:yuk_kuy_mobile/core/values/strings.dart';

@@ -1,6 +1,5 @@
 import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:yuk_kuy_mobile/app/modules/favorite/views/favorite_view.dart';
@@ -12,6 +11,7 @@ import '../controllers/base_controller.dart';
 
 class BaseView extends GetView<BaseController> {
   const BaseView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<BaseController>(
