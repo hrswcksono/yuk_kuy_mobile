@@ -84,7 +84,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.detailTransaction,
-      page: () => VerificationSuccessView(),
+      page: () => const VerificationSuccessView(),
       binding: DetailTransactionBinding(),
     ),
   ];

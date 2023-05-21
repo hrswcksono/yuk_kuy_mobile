@@ -58,10 +58,6 @@ class PaymentController extends GetxController
 
   late TextEditingController reason;
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
 
   void initData(ProductDetailItem data) {
     numPeople = 1;

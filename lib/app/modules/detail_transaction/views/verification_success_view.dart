@@ -8,7 +8,7 @@ import 'package:yuk_kuy_mobile/core/utils/extensions/string_extensions.dart';
 import '../../../widgets/header_global.dart';
 
 class VerificationSuccessView extends GetView<DetailTransactionController> {
-  VerificationSuccessView({Key? key}) : super(key: key);
+  const VerificationSuccessView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
