@@ -3,14 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:yuk_kuy_mobile/app/modules/payment/views/components/payment_text_field.dart';
-import 'package:yuk_kuy_mobile/app/modules/payment/views/payment_information_view.dart';
-import 'package:yuk_kuy_mobile/app/widgets/text_field_global.dart';
 import 'package:yuk_kuy_mobile/core/themes/colors.dart';
 import 'package:yuk_kuy_mobile/core/utils/extensions/int_extentions.dart';
 
 import '../controllers/payment_controller.dart';
 import 'components/payment_header.dart';
 
+// ignore: must_be_immutable
 class PaymentView extends GetView<PaymentController> {
   PaymentView({Key? key}) : super(key: key);
   dynamic argumentData = Get.arguments;

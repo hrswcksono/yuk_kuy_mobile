@@ -1,8 +1,15 @@
 import 'package:get/get.dart';
+import 'package:yuk_kuy_mobile/app/modules/favorite/controllers/favorite_controller.dart';
+import 'package:yuk_kuy_mobile/app/modules/home/controllers/home_controller.dart';
+import 'package:yuk_kuy_mobile/app/modules/profile/controllers/profile_controller.dart';
+import 'package:yuk_kuy_mobile/app/modules/transaction/controllers/transaction_controller.dart';
 import 'package:yuk_kuy_mobile/app/routes/app_pages.dart';
 
 class BaseController extends GetxController {
-  //TODO: Implement BaseController
+  var homeC = Get.put(HomeController());
+  var transC = Get.put(TransactionController());
+  var favC = Get.put(FavoriteController());
+  var profC = Get.put(ProfileController());
 
   var indexTab = 0;
 
@@ -12,18 +19,29 @@ class BaseController extends GetxController {
   void onInit() {
     indexTab = 0;
     update();
+    // homeC.onInit();
     super.onInit();
   }
 
   void moved() {
-    Get.offAllNamed(AppPages.INITIAL_B);
+    Get.offAllNamed(AppPages.initialB);
     indexTab = 1;
-    print('indextab $indexTab');
     update();
   }
 
   void changeIndexTab(int index) {
     indexTab = index;
+    switch (indexTab) {
+      case 0:
+        homeC.moveData();
+        break;
+      case 1:
+        transC.moveData();
+        break;
+      case 2:
+        favC.onInit();
+        break;
+    }
     update();
   }
 }

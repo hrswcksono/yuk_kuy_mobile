@@ -10,9 +10,7 @@ import '../modules/favorite/views/favorite_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/login_register/bindings/login_register_binding.dart';
-import '../modules/login_register/views/login_register_view.dart';
 import '../modules/login_register/views/login_view.dart';
-import '../modules/login_register/views/register_view.dart';
 import '../modules/payment/bindings/payment_binding.dart';
 import '../modules/payment/views/payment_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
@@ -27,58 +25,58 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL_B = Routes.BASE;
-  static const INITIAL = Routes.HOME;
-  static const INITIAL_LR = Routes.LOGIN_REGISTER;
-  static const INITIAL_DP = Routes.DETAIL_PRODUCT;
-  static const INITIAL_P = Routes.PAYMENT;
-  static const INITIAL_SP = Routes.SELLER_PROFILE;
+  static const initialB = Routes.base;
+  static const initial = Routes.home;
+  static const initialLR = Routes.loginRegister;
+  static const initialDP = Routes.detailProduct;
+  static const initialP = Routes.payment;
+  static const initialSP = Routes.sellerProfile;
 
   static final routes = [
     GetPage(
-      name: _Paths.HOME,
+      name: _Paths.home,
       page: () => HomeView(),
       binding: HomeBinding(),
     ),
     GetPage(
-      name: _Paths.DETAIL_PRODUCT,
+      name: _Paths.detailProduct,
       page: () => const DetailProductView(),
       binding: DetailProductBinding(),
     ),
     GetPage(
-      name: _Paths.LOGIN_REGISTER,
+      name: _Paths.loginRegister,
       page: () => LoginView(),
       binding: LoginRegisterBinding(),
       middlewares: [AuthMiddleware()],
     ),
     GetPage(
-      name: _Paths.PROFILE,
-      page: () => ProfileView(),
+      name: _Paths.profile,
+      page: () => const ProfileView(),
       binding: ProfileBinding(),
     ),
     GetPage(
-      name: _Paths.TRANSACTION,
+      name: _Paths.transaction,
       page: () => TransactionView(),
       binding: TransactionBinding(),
     ),
     GetPage(
-      name: _Paths.BASE,
+      name: _Paths.base,
       page: () => const BaseView(),
       binding: BaseBinding(),
     ),
     GetPage(
-      name: _Paths.FAVORITE,
-      page: () => FavoriteView(),
+      name: _Paths.favorite,
+      page: () => const FavoriteView(),
       binding: FavoriteBinding(),
     ),
     GetPage(
-      name: _Paths.PAYMENT,
+      name: _Paths.payment,
       page: () => PaymentView(),
       binding: PaymentBinding(),
     ),
     GetPage(
-      name: _Paths.SELLER_PROFILE,
-      page: () => SellerProfileView(),
+      name: _Paths.sellerProfile,
+      page: () => const SellerProfileView(),
       binding: SellerProfileBinding(),
     ),
   ];

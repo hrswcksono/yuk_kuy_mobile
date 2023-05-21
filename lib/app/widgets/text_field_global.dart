@@ -25,7 +25,7 @@ class TextFieldGlobal extends StatelessWidget {
             fontWeight: FontWeight.w600,
           )),
         ),
-        SizedBox(
+        const SizedBox(
           height: 5,
         ),
         TextField(

@@ -27,8 +27,8 @@ class BaseView extends GetView<BaseController> {
                 children: [
                   HomeView(),
                   TransactionView(),
-                  FavoriteView(),
-                  ProfileView()
+                  const FavoriteView(),
+                  const ProfileView()
                 ],
               ),
             ),

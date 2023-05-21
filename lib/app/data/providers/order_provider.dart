@@ -8,8 +8,6 @@ class OrderProvider extends BaseProvider {
   Future<OrderModel> listOrder(int page, int limit) async {
     var response = await get('orders/mobile?page=$page&limit=$limit');
 
-    print(response.body.toString());
-
     if (!response.body['status']) {
       return Future.error(response.body["message"]);
     } else {
@@ -20,9 +18,6 @@ class OrderProvider extends BaseProvider {
   Future<OrderModel> filterOrder(String status, int page, int limit) async {
     var response =
         await get('orders/mobile?status=$status&page=$page&limit=$limit');
-
-    print(response.body.toString());
-
     if (!response.body['status']) {
       return Future.error(response.body["message"]);
     } else {
@@ -32,9 +27,6 @@ class OrderProvider extends BaseProvider {
 
   Future<OrderDetailModel> detailOrder(int id) async {
     var response = await get('orders/$id');
-
-    print(response.body.toString());
-
     if (!response.body['status']) {
       return Future.error(response.body["message"]);
     } else {
@@ -59,8 +51,6 @@ class OrderProvider extends BaseProvider {
       contentType: "application/x-www-form-urlencoded",
     );
 
-    print(response.body.toString());
-
     if (!response.body['status']) {
       return Future.error(response.body["message"]);
     } else {
@@ -70,8 +60,6 @@ class OrderProvider extends BaseProvider {
 
   Future<dynamic> verification(int id) async {
     var response = await get('orders/$id');
-
-    print(response.body.toString());
 
     if (!response.body['status']) {
       return Future.error(response.body["message"]);

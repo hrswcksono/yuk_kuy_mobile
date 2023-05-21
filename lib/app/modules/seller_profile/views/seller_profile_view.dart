@@ -10,7 +10,7 @@ import '../../../widgets/header_global.dart';
 import '../controllers/seller_profile_controller.dart';
 
 class SellerProfileView extends GetView<SellerProfileController> {
-  SellerProfileView({Key? key}) : super(key: key);
+  const SellerProfileView({Key? key}) : super(key: key);
 
   // var ctrl = Get.put(SellerProfileController());
 

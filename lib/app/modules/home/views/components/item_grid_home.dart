@@ -17,7 +17,7 @@ class ItemGridHome extends StatelessWidget {
     return InkWell(
       onTap: () {
         Get.toNamed(
-          AppPages.INITIAL_DP,
+          AppPages.initialDP,
           arguments: {"id": model.id},
         );
       },

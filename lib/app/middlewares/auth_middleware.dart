@@ -8,7 +8,7 @@ class AuthMiddleware extends GetMiddleware {
   @override
   RouteSettings? redirect(String? route) {
     if (readToken().isNotEmpty) {
-      return const RouteSettings(name: Routes.BASE);
+      return const RouteSettings(name: Routes.base);
     }
     return null;
   }

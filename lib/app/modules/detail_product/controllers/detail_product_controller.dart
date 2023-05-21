@@ -5,8 +5,6 @@ import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:yuk_kuy_mobile/app/data/models/product_detail_model.dart';
 import 'package:yuk_kuy_mobile/core/utils/helpers.dart';
-
-import '../../../../core/values/keys/get_storage_key.dart';
 import '../../../../services/storage_services.dart';
 import '../../../data/models/favorite_model.dart';
 import '../../../data/providers/product_provider.dart';
@@ -50,12 +48,11 @@ class DetailProductController extends GetxController
 
   void initData(int id) {
     try {
-      productProvider.detail_product(id).then((value) {
+      productProvider.detailProduct(id).then((value) {
         // print(value);
         initFavorite(value.data);
         change(value, status: RxStatus.success());
       }).onError((error, stackTrace) {
-        print('error');
         change(null, status: RxStatus.error());
         if (kDebugMode) {
           print(error);

@@ -21,7 +21,7 @@ import '../controllers/transaction_controller.dart';
 class TransactionView extends GetView {
   TransactionView({Key? key}) : super(key: key);
 
-  var transactionC = Get.put(TransactionController());
+  var transC = Get.put(TransactionController());
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +29,8 @@ class TransactionView extends GetView {
         resizeToAvoidBottomInset: false,
         body: SafeArea(
           child: SmartRefresher(
-            controller: transactionC.refreshController,
-            onRefresh: transactionC.onRefresh,
+            controller: transC.refreshController,
+            onRefresh: transC.onRefresh,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -76,7 +76,7 @@ class TransactionView extends GetView {
                                   (BuildContext context, int index) =>
                                       filterTransaction(
                                 index,
-                                transactionC.stateFilter[index],
+                                transC.stateFilter[index],
                                 ctx,
                               ),
                             ),
@@ -86,13 +86,13 @@ class TransactionView extends GetView {
                   height: Get.height * 0.78 - (Get.mediaQuery.viewPadding.top),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: transactionC.obx(
+                    child: transC.obx(
                       (data) => ListView.separated(
                           padding:
                               const EdgeInsets.only(top: 10, left: 5, right: 5),
                           shrinkWrap: true,
                           physics: const BouncingScrollPhysics(),
-                          controller: transactionC.scroll,
+                          controller: transC.scroll,
                           itemCount: data!.length,
                           itemBuilder: (BuildContext context, int index) =>
                               itemTransaction(
@@ -197,8 +197,8 @@ class TransactionView extends GetView {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: Colors.white,
-          boxShadow: <BoxShadow>[
-            const BoxShadow(
+          boxShadow: const <BoxShadow>[
+            BoxShadow(
               color: Color(0x73000000),
               blurRadius: 2.0,
               spreadRadius: 1,

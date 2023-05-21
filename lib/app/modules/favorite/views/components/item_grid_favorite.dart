@@ -9,6 +9,7 @@ import 'package:yuk_kuy_mobile/core/utils/extensions/string_extensions.dart';
 import '../../../../../core/values/consts.dart';
 import '../../../../routes/app_pages.dart';
 
+// ignore: must_be_immutable
 class ItemGridFavorite extends StatelessWidget {
   ItemGridFavorite({super.key, required this.model, required this.state});
 
@@ -22,7 +23,7 @@ class ItemGridFavorite extends StatelessWidget {
     return InkWell(
       onTap: () {
         Get.toNamed(
-          AppPages.INITIAL_DP,
+          AppPages.initialDP,
           arguments: {"id": model.id},
         );
       },

@@ -9,15 +9,14 @@ import 'package:yuk_kuy_mobile/app/modules/favorite/views/components/item_grid_f
 import '../controllers/favorite_controller.dart';
 
 class FavoriteView extends GetView<FavoriteController> {
-  FavoriteView({Key? key}) : super(key: key);
-  var favC = Get.put(FavoriteController());
+  const FavoriteView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: SmartRefresher(
-          controller: favC.refreshController,
-          onRefresh: favC.onRefresh,
+          controller: controller.refreshController,
+          onRefresh: controller.onRefresh,
           child: Padding(
             padding: const EdgeInsets.all(20),
             child: Column(

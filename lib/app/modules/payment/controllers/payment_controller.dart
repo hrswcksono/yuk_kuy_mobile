@@ -15,13 +15,11 @@ import 'package:yuk_kuy_mobile/app/data/models/product_detail_model.dart';
 import 'package:yuk_kuy_mobile/app/data/providers/bank_provider.dart';
 import 'package:yuk_kuy_mobile/app/data/providers/order_provider.dart';
 import 'package:yuk_kuy_mobile/app/modules/base/controllers/base_controller.dart';
-import 'package:yuk_kuy_mobile/app/modules/base/views/base_view.dart';
 import 'package:yuk_kuy_mobile/app/modules/payment/views/payment_information_view.dart';
 import 'package:yuk_kuy_mobile/app/modules/transaction/controllers/transaction_controller.dart';
 import 'package:yuk_kuy_mobile/app/widgets/custom_alert.dart';
 
 import '../../../data/providers/verification_provider.dart';
-import '../../../routes/app_pages.dart';
 
 class PaymentController extends GetxController
     with StateMixin<Tuple2<OrderDetailModel, BankModel>> {
@@ -123,12 +121,6 @@ class PaymentController extends GetxController
   }
 
   void addOrder() {
-    // print("name : ${name.text}");
-    // print("phone : ${phone.text}");
-    // print("email : ${email.text}");
-    // print("totalPrice : ${totalPrice}");
-    // print("numpeople : ${numPeople}");
-    // print("argumen : ${argumentData["data"].id}");
     try {
       orderProvider
           .addOder(name.text, phone.text, email.text, totalPrice, numPeople,
@@ -136,10 +128,7 @@ class PaymentController extends GetxController
           .then((value) {
         CustomAlert.success(Get.context!, "Order");
         Get.off(PaymentInformationView(productId, idTour));
-        print("berhasil");
-        print(value);
       }).onError((error, stackTrace) {
-        print('error');
         // change(null, status: RxStatus.error());
         if (kDebugMode) {
           print(error);
@@ -160,10 +149,7 @@ class PaymentController extends GetxController
     try {
       orderProvider.detailOrder(idOrder).then((value) {
         listBank(accountId, value);
-        print("berhasil");
-        print(value);
       }).onError((error, stackTrace) {
-        print('error');
         change(null, status: RxStatus.error());
         if (kDebugMode) {
           print(error);
@@ -179,13 +165,10 @@ class PaymentController extends GetxController
   }
 
   void listBank(int id, OrderDetailModel data) {
-    print('account id : $id');
     try {
       bankProvider.listBank(id).then((value) {
-        print(value.toString());
         change(Tuple2(data, value), status: RxStatus.success());
       }).onError((error, stackTrace) {
-        print('error');
         change(null, status: RxStatus.error());
         if (kDebugMode) {
           print(error);
@@ -203,7 +186,6 @@ class PaymentController extends GetxController
   void verifOrder(int idOrd) {
     try {
       verifProvider.verifOrder(imgVerification!, idBank, idOrd).then((value) {
-        print(value);
         ArtSweetAlert.show(
             context: Get.context!,
             artDialogArgs: ArtDialogArgs(
@@ -214,7 +196,6 @@ class PaymentController extends GetxController
           baseController.moved();
         });
       }).onError((error, stackTrace) {
-        print('error');
         if (kDebugMode) {
           print(error);
         }
@@ -231,7 +212,6 @@ class PaymentController extends GetxController
   void cancelOrder(int idOrd) {
     try {
       verifProvider.cancelOrder(idOrd, reason.text).then((value) {
-        print(value);
         ArtSweetAlert.show(
             context: Get.context!,
             artDialogArgs: ArtDialogArgs(
@@ -245,7 +225,6 @@ class PaymentController extends GetxController
           transController.initData();
         });
       }).onError((error, stackTrace) {
-        print('error');
         if (kDebugMode) {
           print(error);
         }
