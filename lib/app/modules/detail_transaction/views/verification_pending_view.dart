@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -7,6 +6,7 @@ import '../../../widgets/header_global.dart';
 
 class VerificationPendingView extends GetView {
   const VerificationPendingView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +23,7 @@ class VerificationPendingView extends GetView {
                   title: "Verification Pending",
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 50,
                 ),
                 Image.asset(
                   "assets/images/img_pending.png",
@@ -31,7 +31,7 @@ class VerificationPendingView extends GetView {
                   width: 184,
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 50,
                 ),
                 Align(
                   alignment: Alignment.centerLeft,
@@ -51,7 +51,7 @@ class VerificationPendingView extends GetView {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    "Your xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+                    "Please wait a moment, we are processing your transaction.",
                     style: GoogleFonts.inter(
                         textStyle: const TextStyle(
                       fontSize: 16,

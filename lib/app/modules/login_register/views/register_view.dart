@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:yuk_kuy_mobile/app/modules/login_register/controllers/login_register_controller.dart';
@@ -11,6 +10,7 @@ import 'package:yuk_kuy_mobile/core/themes/colors.dart';
 class RegisterView extends GetView {
   RegisterView({Key? key}) : super(key: key);
   var lrController = Get.put(LoginRegisterController());
+
   @override
   Widget build(BuildContext context) {
     lrController.initTextRegister();

@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../widgets/header_global.dart';
 
 class OrderCanceledView extends GetView {
-  const OrderCanceledView({Key? key}) : super(key: key);
+  final String reason;
+
+  const OrderCanceledView(this.reason, {Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +25,7 @@ class OrderCanceledView extends GetView {
                   title: "Order Cancelled",
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 50,
                 ),
                 Image.asset(
                   "assets/images/img_rejected.png",
@@ -31,7 +33,7 @@ class OrderCanceledView extends GetView {
                   width: 184,
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 50,
                 ),
                 Align(
                   alignment: Alignment.centerLeft,
@@ -51,7 +53,7 @@ class OrderCanceledView extends GetView {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    "Your xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+                    reason,
                     style: GoogleFonts.inter(
                         textStyle: const TextStyle(
                       fontSize: 16,

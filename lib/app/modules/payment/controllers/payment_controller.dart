@@ -58,10 +58,6 @@ class PaymentController extends GetxController
 
   late TextEditingController reason;
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
 
   void initData(ProductDetailItem data) {
     numPeople = 1;
@@ -127,7 +123,7 @@ class PaymentController extends GetxController
               productId)
           .then((value) {
         CustomAlert.success(Get.context!, "Order");
-        Get.off(PaymentInformationView(productId, idTour));
+        Get.off(PaymentInformationView(productId, idTour, true));
       }).onError((error, stackTrace) {
         // change(null, status: RxStatus.error());
         if (kDebugMode) {
@@ -278,7 +274,7 @@ class PaymentController extends GetxController
                       ),
                     ),
                     Text(
-                      "Reason for Cancel",
+                      "Reason",
                       style: GoogleFonts.inter(
                           textStyle: const TextStyle(
                         fontSize: 16,
@@ -297,9 +293,16 @@ class PaymentController extends GetxController
                       onPressed: () {
                         if (reason.text != "") {
                           cancelOrder(idOrder);
+                        } else {
+                          ArtSweetAlert.show(
+                              context: Get.context!,
+                              artDialogArgs: ArtDialogArgs(
+                                  type: ArtSweetAlertType.warning,
+                                  title: "Cancel Verification",
+                                  text: "Reason cannot be empty"));
                         }
                       },
-                      child: Text("Cancel",
+                      child: Text("Submit",
                           textAlign: TextAlign.center,
                           style: GoogleFonts.inter(
                               textStyle: const TextStyle(

@@ -19,7 +19,6 @@ class BaseController extends GetxController {
   void onInit() {
     indexTab = 0;
     update();
-    // homeC.onInit();
     super.onInit();
   }
 

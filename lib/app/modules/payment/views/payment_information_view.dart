@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -12,10 +11,13 @@ import 'components/payment_header.dart';
 
 // ignore: must_be_immutable
 class PaymentInformationView extends GetView {
-  PaymentInformationView(this.id, this.accountId, {Key? key}) : super(key: key);
+  PaymentInformationView(this.id, this.accountId, this.btnCancel, {Key? key})
+      : super(key: key);
   final int? id;
   final int? accountId;
+  final bool btnCancel;
   var paymentC = Get.put(PaymentController());
+
   @override
   Widget build(BuildContext context) {
     paymentC.detailOrder(id!, accountId!);
@@ -110,33 +112,39 @@ class PaymentInformationView extends GetView {
                               fontWeight: FontWeight.w500,
                             ))),
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          paymentC.showDialogCancel();
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          side: const BorderSide(
-                              width: 2, // the thickness
-                              color: Color.fromRGBO(
-                                  255, 79, 79, 1) // the color of the border
+                      Visibility(
+                          visible: btnCancel,
+                          child: Column(
+                            children: [
+                              const SizedBox(
+                                height: 10,
                               ),
-                        ),
-                        child: Text("Cancel Book",
-                            textAlign: TextAlign.center,
-                            style: GoogleFonts.inter(
-                                textStyle: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              color: Color.fromRGBO(255, 79, 79, 1),
-                            ))),
-                      ),
+                              ElevatedButton(
+                                onPressed: () {
+                                  paymentC.showDialogCancel();
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  side: const BorderSide(
+                                      width: 2, // the thickness
+                                      color: Color.fromRGBO(255, 79, 79,
+                                          1) // the color of the border
+                                      ),
+                                ),
+                                child: Text("Cancel Book",
+                                    textAlign: TextAlign.center,
+                                    style: GoogleFonts.inter(
+                                        textStyle: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                      color: Color.fromRGBO(255, 79, 79, 1),
+                                    ))),
+                              )
+                            ],
+                          )),
                       const SizedBox(
                         height: 30,
                       ),

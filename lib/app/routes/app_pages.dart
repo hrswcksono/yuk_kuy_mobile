@@ -5,6 +5,8 @@ import '../modules/base/bindings/base_binding.dart';
 import '../modules/base/views/base_view.dart';
 import '../modules/detail_product/bindings/detail_product_binding.dart';
 import '../modules/detail_product/views/detail_product_view.dart';
+import '../modules/detail_transaction/binding/detail_transaction_binding.dart';
+import '../modules/detail_transaction/views/verification_success_view.dart';
 import '../modules/favorite/bindings/favorite_binding.dart';
 import '../modules/favorite/views/favorite_view.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -31,6 +33,7 @@ class AppPages {
   static const initialDP = Routes.detailProduct;
   static const initialP = Routes.payment;
   static const initialSP = Routes.sellerProfile;
+  static const initialDT = Routes.detailTransaction;
 
   static final routes = [
     GetPage(
@@ -78,6 +81,11 @@ class AppPages {
       name: _Paths.sellerProfile,
       page: () => const SellerProfileView(),
       binding: SellerProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.detailTransaction,
+      page: () => const VerificationSuccessView(),
+      binding: DetailTransactionBinding(),
     ),
   ];
 }

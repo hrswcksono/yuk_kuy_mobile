@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -7,7 +8,6 @@ import 'package:yuk_kuy_mobile/core/values/strings.dart';
 
 import '../../../data/models/order_model.dart';
 import '../../../data/providers/order_provider.dart';
-import 'package:collection/collection.dart';
 
 class TransactionController extends GetxController
     with StateMixin<List<OrderItem>>, ScrollMixin {
