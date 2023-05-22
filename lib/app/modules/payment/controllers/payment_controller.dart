@@ -14,10 +14,13 @@ import 'package:yuk_kuy_mobile/app/data/models/order_detail_model.dart';
 import 'package:yuk_kuy_mobile/app/data/models/product_detail_model.dart';
 import 'package:yuk_kuy_mobile/app/data/providers/bank_provider.dart';
 import 'package:yuk_kuy_mobile/app/data/providers/order_provider.dart';
+import 'package:yuk_kuy_mobile/app/data/providers/profile_provider.dart';
 import 'package:yuk_kuy_mobile/app/modules/base/controllers/base_controller.dart';
 import 'package:yuk_kuy_mobile/app/modules/payment/views/payment_information_view.dart';
 import 'package:yuk_kuy_mobile/app/modules/transaction/controllers/transaction_controller.dart';
 import 'package:yuk_kuy_mobile/app/widgets/custom_alert.dart';
+import 'package:yuk_kuy_mobile/core/utils/extensions/string_extensions.dart';
+import 'package:yuk_kuy_mobile/core/utils/helpers.dart';
 
 import '../../../data/providers/verification_provider.dart';
 
@@ -30,6 +33,7 @@ class PaymentController extends GetxController
   var orderProvider = Get.put(OrderProvider());
   var bankProvider = Get.put(BankProvider());
   var verifProvider = Get.put(VerificationProvider());
+  var profilProvider = Get.put(ProfileProvider());
   var baseController = Get.put(BaseController());
   var transController = Get.put(TransactionController());
 
@@ -58,7 +62,6 @@ class PaymentController extends GetxController
 
   late TextEditingController reason;
 
-
   void initData(ProductDetailItem data) {
     numPeople = 1;
     name = TextEditingController();
@@ -69,6 +72,7 @@ class PaymentController extends GetxController
     totalPrice = price;
     productId = data.id!;
     idTour = data.accountId!;
+    getProfile(readUsername());
   }
 
   void addPeople() {
@@ -100,6 +104,103 @@ class PaymentController extends GetxController
     update();
   }
 
+  void showDialogSelect(context) {
+    Get.dialog(Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 20, right: 20, bottom: 150),
+          child: Container(
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(
+                Radius.circular(10),
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Material(
+                color: Colors.white,
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                            child: Text(
+                          "Select",
+                          style: GoogleFonts.inter(
+                              textStyle: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          )),
+                        )),
+                        Expanded(
+                            child: Container(
+                                alignment: Alignment.centerRight,
+                                child: const CloseButton()))
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 10.0),
+                            child: ElevatedButton(
+                              onPressed: () async {
+                                var pickImage = await _picker.pickImage(
+                                    source: ImageSource.gallery);
+                                if (pickImage != null) {
+                                  imgVerification = File(pickImage.path);
+                                }
+                                update();
+                                Navigator.pop(context);
+                              },
+                              child: Text("Gallery",
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.inter(
+                                      textStyle: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                  ))),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 10.0),
+                            child: ElevatedButton(
+                              onPressed: () async {
+                                var pickImage = await _picker.pickImage(
+                                    source: ImageSource.camera);
+                                if (pickImage != null) {
+                                  imgVerification = File(pickImage.path);
+                                }
+                                update();
+                                Navigator.pop(context);
+                              },
+                              child: Text("Camera",
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.inter(
+                                      textStyle: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                  ))),
+                            ),
+                          ),
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    ));
+  }
+
   addImage(String label) async {
     if (label == "Gallery") {
       var pickImage = await _picker.pickImage(source: ImageSource.gallery);
@@ -118,20 +219,49 @@ class PaymentController extends GetxController
 
   void addOrder() {
     try {
-      orderProvider
-          .addOder(name.text, phone.text, email.text, totalPrice, numPeople,
-              productId)
-          .then((value) {
-        CustomAlert.success(Get.context!, "Order");
-        Get.off(PaymentInformationView(productId, idTour, true));
-      }).onError((error, stackTrace) {
-        // change(null, status: RxStatus.error());
-        if (kDebugMode) {
-          print(error);
-        }
-      }).whenComplete(() {
-        log("Add Order complete!");
-      });
+      if (name.text == "") {
+        ArtSweetAlert.show(
+            context: Get.context!,
+            artDialogArgs: ArtDialogArgs(
+                type: ArtSweetAlertType.warning,
+                title: "Warning",
+                text: "Name cannot be empty"));
+      } else if (phone.text == "") {
+        ArtSweetAlert.show(
+            context: Get.context!,
+            artDialogArgs: ArtDialogArgs(
+                type: ArtSweetAlertType.warning,
+                title: "Warning",
+                text: "Phone cannot be empty"));
+      } else if (email.text == "") {
+        ArtSweetAlert.show(
+            context: Get.context!,
+            artDialogArgs: ArtDialogArgs(
+                type: ArtSweetAlertType.warning,
+                title: "Warning",
+                text: "Email cannot be empty"));
+      } else if (!email.text.isValidEmail) {
+        ArtSweetAlert.show(
+            context: Get.context!,
+            artDialogArgs: ArtDialogArgs(
+                type: ArtSweetAlertType.warning,
+                title: "Warning",
+                text: "Invalid email address"));
+      } else {
+        orderProvider
+            .addOder(name.text, phone.text, email.text, totalPrice, numPeople,
+                productId)
+            .then((value) {
+          CustomAlert.success(Get.context!, "Order");
+          Get.off(PaymentInformationView(productId, idTour, true));
+        }).onError((error, stackTrace) {
+          if (kDebugMode) {
+            print(error);
+          }
+        }).whenComplete(() {
+          log("Add Order complete!");
+        });
+      }
     } catch (e) {
       if (kDebugMode) {
         print("gagal");
@@ -139,12 +269,12 @@ class PaymentController extends GetxController
     }
   }
 
-  void detailOrder(int id, int accountId) {
-    idOrder = id;
-    idAccount = accountId;
+  void detailOrder(int orderId, int sellerId) {
+    idOrder = orderId;
+    idAccount = sellerId;
     try {
       orderProvider.detailOrder(idOrder).then((value) {
-        listBank(accountId, value);
+        listBank(sellerId, value);
       }).onError((error, stackTrace) {
         change(null, status: RxStatus.error());
         if (kDebugMode) {
@@ -160,10 +290,32 @@ class PaymentController extends GetxController
     }
   }
 
-  void listBank(int id, OrderDetailModel data) {
+  void getProfile(username) {
+    try {
+      profilProvider.detailProfile(username).then((value) {
+        name.text = value.data!.name!;
+        phone.text = value.data!.profile!.phone;
+        email.text = value.data!.email!;
+      }).onError((error, stackTrace) {
+        change(null, status: RxStatus.error());
+        if (kDebugMode) {
+          print(error);
+        }
+      }).whenComplete(() {
+        log("Detail Profile complete!");
+      });
+    } catch (e) {
+      if (kDebugMode) {
+        print("gagal");
+      }
+    }
+  }
+
+  void listBank(int id, OrderDetailModel dataOrder) {
     try {
       bankProvider.listBank(id).then((value) {
-        change(Tuple2(data, value), status: RxStatus.success());
+        change(Tuple2(dataOrder, value),
+            status: RxStatus.success());
       }).onError((error, stackTrace) {
         change(null, status: RxStatus.error());
         if (kDebugMode) {
@@ -187,7 +339,7 @@ class PaymentController extends GetxController
             artDialogArgs: ArtDialogArgs(
                 type: ArtSweetAlertType.success,
                 title: "Success",
-                text: "Login Success"));
+                text: "Send verification successfully"));
         Future.delayed(const Duration(seconds: 2), () {
           baseController.moved();
         });
@@ -267,19 +419,22 @@ class PaymentController extends GetxController
                 color: Colors.white,
                 child: Column(
                   children: [
-                    const SizedBox(
-                      width: 180,
-                      child: Divider(
-                        thickness: 2,
-                      ),
-                    ),
-                    Text(
-                      "Reason",
-                      style: GoogleFonts.inter(
-                          textStyle: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                      )),
+                    Row(
+                      children: [
+                        Expanded(
+                            child: Text(
+                          "Reason",
+                          style: GoogleFonts.inter(
+                              textStyle: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          )),
+                        )),
+                        Expanded(
+                            child: Container(
+                                alignment: Alignment.centerRight,
+                                child: const CloseButton()))
+                      ],
                     ),
                     const SizedBox(
                       height: 10,
@@ -288,7 +443,6 @@ class PaymentController extends GetxController
                       controller: reason,
                     ),
                     const SizedBox(height: 20),
-                    //Buttons
                     ElevatedButton(
                       onPressed: () {
                         if (reason.text != "") {
@@ -309,7 +463,7 @@ class PaymentController extends GetxController
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
                           ))),
-                    )
+                    ),
                   ],
                 ),
               ),

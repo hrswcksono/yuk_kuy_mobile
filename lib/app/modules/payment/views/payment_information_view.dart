@@ -99,52 +99,62 @@ class PaymentInformationView extends GetView {
                           },
                         ),
                       ),
-                      ElevatedButton(
-                        onPressed: () {
-                          Get.to(PaymentVerificationView(
-                              data.item2.data!, data.item1.data!.id));
-                        },
-                        child: Text("Payment Verification",
-                            textAlign: TextAlign.center,
-                            style: GoogleFonts.inter(
-                                textStyle: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            ))),
+                      Row(
+                        children: [
+                          Visibility(
+                            visible: btnCancel,
+                            child: Expanded(
+                              child: Padding(
+                                  padding: const EdgeInsets.only(right: 10.0),
+                                  child: Column(
+                                    children: [
+                                      ElevatedButton(
+                                        onPressed: () {
+                                          paymentC.showDialogCancel();
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.white,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                          side: const BorderSide(
+                                              width: 2, // the thickness
+                                              color: Color.fromRGBO(255, 79, 79,
+                                                  1) // the color of the border
+                                              ),
+                                        ),
+                                        child: Text("Cancel Book",
+                                            textAlign: TextAlign.center,
+                                            style: GoogleFonts.inter(
+                                                textStyle: const TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500,
+                                              color: Color.fromRGBO(
+                                                  255, 79, 79, 1),
+                                            ))),
+                                      )
+                                    ],
+                                  )),
+                            ),
+                          ),
+                          Expanded(
+                            child: ElevatedButton(
+                              onPressed: () {
+                                Get.to(PaymentVerificationView(
+                                    data.item2.data!, data.item1.data!.id));
+                              },
+                              child: Text("Payment Verification",
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.inter(
+                                      textStyle: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                  ))),
+                            ),
+                          ),
+                        ],
                       ),
-                      Visibility(
-                          visible: btnCancel,
-                          child: Column(
-                            children: [
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              ElevatedButton(
-                                onPressed: () {
-                                  paymentC.showDialogCancel();
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.white,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  side: const BorderSide(
-                                      width: 2, // the thickness
-                                      color: Color.fromRGBO(255, 79, 79,
-                                          1) // the color of the border
-                                      ),
-                                ),
-                                child: Text("Cancel Book",
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.inter(
-                                        textStyle: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w500,
-                                      color: Color.fromRGBO(255, 79, 79, 1),
-                                    ))),
-                              )
-                            ],
-                          )),
                       const SizedBox(
                         height: 30,
                       ),

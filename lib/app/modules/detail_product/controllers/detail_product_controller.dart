@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:art_sweetalert/art_sweetalert.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -41,8 +42,21 @@ class DetailProductController extends GetxController
     isFavorite = !isFavorite;
     if (isFavorite) {
       saveListFavorite(data);
+      ArtSweetAlert.show(
+          context: Get.context!,
+          artDialogArgs: ArtDialogArgs(
+              type: ArtSweetAlertType.success,
+              title: "Favorite",
+              text: "${data.name} added to favorites"));
     } else {
       deleteFavorite(data);
+      ArtSweetAlert.show(
+          context: Get.context!,
+          artDialogArgs: ArtDialogArgs(
+              type: ArtSweetAlertType.success,
+              title: "Unfavorite",
+              text:
+                  "${data.name} removed from favourites"));
     }
     update();
   }
@@ -50,7 +64,6 @@ class DetailProductController extends GetxController
   void initData(int id) {
     try {
       productProvider.detailProduct(id).then((value) {
-        // print(value);
         initFavorite(value.data);
         change(value, status: RxStatus.success());
       }).onError((error, stackTrace) {
@@ -71,14 +84,10 @@ class DetailProductController extends GetxController
   void onRefresh() async {
     isLoading = false;
     update();
-    // monitor network fetch
     await Future.delayed(const Duration(milliseconds: 1000), () {
       initData(argumentData["id"]);
       update();
       return refreshController.refreshCompleted();
     });
-    // is_Loading = true;
-    // if failed,use refreshFailed()
-    // update();
   }
 }

@@ -69,45 +69,56 @@ class VerificationRejectedView extends GetView {
                   ),
                 ),
                 const Spacer(),
-                ElevatedButton(
-                  onPressed: () {
-                    Get.to(PaymentInformationView(orderId, sellerId, false));
-                  },
-                  child: Text("Verification Again",
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.inter(
-                          textStyle: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                      ))),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    paymentC.showDialogCancel();
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    side: const BorderSide(
-                        width: 2, // the thickness
-                        color: Color.fromRGBO(
-                            255, 79, 79, 1) // the color of the border
+                Row(
+                  children: [
+                    Expanded(
+                        child: Padding(
+                      padding: const EdgeInsets.only(right: 5.0),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          paymentC.showDialogCancel();
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          side: const BorderSide(
+                              width: 2, // the thickness
+                              color: Color.fromRGBO(
+                                  255, 79, 79, 1) // the color of the border
+                              ),
                         ),
-                  ),
-                  child: Text("Cancel Book",
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.inter(
-                          textStyle: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: Color.fromRGBO(255, 79, 79, 1),
-                      ))),
-                )
+                        child: Text("Cancel Book",
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.inter(
+                                textStyle: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              color: Color.fromRGBO(255, 79, 79, 1),
+                            ))),
+                      ),
+                    )),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 5.0),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Get.to(PaymentInformationView(
+                                orderId, sellerId, false));
+                          },
+                          child: Text("Verification Again",
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.inter(
+                                  textStyle: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                              ))),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ],
             ),
           ),
