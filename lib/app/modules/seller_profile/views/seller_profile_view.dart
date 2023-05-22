@@ -1,7 +1,8 @@
+import 'package:art_sweetalert/art_sweetalert.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sign_button/sign_button.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:yuk_kuy_mobile/core/utils/extensions/widget_extention.dart';
 import 'package:yuk_kuy_mobile/core/values/consts.dart';
 
@@ -10,8 +11,6 @@ import '../controllers/seller_profile_controller.dart';
 
 class SellerProfileView extends GetView<SellerProfileController> {
   const SellerProfileView({Key? key}) : super(key: key);
-
-  // var ctrl = Get.put(SellerProfileController());
 
   @override
   Widget build(BuildContext context) {
@@ -24,14 +23,14 @@ class SellerProfileView extends GetView<SellerProfileController> {
                 ).margin(horizontal: 20, vertical: 5),
                 SizedBox(
                   width: Get.width,
-                  height: 210,
+                  height: 250,
                   child: Stack(
                     children: [
                       Image.network(
                         Consts.urlImg + data.profile!.bannerImage.toString(),
                         fit: BoxFit.fitWidth,
                         width: double.infinity,
-                        height: 128,
+                        height: 175,
                       ),
                       Positioned(
                         bottom: 0,
@@ -72,75 +71,101 @@ class SellerProfileView extends GetView<SellerProfileController> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Row(
-                            children: [
-                              Image.asset(
-                                "assets/icons/ic_location.png",
-                                width: 20,
-                              ),
-                              const SizedBox(
-                                width: 15,
-                              ),
-                              SizedBox(
-                                width: Get.width * 0.5,
-                                child: Text(
-                                  data.profile!.address.toString(),
-                                  style: GoogleFonts.inter(
-                                      textStyle: const TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
-                                    color: Color.fromRGBO(143, 149, 158, 1),
-                                  )),
+                          Visibility(
+                            visible: data.profile!.address != null,
+                            child: Row(
+                              children: [
+                                Image.asset(
+                                  "assets/icons/ic_location.png",
+                                  width: 20,
                                 ),
-                              ),
-                            ],
+                                const SizedBox(
+                                  width: 15,
+                                ),
+                                SizedBox(
+                                  width: Get.width * 0.5,
+                                  child: Text(
+                                    data.profile!.address.toString(),
+                                    style: GoogleFonts.inter(
+                                        textStyle: const TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500,
+                                      color: Color.fromRGBO(143, 149, 158, 1),
+                                    )),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Row(
-                            children: [
-                              Image.asset(
-                                "assets/icons/ic_mail.png",
-                                width: 20,
-                              ),
-                              const SizedBox(
-                                width: 15,
-                              ),
-                              Text(
-                                data.email.toString(),
-                                style: GoogleFonts.inter(
-                                    textStyle: const TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
-                                  color: Color.fromRGBO(143, 149, 158, 1),
-                                )),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Row(
-                            children: [
-                              Image.asset(
-                                "assets/icons/ic_phone.png",
-                                width: 20,
-                              ),
-                              const SizedBox(
-                                width: 15,
-                              ),
-                              Text(
-                                data.profile!.phone.toString(),
-                                style: GoogleFonts.inter(
-                                    textStyle: const TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
-                                  color: Color.fromRGBO(143, 149, 158, 1),
-                                )),
-                              ),
-                            ],
-                          ),
+                          Visibility(
+                              visible: data.email != null,
+                              child: Column(
+                                children: [
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Image.asset(
+                                        "assets/icons/ic_mail.png",
+                                        width: 20,
+                                      ),
+                                      const SizedBox(
+                                        width: 15,
+                                      ),
+                                      TextButton(
+                                        onPressed: () async {
+                                          var url =
+                                              "mailto:${data.email.toString()}";
+                                          if (await canLaunch(url)) {
+                                            await launch(url);
+                                          } else {
+                                            throw 'Could not launch $url';
+                                          }
+                                        },
+                                        child: Text(data.email.toString(),
+                                            style: GoogleFonts.inter(
+                                                textStyle: const TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w500,
+                                              color: Color.fromRGBO(
+                                                  143, 149, 158, 1),
+                                            ))),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              )),
+                          Visibility(
+                              visible: data.profile!.phone != null,
+                              child: Column(
+                                children: [
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Image.asset(
+                                        "assets/icons/ic_phone.png",
+                                        width: 20,
+                                      ),
+                                      const SizedBox(
+                                        width: 15,
+                                      ),
+                                      Text(
+                                        data.profile!.phone.toString(),
+                                        style: GoogleFonts.inter(
+                                            textStyle: const TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
+                                          color:
+                                              Color.fromRGBO(143, 149, 158, 1),
+                                        )),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              )),
                         ],
                       ),
                     ),
@@ -151,21 +176,121 @@ class SellerProfileView extends GetView<SellerProfileController> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children:
                           List.generate(data.socialAccounts!.length, (index) {
-                        if (data.socialAccounts![index].platform ==
-                            "facebook") {
-                          return SizedBox(
-                            width: 50,
-                            child: SignInButton.mini(
-                              buttonType: ButtonType.facebook,
-                              onPressed: () {},
+                        if (data.socialAccounts![index].platform == "Twitter") {
+                          return InkWell(
+                            onTap: () async {
+                              var url =
+                                  "https://twitter.com/${data.socialAccounts![index].link.toString()}";
+                              if (await canLaunch(url)) {
+                                await launch(url);
+                              } else {
+                                throw 'Could not launch $url';
+                              }
+                            },
+                            // Image tapped
+                            splashColor: Colors.white10,
+                            // Splash color over image
+                            child: Ink.image(
+                              fit: BoxFit.cover, // Fixes border issues
+                              width: 50,
+                              height: 50,
+                              image: const AssetImage(
+                                "assets/icons/ic_twitter.png",
+                              ),
+                            ),
+                          );
+                        } else if (data.socialAccounts![index].platform ==
+                            "Youtube") {
+                          return InkWell(
+                            onTap: () async {
+                              var url =
+                                  "https://www.youtube.com/@${data.socialAccounts![index].link.toString()}";
+                              if (await canLaunch(url)) {
+                                await launch(url);
+                              } else {
+                                throw 'Could not launch $url';
+                              }
+                            },
+                            // Image tapped
+                            splashColor: Colors.white10,
+                            // Splash color over image
+                            child: Ink.image(
+                              fit: BoxFit.cover, // Fixes border issues
+                              width: 50,
+                              height: 50,
+                              image: const AssetImage(
+                                "assets/icons/ic_youtube.png",
+                              ),
+                            ),
+                          );
+                        } else if (data.socialAccounts![index].platform ==
+                            "Instagram") {
+                          return InkWell(
+                            onTap: () async {
+                              var url =
+                                  "https://www.instagram.com/${data.socialAccounts![index].link.toString()}/";
+                              if (await canLaunch(url)) {
+                                await launch(url);
+                              } else {
+                                throw 'Could not launch $url';
+                              }
+                            },
+                            // Image tapped
+                            splashColor: Colors.white10,
+                            // Splash color over image
+                            child: Ink.image(
+                              fit: BoxFit.cover, // Fixes border issues
+                              width: 50,
+                              height: 50,
+                              image: const AssetImage(
+                                "assets/icons/ic_instagram.png",
+                              ),
+                            ),
+                          );
+                        } else if (data.socialAccounts![index].platform ==
+                            "Tiktok") {
+                          return InkWell(
+                            onTap: () async {
+                              var url =
+                                  "https://www.tiktok.com/@${data.socialAccounts![index].link.toString()}/";
+                              if (await canLaunch(url)) {
+                                await launch(url);
+                              } else {
+                                throw 'Could not launch $url';
+                              }
+                            },
+                            // Image tapped
+                            splashColor: Colors.white10,
+                            // Splash color over image
+                            child: Ink.image(
+                              fit: BoxFit.cover, // Fixes border issues
+                              width: 50,
+                              height: 50,
+                              image: const AssetImage(
+                                "assets/icons/ic_tiktok.png",
+                              ),
                             ),
                           );
                         } else {
-                          return SizedBox(
-                            width: 50,
-                            child: SignInButton.mini(
-                              buttonType: ButtonType.instagram,
-                              onPressed: () {},
+                          return InkWell(
+                            onTap: () async {
+                              ArtSweetAlert.show(
+                                  context: Get.context!,
+                                  artDialogArgs: ArtDialogArgs(
+                                      type: ArtSweetAlertType.danger,
+                                      title: "Error",
+                                      text: "Undefined"));
+                            },
+                            // Image tapped
+                            splashColor: Colors.white10,
+                            // Splash color over image
+                            child: Ink.image(
+                              fit: BoxFit.cover, // Fixes border issues
+                              width: 50,
+                              height: 50,
+                              image: const AssetImage(
+                                "assets/icons/ic_ask.png",
+                              ),
                             ),
                           );
                         }
