@@ -35,7 +35,7 @@ class LoginView extends GetView {
                   height: 100,
                 ),
                 TextFieldGlobal(
-                  title: "Email",
+                  title: "Username or Email",
                   value: controllerLR.emailLoginTF,
                 ),
                 const SizedBox(

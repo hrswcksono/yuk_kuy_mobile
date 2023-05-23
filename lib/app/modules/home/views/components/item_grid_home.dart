@@ -66,7 +66,7 @@ class ItemGridHome extends StatelessWidget {
             height: 3,
           ),
           Text(
-            model.price.toPrice,
+            "${model.price.toRupiah}/pax",
             style: GoogleFonts.inter(
                 textStyle: const TextStyle(
               fontSize: 10,

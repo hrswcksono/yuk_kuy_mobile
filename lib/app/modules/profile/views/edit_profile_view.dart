@@ -17,10 +17,12 @@ class EditProfileView extends GetView {
   Widget build(BuildContext context) {
     profileC.initEdit(data);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
-        child: SingleChildScrollView(
+        child: SizedBox(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+            padding:
+                const EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 10),
             child: Column(
               children: [
                 const SizedBox(
@@ -67,9 +69,7 @@ class EditProfileView extends GetView {
                   title: "Address",
                   value: profileC.editAddress,
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const Spacer(),
                 ElevatedButton(
                   onPressed: () {
                     profileC.editData();

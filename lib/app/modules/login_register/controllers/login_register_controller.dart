@@ -2,6 +2,7 @@ import 'package:art_sweetalert/art_sweetalert.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:yuk_kuy_mobile/core/utils/extensions/string_extensions.dart';
 
 import '../../../../core/values/keys/get_storage_key.dart';
 import '../../../../services/storage_services.dart';
@@ -133,6 +134,18 @@ class LoginRegisterController extends GetxController {
           type: ArtSweetAlertType.danger,
           title: "Error",
           text: "Email cannot be empty",
+        ),
+      );
+      return;
+    }
+
+    if (!emailRegisTF.text.isValidEmail) {
+      ArtSweetAlert.show(
+        context: Get.context!,
+        artDialogArgs: ArtDialogArgs(
+          type: ArtSweetAlertType.danger,
+          title: "Error",
+          text: "Invalid email address",
         ),
       );
       return;

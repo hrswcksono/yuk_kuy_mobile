@@ -23,6 +23,7 @@ import 'package:yuk_kuy_mobile/core/utils/extensions/string_extensions.dart';
 import 'package:yuk_kuy_mobile/core/utils/helpers.dart';
 
 import '../../../data/providers/verification_provider.dart';
+import '../../../routes/app_pages.dart';
 
 class PaymentController extends GetxController
     with StateMixin<Tuple2<OrderDetailModel, BankModel>> {
@@ -356,20 +357,24 @@ class PaymentController extends GetxController
     }
   }
 
-  void cancelOrder(int idOrd) {
+  void cancelOrder(int idOrd, context) {
     try {
       verifProvider.cancelOrder(idOrd, reason.text).then((value) {
         ArtSweetAlert.show(
             context: Get.context!,
             artDialogArgs: ArtDialogArgs(
-                type: ArtSweetAlertType.info,
+                type: ArtSweetAlertType.success,
                 title: "Success",
                 text: "Order Cancel"));
         Future.delayed(const Duration(seconds: 2), () {
-          Get.back();
-          Get.back();
-          Get.back();
+          // Navigator.pop(Get.context!);
+          // Navigator.pop(Get.context!);
+          // Navigator.of(context).pop();
+          // Navigator.of(context).pop();
+          // Navigator.of(context).pop();
+          Get.offAllNamed(AppPages.initialB);
           transController.initData();
+          update();
         });
       }).onError((error, stackTrace) {
         if (kDebugMode) {
@@ -399,7 +404,8 @@ class PaymentController extends GetxController
     // update();
   }
 
-  void showDialogCancel() {
+  void showDialogCancel(context) {
+    reason = TextEditingController();
     Get.dialog(Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -445,7 +451,7 @@ class PaymentController extends GetxController
                     ElevatedButton(
                       onPressed: () {
                         if (reason.text != "") {
-                          cancelOrder(idOrder);
+                          cancelOrder(idOrder, context);
                         } else {
                           ArtSweetAlert.show(
                               context: Get.context!,
