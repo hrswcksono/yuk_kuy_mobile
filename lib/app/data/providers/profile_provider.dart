@@ -35,7 +35,7 @@ class ProfileProvider extends BaseProvider {
     return response.body['status'];
   }
 
-  Future<bool> editPassword(
+  Future<Object> editPassword(
       String oldPassword, String newPassword, String confirmPassword) async {
     Map<String, String> jsonBody = {
       'oldPassword': oldPassword,
@@ -49,7 +49,11 @@ class ProfileProvider extends BaseProvider {
       contentType: "application/x-www-form-urlencoded",
     );
 
-    return response.body['status'];
+    if (!response.body['status']) {
+      return Future.error(response.body["message"]);
+    } else {
+      return response.body.toString();
+    }
   }
 
   Future<dynamic> changeAvatar(File avatar) async {

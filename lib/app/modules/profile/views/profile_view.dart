@@ -132,7 +132,7 @@ class ProfileView extends GetView<ProfileController> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            data.data!.profile!.address.toString() != "null"
+                            data.data!.profile!.address.toString() != ""
                                 ? Row(
                                     children: [
                                       Image.asset(
@@ -162,11 +162,11 @@ class ProfileView extends GetView<ProfileController> {
                             const SizedBox(
                               height: 5,
                             ),
-                            data.data!.profile!.phone.toString() != "null"
+                            data.data!.profile!.phone.toString() != ""
                                 ? Row(
                                     children: [
                                       Image.asset(
-                                        "assets/icons/ic_mail.png",
+                                        "assets/icons/ic_phone.png",
                                         width: 20,
                                       ),
                                       const SizedBox(
@@ -191,7 +191,7 @@ class ProfileView extends GetView<ProfileController> {
                             Row(
                               children: [
                                 Image.asset(
-                                  "assets/icons/ic_phone.png",
+                                  "assets/icons/ic_mail.png",
                                   width: 20,
                                 ),
                                 const SizedBox(

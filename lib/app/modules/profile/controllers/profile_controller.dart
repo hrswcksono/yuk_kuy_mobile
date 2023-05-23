@@ -19,11 +19,11 @@ class ProfileController extends GetxController with StateMixin<ProfileModel> {
   var getService = Get.put(StorageService());
 
   //edit profile
-  late TextEditingController editName;
-  late TextEditingController editUsername;
-  late TextEditingController editEmail;
-  late TextEditingController editPhone;
-  late TextEditingController editAddress;
+  late TextEditingController editName = TextEditingController(text: '');
+  late TextEditingController editUsername = TextEditingController(text: '');
+  late TextEditingController editEmail = TextEditingController(text: '');
+  late TextEditingController editPhone = TextEditingController(text: '');
+  late TextEditingController editAddress = TextEditingController(text: '');
 
   //edit password
   late TextEditingController oldPassword;
@@ -76,8 +76,14 @@ class ProfileController extends GetxController with StateMixin<ProfileModel> {
     editName.text = data.name.toString();
     editUsername.text = data.username.toString();
     editEmail.text = data.email.toString();
-    editPhone.text = data.profile!.phone.toString();
-    editAddress.text = data.profile!.address.toString();
+
+    if (data.profile != null) {
+      editPhone.text = data.profile!.phone?.toString() ?? '';
+      editAddress.text = data.profile!.address ?? '';
+    } else {
+      editPhone.text = '';
+      editAddress.text = '';
+    }
   }
 
   void logout() async {
@@ -126,9 +132,14 @@ class ProfileController extends GetxController with StateMixin<ProfileModel> {
 
   void editData() {
     try {
+      String name = editName.text.isEmpty ? '' : editName.text;
+      String username = editUsername.text.isEmpty ? '' : editUsername.text;
+      String email = editEmail.text.isEmpty ? '' : editEmail.text;
+      String phone = editPhone.text.isEmpty ? '' : editPhone.text;
+      String address = editAddress.text.isEmpty ? '' : editAddress.text;
+
       profileProvider
-          .editProfile(editUsername.text, editName.text, editEmail.text,
-              editPhone.text, editAddress.text)
+          .editProfile(username, name, email, phone, address)
           .then((value) {
             Get.back();
             initData();
@@ -145,18 +156,47 @@ class ProfileController extends GetxController with StateMixin<ProfileModel> {
   }
 
   void editPassword() {
+    if (oldPassword.text.isEmpty ||
+        newPassword.text.isEmpty ||
+        confirmPassword.text.isEmpty) {
+      ArtSweetAlert.show(
+        context: Get.context!,
+        artDialogArgs: ArtDialogArgs(
+          type: ArtSweetAlertType.danger,
+          title: "Error",
+          text: "All fields must be filled",
+        ),
+      );
+      return;
+    }
+
     try {
       profileProvider
           .editPassword(
               oldPassword.text, newPassword.text, confirmPassword.text)
           .then((value) {
-            Get.back();
-            initData();
-          })
-          .onError((error, stackTrace) {})
-          .whenComplete(() {
-            log('selesai edit password');
-          });
+        Get.back();
+        initData();
+        ArtSweetAlert.show(
+          context: Get.context!,
+          artDialogArgs: ArtDialogArgs(
+            type: ArtSweetAlertType.success,
+            title: "Success",
+            text: "Change password successful",
+          ),
+        );
+      }).catchError((error) {
+        ArtSweetAlert.show(
+          context: Get.context!,
+          artDialogArgs: ArtDialogArgs(
+            type: ArtSweetAlertType.danger,
+            title: "Error",
+            text: "Old password is incorrect",
+          ),
+        );
+      }).whenComplete(() {
+        log('selesai edit password');
+      });
     } catch (e) {
       if (kDebugMode) {
         print("gagal");

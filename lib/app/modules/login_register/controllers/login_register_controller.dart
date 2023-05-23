@@ -41,17 +41,31 @@ class LoginRegisterController extends GetxController {
     confirmPassRegisTF = TextEditingController();
   }
 
-  // @override
-  // void onReady() {
-  //   super.onReady();
-  // }
-
-  // @override
-  // void onClose() {
-  //   super.onClose();
-  // }
-
   void login() {
+    if (emailLoginTF.text.isEmpty) {
+      ArtSweetAlert.show(
+        context: Get.context!,
+        artDialogArgs: ArtDialogArgs(
+          type: ArtSweetAlertType.danger,
+          title: "Error",
+          text: "Email cannot be empty",
+        ),
+      );
+      return;
+    }
+
+    if (passwordLoginTF.text.isEmpty) {
+      ArtSweetAlert.show(
+        context: Get.context!,
+        artDialogArgs: ArtDialogArgs(
+          type: ArtSweetAlertType.danger,
+          title: "Error",
+          text: "Password cannot be empty",
+        ),
+      );
+      return;
+    }
+
     try {
       authProvider
           .login(emailLoginTF.text, passwordLoginTF.text.toString())
@@ -59,22 +73,26 @@ class LoginRegisterController extends GetxController {
         getService.write(GetStorageKey.userToken, value.data.accessToken);
         getService.write(GetStorageKey.userName, value.data.username);
         ArtSweetAlert.show(
-            context: Get.context!,
-            artDialogArgs: ArtDialogArgs(
-                type: ArtSweetAlertType.success,
-                title: "Success",
-                text: "Login Success"));
+          context: Get.context!,
+          artDialogArgs: ArtDialogArgs(
+            type: ArtSweetAlertType.success,
+            title: "Success",
+            text: "Login Success",
+          ),
+        );
         Future.delayed(const Duration(seconds: 2), () {
           Get.back();
           Get.offAllNamed(AppPages.initialB);
         });
       }).onError((error, stackTrace) {
         ArtSweetAlert.show(
-            context: Get.context!,
-            artDialogArgs: ArtDialogArgs(
-                type: ArtSweetAlertType.danger,
-                title: "Failed",
-                text: error.toString()));
+          context: Get.context!,
+          artDialogArgs: ArtDialogArgs(
+            type: ArtSweetAlertType.danger,
+            title: "Failed",
+            text: error.toString(),
+          ),
+        );
       });
     } catch (e) {
       if (kDebugMode) {
@@ -84,17 +102,84 @@ class LoginRegisterController extends GetxController {
   }
 
   void register() {
+    if (usernameRegisTF.text.isEmpty) {
+      ArtSweetAlert.show(
+        context: Get.context!,
+        artDialogArgs: ArtDialogArgs(
+          type: ArtSweetAlertType.danger,
+          title: "Error",
+          text: "Username cannot be empty",
+        ),
+      );
+      return;
+    }
+
+    if (nameRegisTF.text.isEmpty) {
+      ArtSweetAlert.show(
+        context: Get.context!,
+        artDialogArgs: ArtDialogArgs(
+          type: ArtSweetAlertType.danger,
+          title: "Error",
+          text: "Name cannot be empty",
+        ),
+      );
+      return;
+    }
+
+    if (emailRegisTF.text.isEmpty) {
+      ArtSweetAlert.show(
+        context: Get.context!,
+        artDialogArgs: ArtDialogArgs(
+          type: ArtSweetAlertType.danger,
+          title: "Error",
+          text: "Email cannot be empty",
+        ),
+      );
+      return;
+    }
+
+    if (passwordRegisTF.text.isEmpty) {
+      ArtSweetAlert.show(
+        context: Get.context!,
+        artDialogArgs: ArtDialogArgs(
+          type: ArtSweetAlertType.danger,
+          title: "Error",
+          text: "Password cannot be empty",
+        ),
+      );
+      return;
+    }
+
+    if (confirmPassRegisTF.text.isEmpty) {
+      ArtSweetAlert.show(
+        context: Get.context!,
+        artDialogArgs: ArtDialogArgs(
+          type: ArtSweetAlertType.danger,
+          title: "Error",
+          text: "Confirm Password cannot be empty",
+        ),
+      );
+      return;
+    }
+
     try {
       authProvider
-          .register(usernameRegisTF.text, nameRegisTF.text, emailRegisTF.text,
-              passwordRegisTF.text, confirmPassRegisTF.text)
+          .register(
+        usernameRegisTF.text,
+        nameRegisTF.text,
+        emailRegisTF.text,
+        passwordRegisTF.text,
+        confirmPassRegisTF.text,
+      )
           .then((value) {
         ArtSweetAlert.show(
-            context: Get.context!,
-            artDialogArgs: ArtDialogArgs(
-                type: ArtSweetAlertType.success,
-                title: "Success",
-                text: "Register Success"));
+          context: Get.context!,
+          artDialogArgs: ArtDialogArgs(
+            type: ArtSweetAlertType.success,
+            title: "Success",
+            text: "Register Success",
+          ),
+        );
         Future.delayed(const Duration(seconds: 2), () {
           clearTextRegister();
           Get.back();
@@ -102,11 +187,13 @@ class LoginRegisterController extends GetxController {
         });
       }).onError((error, stackTrace) {
         ArtSweetAlert.show(
-            context: Get.context!,
-            artDialogArgs: ArtDialogArgs(
-                type: ArtSweetAlertType.danger,
-                title: "Failed",
-                text: error.toString()));
+          context: Get.context!,
+          artDialogArgs: ArtDialogArgs(
+            type: ArtSweetAlertType.danger,
+            title: "Failed",
+            text: error.toString(),
+          ),
+        );
       });
     } catch (e) {
       if (kDebugMode) {
