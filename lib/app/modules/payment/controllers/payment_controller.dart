@@ -357,7 +357,7 @@ class PaymentController extends GetxController
     }
   }
 
-  void cancelOrder(int idOrd, context) {
+  void cancelOrder(int idOrd) {
     try {
       verifProvider.cancelOrder(idOrd, reason.text).then((value) {
         ArtSweetAlert.show(
@@ -367,11 +367,6 @@ class PaymentController extends GetxController
                 title: "Success",
                 text: "Order Cancel"));
         Future.delayed(const Duration(seconds: 2), () {
-          // Navigator.pop(Get.context!);
-          // Navigator.pop(Get.context!);
-          // Navigator.of(context).pop();
-          // Navigator.of(context).pop();
-          // Navigator.of(context).pop();
           Get.offAllNamed(AppPages.initialB);
           transController.initData();
           update();
@@ -404,7 +399,7 @@ class PaymentController extends GetxController
     // update();
   }
 
-  void showDialogCancel(context) {
+  void showDialogCancel() {
     reason = TextEditingController();
     Get.dialog(Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -451,7 +446,7 @@ class PaymentController extends GetxController
                     ElevatedButton(
                       onPressed: () {
                         if (reason.text != "") {
-                          cancelOrder(idOrder, context);
+                          cancelOrder(idOrder);
                         } else {
                           ArtSweetAlert.show(
                               context: Get.context!,

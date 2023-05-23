@@ -110,7 +110,7 @@ class PaymentInformationView extends GetView {
                                     children: [
                                       ElevatedButton(
                                         onPressed: () {
-                                          paymentC.showDialogCancel(context);
+                                          paymentC.showDialogCancel();
                                         },
                                         style: ElevatedButton.styleFrom(
                                           backgroundColor: Colors.white,
