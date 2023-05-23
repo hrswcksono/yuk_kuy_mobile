@@ -10,6 +10,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:yuk_kuy_mobile/app/data/models/profile_model.dart';
 import 'package:yuk_kuy_mobile/app/data/providers/profile_provider.dart';
 import 'package:yuk_kuy_mobile/app/routes/app_pages.dart';
+import 'package:yuk_kuy_mobile/core/utils/extensions/string_extensions.dart';
 import 'package:yuk_kuy_mobile/core/utils/helpers.dart';
 
 import '../../../../services/storage_services.dart';
@@ -132,14 +133,55 @@ class ProfileController extends GetxController with StateMixin<ProfileModel> {
 
   void editData() {
     try {
-      String name = editName.text.isEmpty ? '' : editName.text;
-      String username = editUsername.text.isEmpty ? '' : editUsername.text;
-      String email = editEmail.text.isEmpty ? '' : editEmail.text;
-      String phone = editPhone.text.isEmpty ? '' : editPhone.text;
-      String address = editAddress.text.isEmpty ? '' : editAddress.text;
+      if (editUsername.text.isEmpty) {
+        ArtSweetAlert.show(
+          context: Get.context!,
+          artDialogArgs: ArtDialogArgs(
+            type: ArtSweetAlertType.danger,
+            title: "Error",
+            text: "Username cannot empty",
+          ),
+        );
+        return;
+      }
+      if (editName.text.isEmpty) {
+        ArtSweetAlert.show(
+          context: Get.context!,
+          artDialogArgs: ArtDialogArgs(
+            type: ArtSweetAlertType.danger,
+            title: "Error",
+            text: "Name cannot empty",
+          ),
+        );
+        return;
+      }
+      if (editEmail.text.isEmpty) {
+        ArtSweetAlert.show(
+          context: Get.context!,
+          artDialogArgs: ArtDialogArgs(
+            type: ArtSweetAlertType.danger,
+            title: "Error",
+            text: "Email cannot empty",
+          ),
+        );
+        return;
+      }
+
+      if (!editEmail.text.isValidEmail) {
+        ArtSweetAlert.show(
+          context: Get.context!,
+          artDialogArgs: ArtDialogArgs(
+            type: ArtSweetAlertType.danger,
+            title: "Error",
+            text: "Invalid email address",
+          ),
+        );
+        return;
+      }
 
       profileProvider
-          .editProfile(username, name, email, phone, address)
+          .editProfile(editName.text, editUsername.text, editEmail.text,
+              editPhone.text, editAddress.text)
           .then((value) {
             Get.back();
             initData();
@@ -165,6 +207,16 @@ class ProfileController extends GetxController with StateMixin<ProfileModel> {
           type: ArtSweetAlertType.danger,
           title: "Error",
           text: "All fields must be filled",
+        ),
+      );
+      return;
+    } else if (newPassword.text != confirmPassword.text) {
+      ArtSweetAlert.show(
+        context: Get.context!,
+        artDialogArgs: ArtDialogArgs(
+          type: ArtSweetAlertType.danger,
+          title: "Error",
+          text: "New password and Confirm password not match",
         ),
       );
       return;
@@ -212,6 +264,14 @@ class ProfileController extends GetxController with StateMixin<ProfileModel> {
             imageProduct = null;
             update();
             Get.back();
+            ArtSweetAlert.show(
+              context: Get.context!,
+              artDialogArgs: ArtDialogArgs(
+                type: ArtSweetAlertType.success,
+                title: "Success",
+                text: "Change avatar success",
+              ),
+            );
             initData();
           })
           .onError((error, stackTrace) {})

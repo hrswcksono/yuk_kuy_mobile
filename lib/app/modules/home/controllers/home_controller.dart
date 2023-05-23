@@ -57,6 +57,7 @@ class HomeController extends GetxController
   }
 
   void changeState(int index, String filterKey) {
+    search.clear();
     bool temp = stateFilterHome[index];
     if (temp) {
       stateData = 1;

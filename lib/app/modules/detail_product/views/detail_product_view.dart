@@ -122,7 +122,7 @@ class DetailProductView extends GetView<DetailProductController> {
                                       color: Color.fromRGBO(143, 149, 158, 1))),
                             ),
                             Text(
-                              data.data!.price!.toPrice,
+                              "${data.data!.price!.toRupiah}/pax",
                               style: GoogleFonts.inter(
                                   textStyle: const TextStyle(
                                       fontSize: 13,

@@ -76,7 +76,7 @@ class VerificationRejectedView extends GetView {
                       padding: const EdgeInsets.only(right: 5.0),
                       child: ElevatedButton(
                         onPressed: () {
-                          paymentC.showDialogCancel();
+                          paymentC.showDialogCancel(context);
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white,

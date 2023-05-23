@@ -14,7 +14,6 @@ class ProfileView extends GetView<ProfileController> {
   const ProfileView({Key? key}) : super(key: key);
 
   // var controller = Get.put(ProfileController());
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -85,6 +84,8 @@ class ProfileView extends GetView<ProfileController> {
                               onTap: () {
                                 Get.dialog(
                                     changeAvatarDialog(data, controller));
+                                controller.imageProduct = null;
+                                controller.update();
                               },
                               child: Container(
                                 height: 30,
@@ -132,59 +133,57 @@ class ProfileView extends GetView<ProfileController> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            data.data!.profile!.address.toString() != ""
-                                ? Row(
-                                    children: [
-                                      Image.asset(
-                                        "assets/icons/ic_location.png",
-                                        width: 20,
-                                      ),
-                                      const SizedBox(
-                                        width: 15,
-                                      ),
-                                      SizedBox(
-                                        width: Get.width * 0.5,
-                                        child: Text(
-                                          data.data!.profile!.address
-                                              .toString(),
-                                          style: GoogleFonts.inter(
-                                              textStyle: const TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w500,
-                                            color: Color.fromRGBO(
-                                                143, 149, 158, 1),
-                                          )),
-                                        ),
-                                      ),
-                                    ],
-                                  )
-                                : const SizedBox(),
-                            const SizedBox(
-                              height: 5,
+                            Visibility(
+                              visible: data.data!.profile!.address != null &&
+                                  data.data!.profile!.address != "",
+                              child: Row(
+                                children: [
+                                  Image.asset(
+                                    "assets/icons/ic_location.png",
+                                    width: 20,
+                                  ),
+                                  const SizedBox(
+                                    width: 15,
+                                  ),
+                                  SizedBox(
+                                    width: Get.width * 0.5,
+                                    child: Text(
+                                      data.data!.profile!.address.toString(),
+                                      style: GoogleFonts.inter(
+                                          textStyle: const TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w500,
+                                        color: Color.fromRGBO(143, 149, 158, 1),
+                                      )),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                            data.data!.profile!.phone.toString() != ""
-                                ? Row(
-                                    children: [
-                                      Image.asset(
-                                        "assets/icons/ic_phone.png",
-                                        width: 20,
-                                      ),
-                                      const SizedBox(
-                                        width: 15,
-                                      ),
-                                      Text(
-                                        data.data!.profile!.phone.toString(),
-                                        style: GoogleFonts.inter(
-                                            textStyle: const TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w500,
-                                          color:
-                                              Color.fromRGBO(143, 149, 158, 1),
-                                        )),
-                                      ),
-                                    ],
-                                  )
-                                : const SizedBox(),
+                            Visibility(
+                              visible: data.data!.profile!.phone != null &&
+                                  data.data!.profile!.phone != "",
+                              child: Row(
+                                children: [
+                                  Image.asset(
+                                    "assets/icons/ic_phone.png",
+                                    width: 20,
+                                  ),
+                                  const SizedBox(
+                                    width: 15,
+                                  ),
+                                  Text(
+                                    data.data!.profile!.phone.toString(),
+                                    style: GoogleFonts.inter(
+                                        textStyle: const TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500,
+                                      color: Color.fromRGBO(143, 149, 158, 1),
+                                    )),
+                                  ),
+                                ],
+                              ),
+                            ),
                             const SizedBox(
                               height: 5,
                             ),
@@ -284,52 +283,75 @@ class ProfileView extends GetView<ProfileController> {
                     GetBuilder<ProfileController>(
                         init: ProfileController(),
                         builder: (ctx) {
-                          return InkWell(
-                            onTap: () {
-                              ctx.addImage("Gallery");
-                            },
-                            child: ctx.imageProduct != null
-                                ? Container(
-                                    height: 180,
-                                    width: 180,
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey,
-                                      shape: BoxShape.circle,
-                                      image: DecorationImage(
-                                        fit: BoxFit.cover,
-                                        image: FileImage(ctx.imageProduct!),
-                                      ),
-                                    ),
-                                  )
-                                : Container(
-                                    height: 180,
-                                    width: 180,
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey,
-                                      shape: BoxShape.circle,
-                                      image: DecorationImage(
-                                        fit: BoxFit.cover,
-                                        image: NetworkImage(
-                                            "${Consts.urlImg}${data.data!.profile!.avatar.toString()}"),
-                                      ),
+                          return ctx.imageProduct != null
+                              ? Container(
+                                  height: 180,
+                                  width: 180,
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey,
+                                    shape: BoxShape.circle,
+                                    image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: FileImage(ctx.imageProduct!),
                                     ),
                                   ),
-                          );
+                                )
+                              : Container(
+                                  height: 180,
+                                  width: 180,
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey,
+                                    shape: BoxShape.circle,
+                                    image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: NetworkImage(
+                                          "${Consts.urlImg}${data.data!.profile!.avatar.toString()}"),
+                                    ),
+                                  ),
+                                );
                         }),
                     const SizedBox(height: 20),
+                    GetBuilder<ProfileController>(
+                        init: ProfileController(),
+                        builder: (context) {
+                          return Column(
+                            children: [
+                              Visibility(
+                                visible: context.imageProduct == null,
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    context.addImage("Gallery");
+                                    context.update();
+                                  },
+                                  child: Text("Change Avatar",
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.inter(
+                                          textStyle: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                      ))),
+                                ),
+                              ),
+                              Visibility(
+                                visible: context.imageProduct != null,
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    context.changeAvatar();
+                                    context.update();
+                                  },
+                                  child: Text("Submit",
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.inter(
+                                          textStyle: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                      ))),
+                                ),
+                              )
+                            ],
+                          );
+                        }),
                     //Buttons
-                    ElevatedButton(
-                      onPressed: () {
-                        controller.changeAvatar();
-                      },
-                      child: Text("Change Picture",
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.inter(
-                              textStyle: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                          ))),
-                    )
                   ],
                 ),
               ),

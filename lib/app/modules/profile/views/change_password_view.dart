@@ -15,66 +15,64 @@ class ChangePasswordView extends GetView {
   Widget build(BuildContext context) {
     profileC.initPasswordTF();
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 10,
-                ),
-                const HeaderGlobal(
-                  title: "Change Password",
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Image.asset(
-                  'assets/images/img_lock.png',
-                  height: 110,
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                TextFieldGlobal(
-                  title: "Old Password",
-                  value: profileC.oldPassword,
-                  obsTxt: true,
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                TextFieldGlobal(
-                  title: "New Password",
-                  value: profileC.newPassword,
-                  obsTxt: true,
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                TextFieldGlobal(
-                  title: "Confirm Password",
-                  value: profileC.confirmPassword,
-                  obsTxt: true,
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    profileC.editPassword();
-                  },
-                  child: Text("Submit",
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.inter(
-                          textStyle: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                      ))),
-                ),
-              ],
-            ),
+        child: Padding(
+          padding:
+              const EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 10),
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 10,
+              ),
+              const HeaderGlobal(
+                title: "Change Password",
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Image.asset(
+                'assets/images/img_lock.png',
+                height: 110,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              TextFieldGlobal(
+                title: "Old Password",
+                value: profileC.oldPassword,
+                obsTxt: true,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              TextFieldGlobal(
+                title: "New Password",
+                value: profileC.newPassword,
+                obsTxt: true,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              TextFieldGlobal(
+                title: "Confirm Password",
+                value: profileC.confirmPassword,
+                obsTxt: true,
+              ),
+              const Spacer(),
+              ElevatedButton(
+                onPressed: () {
+                  profileC.editPassword();
+                },
+                child: Text("Submit",
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.inter(
+                        textStyle: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ))),
+              ),
+            ],
           ),
         ),
       ),
