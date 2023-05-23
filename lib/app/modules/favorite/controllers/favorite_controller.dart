@@ -1,3 +1,4 @@
+import 'package:art_sweetalert/art_sweetalert.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -47,6 +48,12 @@ class FavoriteController extends GetxController
     stateFavorited[index] = false;
     update();
     deleteFavorite(data);
+    ArtSweetAlert.show(
+        context: Get.context!,
+        artDialogArgs: ArtDialogArgs(
+            type: ArtSweetAlertType.success,
+            title: "Unfavorite",
+            text: "${data.name} removed from favourites"));
     Future.delayed(const Duration(seconds: 2), () {
       initData();
     });

@@ -27,6 +27,11 @@ class PaymentTextField extends StatelessWidget {
         ),
         TextField(
           controller: value,
+          keyboardType: title == "Phone"
+              ? TextInputType.phone
+              : title == "Email"
+                  ? TextInputType.emailAddress
+                  : TextInputType.name,
           decoration: InputDecoration(hintText: title),
         ),
       ],
