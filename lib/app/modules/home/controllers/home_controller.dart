@@ -137,6 +137,8 @@ class HomeController extends GetxController
     if (page > 1) {
       loadingPagination = true;
       update();
+    } else {
+      change(null, status: RxStatus.loading());
     }
     try {
       productProvider.listProductPagination(page, 6).then((value) {
@@ -157,6 +159,8 @@ class HomeController extends GetxController
     if (page > 1) {
       loadingPagination = true;
       update();
+    } else {
+      change(null, status: RxStatus.loading());
     }
     try {
       productProvider.filterProduct(key, page, 6).then((value) {
@@ -177,6 +181,8 @@ class HomeController extends GetxController
     if (page > 1) {
       loadingPagination = true;
       update();
+    } else {
+      change(null, status: RxStatus.loading());
     }
     try {
       productProvider.searchProduct(search.text, page, 6).then((value) {
