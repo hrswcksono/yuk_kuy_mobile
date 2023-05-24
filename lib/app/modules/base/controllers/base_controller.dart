@@ -22,12 +22,6 @@ class BaseController extends GetxController {
     super.onInit();
   }
 
-  void moved() {
-    Get.offAllNamed(AppPages.initialB);
-    indexTab = 1;
-    update();
-  }
-
   void changeIndexTab(int index) {
     indexTab = index;
     switch (indexTab) {
@@ -39,6 +33,9 @@ class BaseController extends GetxController {
         break;
       case 2:
         favC.onInit();
+        break;
+      case 3:
+        profC.onInit();
         break;
     }
     update();

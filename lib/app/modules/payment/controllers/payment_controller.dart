@@ -254,6 +254,7 @@ class PaymentController extends GetxController
                 productId)
             .then((value) {
           CustomAlert.success(Get.context!, "Order");
+          Get.close(2);
           Get.off(PaymentInformationView(productId, idTour, true));
         }).onError((error, stackTrace) {
           if (kDebugMode) {
@@ -341,7 +342,10 @@ class PaymentController extends GetxController
                 title: "Success",
                 text: "Send verification successfully"));
         Future.delayed(const Duration(seconds: 2), () {
-          baseController.moved();
+          Get.close(1);
+          Get.back();
+          Get.back();
+          Get.back();
         });
       }).onError((error, stackTrace) {
         if (kDebugMode) {
@@ -367,7 +371,9 @@ class PaymentController extends GetxController
                 title: "Success",
                 text: "Order Cancel"));
         Future.delayed(const Duration(seconds: 2), () {
-          Get.offAllNamed(AppPages.initialB);
+          Get.close(1);
+          Get.back();
+          Get.back();
           transController.initData();
           update();
         });

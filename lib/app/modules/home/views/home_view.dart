@@ -170,9 +170,15 @@ class HomeView extends GetView {
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 20,
-              )
+              GetBuilder<HomeController>(
+                  init: HomeController(),
+                  builder: (context) {
+                    return context.loadingPagination
+                        ? const SizedBox(child: LinearProgressIndicator())
+                        : const SizedBox(
+                            height: 20,
+                          );
+                  }),
             ],
           ),
         ),
