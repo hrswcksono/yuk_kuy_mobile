@@ -23,7 +23,6 @@ import 'package:yuk_kuy_mobile/core/utils/extensions/string_extensions.dart';
 import 'package:yuk_kuy_mobile/core/utils/helpers.dart';
 
 import '../../../data/providers/verification_provider.dart';
-import '../../../routes/app_pages.dart';
 
 class PaymentController extends GetxController
     with StateMixin<Tuple2<OrderDetailModel, BankModel>> {
@@ -255,7 +254,7 @@ class PaymentController extends GetxController
             .then((value) {
           CustomAlert.success(Get.context!, "Order");
           Get.close(2);
-          Get.off(PaymentInformationView(productId, idTour, true));
+          Get.off(PaymentInformationView(value.data!.id, idTour, true));
         }).onError((error, stackTrace) {
           if (kDebugMode) {
             print(error);
@@ -342,6 +341,7 @@ class PaymentController extends GetxController
                 title: "Success",
                 text: "Send verification successfully"));
         Future.delayed(const Duration(seconds: 2), () {
+          nameBankSelected = "Choose Bank :";
           Get.close(1);
           Get.back();
           Get.back();

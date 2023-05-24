@@ -274,13 +274,18 @@ class TransactionView extends GetView {
                       // mainAxisSize: MainAxisSize.max,
                       // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          productName,
-                          style: GoogleFonts.inter(
-                              textStyle: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                          )),
+                        SizedBox(
+                          width: Get.width * 0.44,
+                          child: Text(
+                            maxLines: 1,
+                            productName,
+                            style: GoogleFonts.inter(
+                                textStyle: const TextStyle(
+                              overflow: TextOverflow.ellipsis,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                            )),
+                          ),
                         ),
                         const Spacer(),
                         Container(

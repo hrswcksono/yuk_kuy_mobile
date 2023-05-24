@@ -191,8 +191,8 @@ class DetailProductView extends GetView<DetailProductController> {
                         ),
                         Text(
                           data.data!.description.toString(),
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 3,
+                          // overflow: TextOverflow.ellipsis,
+                          // maxLines: 3,
                           textAlign: TextAlign.justify,
                           style: GoogleFonts.inter(
                               textStyle: const TextStyle(

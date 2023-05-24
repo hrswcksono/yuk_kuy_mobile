@@ -92,13 +92,17 @@ class SellerProfileView extends GetView<SellerProfileController> {
                                       throw 'Could not launch $url';
                                     }
                                   },
-                                  child: Text(data.profile!.address!,
-                                      style: GoogleFonts.inter(
-                                          textStyle: const TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w500,
-                                        color: Color.fromRGBO(143, 149, 158, 1),
-                                      ))),
+                                  child: SizedBox(
+                                    width: Get.width * 0.55,
+                                    child: Text(data.profile!.address!,
+                                        style: GoogleFonts.inter(
+                                            textStyle: const TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
+                                          color:
+                                              Color.fromRGBO(143, 149, 158, 1),
+                                        ))),
+                                  ),
                                 ),
                               ],
                             ),
