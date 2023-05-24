@@ -3,7 +3,6 @@ import 'package:yuk_kuy_mobile/app/modules/favorite/controllers/favorite_control
 import 'package:yuk_kuy_mobile/app/modules/home/controllers/home_controller.dart';
 import 'package:yuk_kuy_mobile/app/modules/profile/controllers/profile_controller.dart';
 import 'package:yuk_kuy_mobile/app/modules/transaction/controllers/transaction_controller.dart';
-import 'package:yuk_kuy_mobile/app/routes/app_pages.dart';
 
 class BaseController extends GetxController {
   var homeC = Get.put(HomeController());

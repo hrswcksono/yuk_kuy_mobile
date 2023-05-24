@@ -170,6 +170,14 @@ class ProfileController extends GetxController with StateMixin<ProfileModel> {
               editPhone.text, editAddress.text)
           .then((value) {
             Get.back();
+            ArtSweetAlert.show(
+              context: Get.context!,
+              artDialogArgs: ArtDialogArgs(
+                type: ArtSweetAlertType.success,
+                title: "Success",
+                text: "Edit profile successful",
+              ),
+            );
             initData();
           })
           .onError((error, stackTrace) {})
