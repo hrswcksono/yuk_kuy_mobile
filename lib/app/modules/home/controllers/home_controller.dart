@@ -29,6 +29,8 @@ class HomeController extends GetxController
 
   late TextEditingController search;
 
+  bool loadingPagination = false;
+
   int page = 1;
   bool getFirstData = false;
   bool lastPage = false;
@@ -108,12 +110,15 @@ class HomeController extends GetxController
       productItem.addAll(value.data);
       change(productItem, status: RxStatus.success());
     }
+    loadingPagination = false;
+    update();
   }
 
   void getListCity() {
     try {
       productProvider.listCity().then((value) {
         listFilter.addAll(value.data!);
+        update();
       }).onError((error, stackTrace) {
         if (kDebugMode) {
           print(error);
@@ -129,6 +134,10 @@ class HomeController extends GetxController
   }
 
   void getProductPagination() {
+    if (page > 1) {
+      loadingPagination = true;
+      update();
+    }
     try {
       productProvider.listProductPagination(page, 6).then((value) {
         changeData(value);
@@ -145,8 +154,11 @@ class HomeController extends GetxController
   }
 
   void getFilterProduct(String key) {
+    if (page > 1) {
+      loadingPagination = true;
+      update();
+    }
     try {
-      change(null, status: RxStatus.loading());
       productProvider.filterProduct(key, page, 6).then((value) {
         changeData(value);
       }).onError((error, stackTrace) {
@@ -162,8 +174,11 @@ class HomeController extends GetxController
   }
 
   void searchProduct() {
+    if (page > 1) {
+      loadingPagination = true;
+      update();
+    }
     try {
-      change(null, status: RxStatus.loading());
       productProvider.searchProduct(search.text, page, 6).then((value) {
         changeData(value);
       }).onError((error, stackTrace) {
@@ -193,9 +208,6 @@ class HomeController extends GetxController
       update();
       return refreshController.refreshCompleted();
     });
-    // is_Loading = true;
-    // if failed,use refreshFailed()
-    // update();
   }
 
   @override
@@ -211,8 +223,6 @@ class HomeController extends GetxController
         searchProduct();
       }
       Get.back();
-    } else {
-      Get.snackbar('Alert', 'End of Product');
     }
   }
 

@@ -17,6 +17,11 @@ class TransactionController extends GetxController
   RefreshController refreshController =
       RefreshController(initialRefresh: false);
 
+  RefreshController refreshController2 =
+      RefreshController(initialRefresh: false);
+
+  bool loadingPagination = false;
+
   bool isLoading = true;
   int stateIndex = 0;
 
@@ -74,6 +79,7 @@ class TransactionController extends GetxController
     // listFilter.addAll(value.data);
     if (!getFirstData && value.count == 0) {
       change(null, status: RxStatus.empty());
+      // loadingPagination = false;
     } else if (getFirstData && value.count == 0) {
       lastPage = true;
       update();
@@ -81,10 +87,15 @@ class TransactionController extends GetxController
       getFirstData = true;
       orderItem.addAll(value.data!);
       change(orderItem, status: RxStatus.success());
+      // loadingPagination = false;
     }
+    loadingPagination = false;
+    update();
   }
 
   void initData() {
+    loadingPagination = true;
+    update();
     try {
       orderProvider.listOrder(page, 7).then((value) {
         changeData(value);
@@ -104,6 +115,8 @@ class TransactionController extends GetxController
   }
 
   void filterOrder(String filter) {
+    loadingPagination = true;
+    update();
     try {
       orderProvider.filterOrder(filter, page, 7).then((value) {
         changeData(value);
@@ -122,22 +135,33 @@ class TransactionController extends GetxController
     }
   }
 
+  void dataUpdate() {
+    orderItem.clear();
+    page = 1;
+    lastPage = false;
+    getFirstData = false;
+    dataChange(stateIndex);
+    update();
+  }
+
   void onRefresh() async {
     isLoading = false;
     update();
     // monitor network fetch
     await Future.delayed(const Duration(milliseconds: 1000), () {
-      orderItem.clear();
-      page = 1;
-      lastPage = false;
-      getFirstData = false;
-      dataChange(stateIndex);
-      update();
+      dataUpdate();
       return refreshController.refreshCompleted();
     });
-    // is_Loading = true;
-    // if failed,use refreshFailed()
-    // update();
+  }
+
+  void onRefresh2() async {
+    isLoading = false;
+    update();
+    // monitor network fetch
+    await Future.delayed(const Duration(milliseconds: 1000), () {
+      dataUpdate();
+      return refreshController2.refreshCompleted();
+    });
   }
 
   @override
@@ -147,8 +171,6 @@ class TransactionController extends GetxController
       // Get.dialog(Center(child: LinearProgressIndicator()));
       dataChange(stateIndex);
       // Get.back();
-    } else {
-      Get.snackbar('Alert', 'End of Product');
     }
   }
 

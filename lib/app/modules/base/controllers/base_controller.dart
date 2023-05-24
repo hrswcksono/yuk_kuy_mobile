@@ -40,6 +40,9 @@ class BaseController extends GetxController {
       case 2:
         favC.onInit();
         break;
+      case 3:
+        profC.onInit();
+        break;
     }
     update();
   }
