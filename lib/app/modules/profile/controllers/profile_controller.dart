@@ -166,7 +166,7 @@ class ProfileController extends GetxController with StateMixin<ProfileModel> {
       }
 
       profileProvider
-          .editProfile(editName.text, readUsername(), editEmail.text,
+          .editProfile(readUsername(), editName.text, editEmail.text,
               editPhone.text, editAddress.text)
           .then((value) {
             Get.back();
