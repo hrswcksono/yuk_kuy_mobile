@@ -45,13 +45,6 @@ class EditProfileView extends GetView {
                   height: 10,
                 ),
                 TextFieldGlobal(
-                  title: "Username",
-                  value: profileC.editUsername,
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                TextFieldGlobal(
                   title: "Email",
                   value: profileC.editEmail,
                 ),
