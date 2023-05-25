@@ -17,12 +17,12 @@ class DetailProductView extends GetView<DetailProductController> {
 
   @override
   Widget build(BuildContext context) {
-    return SmartRefresher(
-      controller: controller.refreshController,
-      onRefresh: controller.onRefresh,
-      child: controller.obx(
-        (data) => Scaffold(
-          body: SafeArea(
+    return controller.obx(
+      (data) => Scaffold(
+        body: SafeArea(
+          child: SmartRefresher(
+            controller: controller.refreshController,
+            onRefresh: controller.onRefresh,
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -208,49 +208,49 @@ class DetailProductView extends GetView<DetailProductController> {
               ),
             ),
           ),
-          bottomNavigationBar: ElevatedButton(
-            onPressed: () {
-              Get.toNamed(AppPages.initialP, arguments: {"data": data.data});
-            },
-            style: ElevatedButton.styleFrom(
-              minimumSize: const Size(
-                double.infinity,
-                60,
-              ),
-              elevation: 0,
-              textStyle: GoogleFonts.inter(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-              ),
-              backgroundColor: CustomColor.mainGreen,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(0),
-              ),
-            ),
-            child: const Text("Book Now"),
-          ),
         ),
-        onError: (_) => Container(
-          color: Colors.white,
-          height: Get.height,
-          child: Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Lottie.asset('assets/lotties/error.json',
-                    width: 200, height: 200, fit: BoxFit.cover),
-                Material(
-                  child: InkWell(
-                    onTap: () => controller.onRefresh(),
-                    child: Text(
-                      'Refresh',
-                      style: GoogleFonts.inter(
-                          fontSize: 30, color: Colors.black26),
-                    ),
-                  ),
-                )
-              ],
+        bottomNavigationBar: ElevatedButton(
+          onPressed: () {
+            Get.toNamed(AppPages.initialP, arguments: {"data": data.data});
+          },
+          style: ElevatedButton.styleFrom(
+            minimumSize: const Size(
+              double.infinity,
+              60,
             ),
+            elevation: 0,
+            textStyle: GoogleFonts.inter(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+            ),
+            backgroundColor: CustomColor.mainGreen,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(0),
+            ),
+          ),
+          child: const Text("Book Now"),
+        ),
+      ),
+      onError: (_) => Container(
+        color: Colors.white,
+        height: Get.height,
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Lottie.asset('assets/lotties/error-doodle-animation.zip',
+                  width: 200, height: 200, fit: BoxFit.cover),
+              Material(
+                child: InkWell(
+                  onTap: () => controller.onRefresh(),
+                  child: Text(
+                    'Refresh',
+                    style:
+                        GoogleFonts.inter(fontSize: 30, color: Colors.black26),
+                  ),
+                ),
+              )
+            ],
           ),
         ),
       ),

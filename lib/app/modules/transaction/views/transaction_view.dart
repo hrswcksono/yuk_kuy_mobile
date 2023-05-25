@@ -151,7 +151,7 @@ class TransactionView extends GetView {
                                   height: Get.height / 2,
                                   child: Center(
                                     child: Lottie.asset(
-                                        'assets/lotties/error.json',
+                                        'assets/lotties/error-doodle-animation.zip',
                                         width: 200,
                                         height: 200,
                                         fit: BoxFit.cover),

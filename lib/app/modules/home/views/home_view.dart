@@ -60,6 +60,7 @@ class HomeView extends GetView {
                         SizedBox(
                           width: Get.width * 0.77,
                           child: TextField(
+                            focusNode: homeC.closeKeyboard,
                             controller: homeC.search,
                             decoration: const InputDecoration(
                               hintText: "Search...",
@@ -167,8 +168,11 @@ class HomeView extends GetView {
                   onError: (_) => SizedBox(
                         height: Get.height * 0.6,
                         child: Center(
-                          child: Lottie.asset('assets/lotties/error.json',
-                              width: 200, height: 200, fit: BoxFit.cover),
+                          child: Lottie.asset(
+                              'assets/lotties/error-doodle-animation.zip',
+                              width: 200,
+                              height: 200,
+                              fit: BoxFit.cover),
                         ),
                       )),
               GetBuilder<HomeController>(

@@ -256,23 +256,11 @@ class ProfileView extends GetView<ProfileController> {
                     onError: (_) => SizedBox(
                       height: Get.height,
                       child: Center(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Lottie.asset('assets/lotties/error.json',
-                                width: 200, height: 200, fit: BoxFit.cover),
-                            Material(
-                              child: InkWell(
-                                onTap: () => controller.onRefresh(),
-                                child: Text(
-                                  'Refresh',
-                                  style: GoogleFonts.inter(
-                                      fontSize: 30, color: Colors.black26),
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
+                        child: Lottie.asset(
+                            'assets/lotties/error-doodle-animation.zip',
+                            width: 200,
+                            height: 200,
+                            fit: BoxFit.cover),
                       ),
                     ),
                   ),
