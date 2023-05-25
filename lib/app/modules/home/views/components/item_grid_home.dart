@@ -45,8 +45,10 @@ class ItemGridHome extends StatelessWidget {
           ),
           Text(
             model.name,
+            maxLines: 1,
             style: GoogleFonts.inter(
                 textStyle: const TextStyle(
+              overflow: TextOverflow.ellipsis,
               fontSize: 11,
               fontWeight: FontWeight.w600,
             )),
@@ -66,7 +68,7 @@ class ItemGridHome extends StatelessWidget {
             height: 3,
           ),
           Text(
-            model.price.toPrice,
+            "${model.price.toRupiah}/pax",
             style: GoogleFonts.inter(
                 textStyle: const TextStyle(
               fontSize: 10,

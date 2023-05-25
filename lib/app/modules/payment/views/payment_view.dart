@@ -33,17 +33,21 @@ class PaymentView extends GetView<PaymentController> {
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    controller.title,
-                    style: GoogleFonts.inter(
-                        textStyle: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    )),
+                  SizedBox(
+                    width: Get.width * 0.6,
+                    child: Text(
+                      controller.title,
+                      style: GoogleFonts.inter(
+                          textStyle: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      )),
+                    ),
                   ),
                   Text(
-                    controller.price.toPrice,
+                    controller.price.toRupiah,
                     style: GoogleFonts.inter(
                         textStyle: const TextStyle(
                             fontSize: 16,

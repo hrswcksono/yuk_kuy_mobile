@@ -94,7 +94,7 @@ class PaymentInformationView extends GetView {
                           },
                           separatorBuilder: (BuildContext context, int index) {
                             return const SizedBox(
-                              height: 5,
+                              height: 20,
                             );
                           },
                         ),
@@ -167,8 +167,9 @@ class PaymentInformationView extends GetView {
     );
   }
 
-  Row bankInformation(String bankName, String name, String number) {
-    return Row(
+  Column bankInformation(String bankName, String name, String number) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(bankName,
             style: GoogleFonts.inter(
@@ -176,15 +177,12 @@ class PaymentInformationView extends GetView {
               fontSize: 16,
               fontWeight: FontWeight.w600,
             ))),
-        const SizedBox(
-          width: 5,
-        ),
         Text("$number an $name",
             style: GoogleFonts.inter(
                 textStyle: const TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.w400,
-            )))
+            ))),
       ],
     );
   }

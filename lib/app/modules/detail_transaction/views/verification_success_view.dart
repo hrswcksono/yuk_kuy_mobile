@@ -120,6 +120,7 @@ class VerificationSuccessView extends GetView<DetailTransactionController> {
 
   Row itemData(String tag, String content) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           tag,
@@ -130,13 +131,17 @@ class VerificationSuccessView extends GetView<DetailTransactionController> {
           )),
         ),
         const Spacer(),
-        Text(
-          content,
-          style: GoogleFonts.inter(
-              textStyle: const TextStyle(
-            fontSize: 16,
-            color: Colors.black,
-          )),
+        SizedBox(
+          width: Get.width * 0.55,
+          child: Text(
+            content,
+            textAlign: TextAlign.right,
+            style: GoogleFonts.inter(
+                textStyle: const TextStyle(
+              fontSize: 16,
+              color: Colors.black,
+            )),
+          ),
         ),
       ],
     );

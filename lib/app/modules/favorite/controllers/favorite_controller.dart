@@ -55,6 +55,7 @@ class FavoriteController extends GetxController
             title: "Unfavorite",
             text: "${data.name} removed from favourites"));
     Future.delayed(const Duration(seconds: 2), () {
+      Get.back();
       initData();
     });
   }

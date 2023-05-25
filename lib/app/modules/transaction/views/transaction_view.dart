@@ -81,54 +81,87 @@ class TransactionView extends GetView {
                             ),
                           )),
                 ),
-                SizedBox(
-                  height: Get.height * 0.78 - (Get.mediaQuery.viewPadding.top),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: transC.obx(
-                      (data) => ListView.separated(
-                          padding:
-                              const EdgeInsets.only(top: 10, left: 5, right: 5),
-                          shrinkWrap: true,
-                          physics: const BouncingScrollPhysics(),
-                          controller: transC.scroll,
-                          itemCount: data!.length,
-                          itemBuilder: (BuildContext context, int index) =>
-                              itemTransaction(
-                                data[index].id!,
-                                data[index].product!.accountId!,
-                                data[index].product!.name.toString(),
-                                data[index].name.toString(),
-                                data[index].createdAt.toString(),
-                                data[index].totalPackage!.toInt(),
-                                data[index].totalPrice!.toInt(),
-                                data[index].statusOrder!.status.toString(),
-                                data[index]
-                                    .product!
-                                    .imageProducts![0]
-                                    .src
-                                    .toString(),
-                                data[index].statusOrder!.reason.toString(),
+                GetBuilder<TransactionController>(
+                    init: TransactionController(),
+                    builder: (context) {
+                      return Column(
+                        children: [
+                          SizedBox(
+                            height: Get.height *
+                                    (context.loadingPagination ? 0.785 : 0.79) -
+                                (Get.mediaQuery.viewPadding.top),
+                            // height: Get.height * 0.785 - (Get.mediaQuery.viewPadding.top),
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 15),
+                              child: transC.obx(
+                                (data) => SmartRefresher(
+                                  controller: transC.refreshController2,
+                                  onRefresh: transC.onRefresh2,
+                                  child: ListView.separated(
+                                      padding: const EdgeInsets.only(
+                                          top: 10, left: 5, right: 5),
+                                      shrinkWrap: true,
+                                      physics: const BouncingScrollPhysics(),
+                                      controller: transC.scroll,
+                                      itemCount: data!.length,
+                                      itemBuilder: (BuildContext context,
+                                              int index) =>
+                                          itemTransaction(
+                                            data[index].id!,
+                                            data[index].product!.accountId!,
+                                            data[index]
+                                                .product!
+                                                .name
+                                                .toString(),
+                                            data[index].name.toString(),
+                                            data[index].createdAt.toString(),
+                                            data[index].totalPackage!.toInt(),
+                                            data[index].totalPrice!.toInt(),
+                                            data[index]
+                                                .statusOrder!
+                                                .status
+                                                .toString(),
+                                            data[index]
+                                                .product!
+                                                .imageProducts![0]
+                                                .src
+                                                .toString(),
+                                            data[index]
+                                                .statusOrder!
+                                                .reason
+                                                .toString(),
+                                          ),
+                                      separatorBuilder: (_, __) =>
+                                          const SizedBox(
+                                            height: 5,
+                                          )),
+                                ),
+                                onEmpty: SizedBox(
+                                  height: Get.height / 2,
+                                  child: const Center(
+                                    child: Material(
+                                      child: LottiePlayer(
+                                        networkUrl:
+                                            'https://assets10.lottiefiles.com/datafiles/vhvOcuUkH41HdrL/data.json',
+                                        width: 200,
+                                        height: 200,
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               ),
-                          separatorBuilder: (_, __) => const SizedBox(
-                                height: 5,
-                              )),
-                      onEmpty: SizedBox(
-                        height: Get.height / 2,
-                        child: const Center(
-                          child: Material(
-                            child: LottiePlayer(
-                              networkUrl:
-                                  'https://assets10.lottiefiles.com/datafiles/vhvOcuUkH41HdrL/data.json',
-                              width: 200,
-                              height: 200,
                             ),
                           ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                          Visibility(
+                            visible: context.loadingPagination,
+                            child: const SizedBox(
+                              child: LinearProgressIndicator(),
+                            ),
+                          )
+                        ],
+                      );
+                    }),
               ],
             ),
           ),
@@ -241,13 +274,18 @@ class TransactionView extends GetView {
                       // mainAxisSize: MainAxisSize.max,
                       // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          productName,
-                          style: GoogleFonts.inter(
-                              textStyle: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                          )),
+                        SizedBox(
+                          width: Get.width * 0.44,
+                          child: Text(
+                            maxLines: 1,
+                            productName,
+                            style: GoogleFonts.inter(
+                                textStyle: const TextStyle(
+                              overflow: TextOverflow.ellipsis,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                            )),
+                          ),
                         ),
                         const Spacer(),
                         Container(

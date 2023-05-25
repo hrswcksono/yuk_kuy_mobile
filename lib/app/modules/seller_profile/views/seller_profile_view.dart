@@ -82,16 +82,26 @@ class SellerProfileView extends GetView<SellerProfileController> {
                                 const SizedBox(
                                   width: 15,
                                 ),
-                                SizedBox(
-                                  width: Get.width * 0.5,
-                                  child: Text(
-                                    data.profile!.address.toString(),
-                                    style: GoogleFonts.inter(
-                                        textStyle: const TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                      color: Color.fromRGBO(143, 149, 158, 1),
-                                    )),
+                                TextButton(
+                                  onPressed: () async {
+                                    var url =
+                                        "https://www.google.com/maps/search/?api=1&query=${data.profile!.address.toString()}";
+                                    if (await canLaunchUrl(Uri.parse(url))) {
+                                      await launchUrl(Uri.parse(url));
+                                    } else {
+                                      throw 'Could not launch $url';
+                                    }
+                                  },
+                                  child: SizedBox(
+                                    width: Get.width * 0.55,
+                                    child: Text(data.profile!.address!,
+                                        style: GoogleFonts.inter(
+                                            textStyle: const TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
+                                          color:
+                                              Color.fromRGBO(143, 149, 158, 1),
+                                        ))),
                                   ),
                                 ),
                               ],
@@ -117,13 +127,14 @@ class SellerProfileView extends GetView<SellerProfileController> {
                                         onPressed: () async {
                                           var url =
                                               "mailto:${data.email.toString()}";
-                                          if (await canLaunch(url)) {
-                                            await launch(url);
+                                          if (await canLaunchUrl(
+                                              Uri.parse(url))) {
+                                            await launchUrl(Uri.parse(url));
                                           } else {
                                             throw 'Could not launch $url';
                                           }
                                         },
-                                        child: Text(data.email.toString(),
+                                        child: Text(data.email!,
                                             style: GoogleFonts.inter(
                                                 textStyle: const TextStyle(
                                               fontSize: 12,
@@ -152,15 +163,26 @@ class SellerProfileView extends GetView<SellerProfileController> {
                                       const SizedBox(
                                         width: 15,
                                       ),
-                                      Text(
-                                        data.profile!.phone.toString(),
-                                        style: GoogleFonts.inter(
-                                            textStyle: const TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w500,
-                                          color:
-                                              Color.fromRGBO(143, 149, 158, 1),
-                                        )),
+                                      TextButton(
+                                        onPressed: () async {
+                                          var url =
+                                              "tel:${data.profile!.phone.toString()}";
+                                          if (await canLaunchUrl(
+                                              Uri.parse(url))) {
+                                            await launchUrl(Uri.parse(url));
+                                          } else {
+                                            throw 'Could not launch $url';
+                                          }
+                                        },
+                                        child:
+                                            Text(data.profile!.phone.toString(),
+                                                style: GoogleFonts.inter(
+                                                    textStyle: const TextStyle(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: Color.fromRGBO(
+                                                      143, 149, 158, 1),
+                                                ))),
                                       ),
                                     ],
                                   ),
@@ -181,8 +203,8 @@ class SellerProfileView extends GetView<SellerProfileController> {
                             onTap: () async {
                               var url =
                                   "https://twitter.com/${data.socialAccounts![index].link.toString()}";
-                              if (await canLaunch(url)) {
-                                await launch(url);
+                              if (await canLaunchUrl(Uri.parse(url))) {
+                                await launchUrl(Uri.parse(url));
                               } else {
                                 throw 'Could not launch $url';
                               }
@@ -205,8 +227,8 @@ class SellerProfileView extends GetView<SellerProfileController> {
                             onTap: () async {
                               var url =
                                   "https://www.youtube.com/@${data.socialAccounts![index].link.toString()}";
-                              if (await canLaunch(url)) {
-                                await launch(url);
+                              if (await canLaunchUrl(Uri.parse(url))) {
+                                await launchUrl(Uri.parse(url));
                               } else {
                                 throw 'Could not launch $url';
                               }
@@ -229,8 +251,8 @@ class SellerProfileView extends GetView<SellerProfileController> {
                             onTap: () async {
                               var url =
                                   "https://www.instagram.com/${data.socialAccounts![index].link.toString()}/";
-                              if (await canLaunch(url)) {
-                                await launch(url);
+                              if (await canLaunchUrl(Uri.parse(url))) {
+                                await launchUrl(Uri.parse(url));
                               } else {
                                 throw 'Could not launch $url';
                               }
@@ -253,8 +275,8 @@ class SellerProfileView extends GetView<SellerProfileController> {
                             onTap: () async {
                               var url =
                                   "https://www.tiktok.com/@${data.socialAccounts![index].link.toString()}/";
-                              if (await canLaunch(url)) {
-                                await launch(url);
+                              if (await canLaunchUrl(Uri.parse(url))) {
+                                await launchUrl(Uri.parse(url));
                               } else {
                                 throw 'Could not launch $url';
                               }

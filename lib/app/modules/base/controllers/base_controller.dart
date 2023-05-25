@@ -3,7 +3,6 @@ import 'package:yuk_kuy_mobile/app/modules/favorite/controllers/favorite_control
 import 'package:yuk_kuy_mobile/app/modules/home/controllers/home_controller.dart';
 import 'package:yuk_kuy_mobile/app/modules/profile/controllers/profile_controller.dart';
 import 'package:yuk_kuy_mobile/app/modules/transaction/controllers/transaction_controller.dart';
-import 'package:yuk_kuy_mobile/app/routes/app_pages.dart';
 
 class BaseController extends GetxController {
   var homeC = Get.put(HomeController());
@@ -22,12 +21,6 @@ class BaseController extends GetxController {
     super.onInit();
   }
 
-  void moved() {
-    Get.offAllNamed(AppPages.initialB);
-    indexTab = 1;
-    update();
-  }
-
   void changeIndexTab(int index) {
     indexTab = index;
     switch (indexTab) {
@@ -39,6 +32,9 @@ class BaseController extends GetxController {
         break;
       case 2:
         favC.onInit();
+        break;
+      case 3:
+        profC.onInit();
         break;
     }
     update();

@@ -159,16 +159,26 @@ class HomeView extends GetView {
                 onLoading: SizedBox(
                     height: Get.height * 0.6,
                     child: const Center(child: CircularProgressIndicator())),
-                onEmpty: const LottiePlayer(
-                  networkUrl:
-                      'https://assets10.lottiefiles.com/packages/lf20_NeuXI2OPLG.json',
-                  width: 200,
-                  height: 200,
+                onEmpty: SizedBox(
+                  height: Get.height * 0.8,
+                  width: Get.width,
+                  child: const LottiePlayer(
+                    networkUrl:
+                        'https://assets10.lottiefiles.com/packages/lf20_NeuXI2OPLG.json',
+                    width: 200,
+                    height: 200,
+                  ),
                 ),
               ),
-              const SizedBox(
-                height: 20,
-              )
+              GetBuilder<HomeController>(
+                  init: HomeController(),
+                  builder: (context) {
+                    return context.loadingPagination
+                        ? const SizedBox(child: LinearProgressIndicator())
+                        : const SizedBox(
+                            height: 20,
+                          );
+                  }),
             ],
           ),
         ),
