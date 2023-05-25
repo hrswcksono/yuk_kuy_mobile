@@ -336,34 +336,43 @@ class PaymentController extends GetxController
 
   void verifOrder(int idOrd) {
     try {
-      verifProvider.verifOrder(imgVerification!, idBank, idOrd).then((value) {
-        ArtSweetAlert.show(
-            context: Get.context!,
-            artDialogArgs: ArtDialogArgs(
-                type: ArtSweetAlertType.success,
-                title: "Success",
-                text: "Send verification successfully"));
-        Future.delayed(const Duration(seconds: 2), () {
-          nameBankSelected = "Choose Bank :";
-          Get.close(1);
-          Get.back();
-          Get.back();
-          Get.back();
-          transController.changeState(0);
-        });
-      }).onError((error, stackTrace) {
+      if (nameBankSelected == "Choose Bank :") {
         ArtSweetAlert.show(
             context: Get.context!,
             artDialogArgs: ArtDialogArgs(
                 type: ArtSweetAlertType.warning,
                 title: "Failed",
-                text: error.toString()));
-        if (kDebugMode) {
-          print(error);
-        }
-      }).whenComplete(() {
-        log("Verif complete!");
-      });
+                text: "Must choose one bank to transfer"));
+      } else {
+        verifProvider.verifOrder(imgVerification!, idBank, idOrd).then((value) {
+          ArtSweetAlert.show(
+              context: Get.context!,
+              artDialogArgs: ArtDialogArgs(
+                  type: ArtSweetAlertType.success,
+                  title: "Success",
+                  text: "Send verification successfully"));
+          Future.delayed(const Duration(seconds: 2), () {
+            nameBankSelected = "Choose Bank :";
+            Get.close(1);
+            Get.back();
+            Get.back();
+            Get.back();
+            transController.changeState(0);
+          });
+        }).onError((error, stackTrace) {
+          ArtSweetAlert.show(
+              context: Get.context!,
+              artDialogArgs: ArtDialogArgs(
+                  type: ArtSweetAlertType.warning,
+                  title: "Failed",
+                  text: error.toString()));
+          if (kDebugMode) {
+            print(error);
+          }
+        }).whenComplete(() {
+          log("Verif complete!");
+        });
+      }
     } catch (e) {
       if (kDebugMode) {
         print("gagal");
