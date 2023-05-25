@@ -3,12 +3,15 @@ import 'dart:io';
 import 'package:get/get.dart';
 
 import 'base_provider.dart';
+import 'package:path/path.dart';
 
 class VerificationProvider extends BaseProvider {
   Future<dynamic> verifOrder(File imageReceipt, int bankId, int orderId) async {
+    print(basename(imageReceipt.path));
+
     var imageFile = MultipartFile(
       imageReceipt,
-      filename: "test.png",
+      filename: basename(imageReceipt.path),
       contentType: "multipart/form-data",
     );
 
@@ -23,7 +26,13 @@ class VerificationProvider extends BaseProvider {
       body,
     );
 
-    return response.body.toString();
+    print(response.body.toString());
+
+    if (!response.body['status']) {
+      return Future.error(response.body["message"]);
+    } else {
+      return response.body.toString();
+    }
   }
 
   Future<dynamic> cancelOrder(int orderId, String reason) async {

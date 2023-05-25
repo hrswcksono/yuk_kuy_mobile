@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lottie_player/lottie_player.dart';
+import 'package:lottie/lottie.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../../../../core/themes/colors.dart';
@@ -141,35 +141,36 @@ class HomeView extends GetView {
                   )),
                 ),
               ),
-              homeC.obx(
-                (data) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: StaggeredGrid.count(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 15,
-                      crossAxisSpacing: 25,
-                      children: List.generate(
-                        data!.length,
-                        (index) => ItemGridHome(model: data[index]),
-                      ),
+              homeC.obx((data) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: StaggeredGrid.count(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 15,
+                    crossAxisSpacing: 25,
+                    children: List.generate(
+                      data!.length,
+                      (index) => ItemGridHome(model: data[index]),
                     ),
-                  );
-                },
-                onLoading: SizedBox(
-                    height: Get.height * 0.6,
-                    child: const Center(child: CircularProgressIndicator())),
-                onEmpty: SizedBox(
-                  height: Get.height * 0.8,
-                  width: Get.width,
-                  child: const LottiePlayer(
-                    networkUrl:
-                        'https://assets10.lottiefiles.com/packages/lf20_NeuXI2OPLG.json',
-                    width: 200,
-                    height: 200,
                   ),
-                ),
-              ),
+                );
+              },
+                  onLoading: SizedBox(
+                      height: Get.height * 0.6,
+                      child: const Center(child: CircularProgressIndicator())),
+                  onEmpty: SizedBox(
+                    height: Get.height * 0.8,
+                    width: Get.width,
+                    child: Lottie.asset('assets/lotties/empty-box.json',
+                        width: 200, height: 200, fit: BoxFit.cover),
+                  ),
+                  onError: (_) => SizedBox(
+                        height: Get.height * 0.6,
+                        child: Center(
+                          child: Lottie.asset('assets/lotties/error.json',
+                              width: 200, height: 200, fit: BoxFit.cover),
+                        ),
+                      )),
               GetBuilder<HomeController>(
                   init: HomeController(),
                   builder: (context) {

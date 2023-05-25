@@ -151,6 +151,7 @@ class PaymentController extends GetxController
                             child: ElevatedButton(
                               onPressed: () async {
                                 var pickImage = await _picker.pickImage(
+                                    maxHeight: 500,
                                     source: ImageSource.gallery);
                                 if (pickImage != null) {
                                   imgVerification = File(pickImage.path);
@@ -174,7 +175,7 @@ class PaymentController extends GetxController
                             child: ElevatedButton(
                               onPressed: () async {
                                 var pickImage = await _picker.pickImage(
-                                    source: ImageSource.camera);
+                                    maxHeight: 500, source: ImageSource.camera);
                                 if (pickImage != null) {
                                   imgVerification = File(pickImage.path);
                                 }
@@ -351,6 +352,12 @@ class PaymentController extends GetxController
           transController.changeState(0);
         });
       }).onError((error, stackTrace) {
+        ArtSweetAlert.show(
+            context: Get.context!,
+            artDialogArgs: ArtDialogArgs(
+                type: ArtSweetAlertType.warning,
+                title: "Failed",
+                text: error.toString()));
         if (kDebugMode) {
           print(error);
         }
