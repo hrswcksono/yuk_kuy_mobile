@@ -23,6 +23,7 @@ class BaseController extends GetxController {
 
   void changeIndexTab(int index) {
     indexTab = index;
+    homeC.closeKeyboard.unfocus();
     switch (indexTab) {
       case 0:
         homeC.moveData();

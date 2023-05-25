@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:yuk_kuy_mobile/app/data/models/favorite_model.dart';
 import 'package:yuk_kuy_mobile/app/routes/app_pages.dart';
@@ -230,13 +231,29 @@ class DetailProductView extends GetView<DetailProductController> {
           child: const Text("Book Now"),
         ),
       ),
-      onError: (error) {
-        return Container(
-          height: Get.height,
-          width: Get.width,
-          color: Colors.white,
-        );
-      },
+      onError: (_) => Container(
+        color: Colors.white,
+        height: Get.height,
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Lottie.asset('assets/lotties/error-doodle-animation.zip',
+                  width: 200, height: 200, fit: BoxFit.cover),
+              Material(
+                child: InkWell(
+                  onTap: () => controller.onRefresh(),
+                  child: Text(
+                    'Refresh',
+                    style:
+                        GoogleFonts.inter(fontSize: 30, color: Colors.black26),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

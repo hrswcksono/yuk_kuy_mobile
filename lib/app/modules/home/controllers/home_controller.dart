@@ -31,6 +31,8 @@ class HomeController extends GetxController
 
   bool loadingPagination = false;
 
+  var closeKeyboard = FocusNode();
+
   int page = 1;
   bool getFirstData = false;
   bool lastPage = false;
@@ -59,6 +61,7 @@ class HomeController extends GetxController
   }
 
   void changeState(int index, String filterKey) {
+    closeKeyboard.unfocus();
     search.clear();
     bool temp = stateFilterHome[index];
     if (temp) {

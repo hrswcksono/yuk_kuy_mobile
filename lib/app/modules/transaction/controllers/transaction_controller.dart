@@ -43,7 +43,7 @@ class TransactionController extends GetxController
     page = 1;
     lastPage = false;
     getFirstData = false;
-    dataChange(stateIndex);
+    changeState(stateIndex);
     update();
   }
 
@@ -94,13 +94,19 @@ class TransactionController extends GetxController
   }
 
   void initData() {
-    loadingPagination = true;
-    update();
+    if (page > 1) {
+      loadingPagination = true;
+      update();
+    } else {
+      change(null, status: RxStatus.loading());
+    }
     try {
       orderProvider.listOrder(page, 7).then((value) {
         changeData(value);
       }).onError((error, stackTrace) {
         change(null, status: RxStatus.error());
+        loadingPagination = false;
+        update();
         if (kDebugMode) {
           print(error);
         }
@@ -115,13 +121,19 @@ class TransactionController extends GetxController
   }
 
   void filterOrder(String filter) {
-    loadingPagination = true;
-    update();
+    if (page > 1) {
+      loadingPagination = true;
+      update();
+    } else {
+      change(null, status: RxStatus.loading());
+    }
     try {
       orderProvider.filterOrder(filter, page, 7).then((value) {
         changeData(value);
       }).onError((error, stackTrace) {
         change(null, status: RxStatus.error());
+        loadingPagination = false;
+        update();
         if (kDebugMode) {
           print(error);
         }
