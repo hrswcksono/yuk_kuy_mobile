@@ -62,6 +62,8 @@ class PaymentController extends GetxController
 
   late TextEditingController reason;
 
+  var closeKeyBoard = FocusNode();
+
   void initData(ProductDetailItem data) {
     numPeople = 1;
     name = TextEditingController();
@@ -346,6 +348,7 @@ class PaymentController extends GetxController
           Get.back();
           Get.back();
           Get.back();
+          transController.changeState(0);
         });
       }).onError((error, stackTrace) {
         if (kDebugMode) {
@@ -371,10 +374,11 @@ class PaymentController extends GetxController
                 title: "Success",
                 text: "Order Cancel"));
         Future.delayed(const Duration(seconds: 2), () {
+          closeKeyBoard.unfocus();
           Get.close(1);
           Get.back();
           Get.back();
-          transController.initData();
+          transController.changeState(0);
           update();
         });
       }).onError((error, stackTrace) {
@@ -447,6 +451,7 @@ class PaymentController extends GetxController
                     ),
                     TextField(
                       controller: reason,
+                      focusNode: closeKeyBoard,
                     ),
                     const SizedBox(height: 20),
                     ElevatedButton(
