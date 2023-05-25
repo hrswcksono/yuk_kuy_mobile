@@ -23,7 +23,6 @@ import 'package:yuk_kuy_mobile/core/utils/extensions/string_extensions.dart';
 import 'package:yuk_kuy_mobile/core/utils/helpers.dart';
 
 import '../../../data/providers/verification_provider.dart';
-import '../../../routes/app_pages.dart';
 
 class PaymentController extends GetxController
     with StateMixin<Tuple2<OrderDetailModel, BankModel>> {
@@ -62,6 +61,8 @@ class PaymentController extends GetxController
   int idTour = 0;
 
   late TextEditingController reason;
+
+  var closeKeyBoard = FocusNode();
 
   void initData(ProductDetailItem data) {
     numPeople = 1;
@@ -255,7 +256,7 @@ class PaymentController extends GetxController
             .then((value) {
           CustomAlert.success(Get.context!, "Order");
           Get.close(2);
-          Get.off(PaymentInformationView(productId, idTour, true));
+          Get.off(PaymentInformationView(value.data!.id, idTour, true));
         }).onError((error, stackTrace) {
           if (kDebugMode) {
             print(error);
@@ -342,10 +343,12 @@ class PaymentController extends GetxController
                 title: "Success",
                 text: "Send verification successfully"));
         Future.delayed(const Duration(seconds: 2), () {
+          nameBankSelected = "Choose Bank :";
           Get.close(1);
           Get.back();
           Get.back();
           Get.back();
+          transController.changeState(0);
         });
       }).onError((error, stackTrace) {
         if (kDebugMode) {
@@ -371,10 +374,11 @@ class PaymentController extends GetxController
                 title: "Success",
                 text: "Order Cancel"));
         Future.delayed(const Duration(seconds: 2), () {
+          closeKeyBoard.unfocus();
           Get.close(1);
           Get.back();
           Get.back();
-          transController.initData();
+          transController.changeState(0);
           update();
         });
       }).onError((error, stackTrace) {
@@ -447,6 +451,7 @@ class PaymentController extends GetxController
                     ),
                     TextField(
                       controller: reason,
+                      focusNode: closeKeyBoard,
                     ),
                     const SizedBox(height: 20),
                     ElevatedButton(

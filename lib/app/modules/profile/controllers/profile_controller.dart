@@ -21,7 +21,6 @@ class ProfileController extends GetxController with StateMixin<ProfileModel> {
 
   //edit profile
   late TextEditingController editName = TextEditingController(text: '');
-  late TextEditingController editUsername = TextEditingController(text: '');
   late TextEditingController editEmail = TextEditingController(text: '');
   late TextEditingController editPhone = TextEditingController(text: '');
   late TextEditingController editAddress = TextEditingController(text: '');
@@ -70,12 +69,10 @@ class ProfileController extends GetxController with StateMixin<ProfileModel> {
 
   void initEdit(ProfileItem data) {
     editName = TextEditingController();
-    editUsername = TextEditingController();
     editEmail = TextEditingController();
     editPhone = TextEditingController();
     editAddress = TextEditingController();
     editName.text = data.name.toString();
-    editUsername.text = data.username.toString();
     editEmail.text = data.email.toString();
 
     if (data.profile != null) {
@@ -133,17 +130,6 @@ class ProfileController extends GetxController with StateMixin<ProfileModel> {
 
   void editData() {
     try {
-      if (editUsername.text.isEmpty) {
-        ArtSweetAlert.show(
-          context: Get.context!,
-          artDialogArgs: ArtDialogArgs(
-            type: ArtSweetAlertType.danger,
-            title: "Error",
-            text: "Username cannot empty",
-          ),
-        );
-        return;
-      }
       if (editName.text.isEmpty) {
         ArtSweetAlert.show(
           context: Get.context!,
@@ -180,10 +166,18 @@ class ProfileController extends GetxController with StateMixin<ProfileModel> {
       }
 
       profileProvider
-          .editProfile(editName.text, editUsername.text, editEmail.text,
+          .editProfile(readUsername(), editName.text, editEmail.text,
               editPhone.text, editAddress.text)
           .then((value) {
             Get.back();
+            ArtSweetAlert.show(
+              context: Get.context!,
+              artDialogArgs: ArtDialogArgs(
+                type: ArtSweetAlertType.success,
+                title: "Success",
+                text: "Edit profile successful",
+              ),
+            );
             initData();
           })
           .onError((error, stackTrace) {})

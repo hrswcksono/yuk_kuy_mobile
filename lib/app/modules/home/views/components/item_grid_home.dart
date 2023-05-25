@@ -45,8 +45,10 @@ class ItemGridHome extends StatelessWidget {
           ),
           Text(
             model.name,
+            maxLines: 1,
             style: GoogleFonts.inter(
                 textStyle: const TextStyle(
+              overflow: TextOverflow.ellipsis,
               fontSize: 11,
               fontWeight: FontWeight.w600,
             )),

@@ -14,6 +14,7 @@ class FavoriteView extends GetView<FavoriteController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: SmartRefresher(
           controller: controller.refreshController,
