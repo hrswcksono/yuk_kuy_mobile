@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lottie_player/lottie_player.dart';
+import 'package:lottie/lottie.dart';
+// import 'package:lottie_player/lottie_player.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:yuk_kuy_mobile/app/modules/favorite/views/components/item_grid_favorite.dart';
 
@@ -51,16 +52,10 @@ class FavoriteView extends GetView<FavoriteController> {
                               ),
                             ),
                         onEmpty: SizedBox(
-                          height: Get.height / 2,
-                          child: const Center(
-                            child: Material(
-                              child: LottiePlayer(
-                                networkUrl:
-                                    'https://assets10.lottiefiles.com/datafiles/vhvOcuUkH41HdrL/data.json',
-                                width: 200,
-                                height: 200,
-                              ),
-                            ),
+                          height: Get.height / 1.5,
+                          child: Center(
+                            child: Lottie.asset('assets/lotties/empty-box.json',
+                                width: 200, height: 200, fit: BoxFit.cover),
                           ),
                         )),
                   ),

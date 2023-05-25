@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lottie_player/lottie_player.dart';
+import 'package:lottie/lottie.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:yuk_kuy_mobile/app/modules/detail_transaction/views/order_canceled_view.dart';
 import 'package:yuk_kuy_mobile/app/modules/detail_transaction/views/verification_pending_view.dart';
@@ -139,15 +139,22 @@ class TransactionView extends GetView {
                                 ),
                                 onEmpty: SizedBox(
                                   height: Get.height / 2,
-                                  child: const Center(
-                                    child: Material(
-                                      child: LottiePlayer(
-                                        networkUrl:
-                                            'https://assets10.lottiefiles.com/datafiles/vhvOcuUkH41HdrL/data.json',
+                                  child: Center(
+                                    child: Lottie.asset(
+                                        'assets/lotties/empty-box.json',
                                         width: 200,
                                         height: 200,
-                                      ),
-                                    ),
+                                        fit: BoxFit.cover),
+                                  ),
+                                ),
+                                onError: (_) => SizedBox(
+                                  height: Get.height / 2,
+                                  child: Center(
+                                    child: Lottie.asset(
+                                        'assets/lotties/error-doodle-animation.zip',
+                                        width: 200,
+                                        height: 200,
+                                        fit: BoxFit.cover),
                                   ),
                                 ),
                               ),

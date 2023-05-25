@@ -61,6 +61,7 @@ class DetailProductController extends GetxController
   }
 
   void initData(int id) {
+    change(null, status: RxStatus.loading());
     try {
       productProvider.detailProduct(id).then((value) {
         initFavorite(value.data);
