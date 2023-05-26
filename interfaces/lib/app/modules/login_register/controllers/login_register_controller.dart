@@ -115,6 +115,18 @@ class LoginRegisterController extends GetxController {
       return;
     }
 
+    if (usernameRegisTF.text.contains(" ")) {
+      ArtSweetAlert.show(
+        context: Get.context!,
+        artDialogArgs: ArtDialogArgs(
+          type: ArtSweetAlertType.danger,
+          title: "Error",
+          text: "Invalid username format",
+        ),
+      );
+      return;
+    }
+
     if (nameRegisTF.text.isEmpty) {
       ArtSweetAlert.show(
         context: Get.context!,
