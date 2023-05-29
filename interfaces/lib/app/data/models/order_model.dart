@@ -43,12 +43,14 @@ class OrderModel {
 }
 
 class OrderItem {
-  int? id;
+  String? id;
   int? totalPackage;
   int? totalPrice;
   String? name;
   String? phone;
   String? email;
+  String? responseMidtrans;
+  String? urlMidtrans;
   int? productId;
   int? accountId;
   DateTime? createdAt;
@@ -63,6 +65,8 @@ class OrderItem {
     this.name,
     this.phone,
     this.email,
+    this.responseMidtrans,
+    this.urlMidtrans,
     this.productId,
     this.accountId,
     this.createdAt,
@@ -78,6 +82,8 @@ class OrderItem {
         name: json["name"],
         phone: json["phone"],
         email: json["email"],
+        responseMidtrans: json["responseMidtrans"],
+        urlMidtrans: json["urlMidtrans"],
         productId: json["productId"],
         accountId: json["accountId"],
         createdAt: json["createdAt"] == null
@@ -100,6 +106,8 @@ class OrderItem {
         "name": name,
         "phone": phone,
         "email": email,
+        "responseMidtrans": responseMidtrans,
+        "urlMidtrans": urlMidtrans,
         "productId": productId,
         "accountId": accountId,
         "createdAt": createdAt?.toIso8601String(),
@@ -249,7 +257,7 @@ class StatusOrder {
   int? id;
   String? status;
   dynamic reason;
-  int? orderId;
+  String? orderId;
   DateTime? createdAt;
   DateTime? updatedAt;
 

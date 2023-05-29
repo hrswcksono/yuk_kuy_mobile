@@ -32,7 +32,7 @@ class OrderDetailModel {
 }
 
 class Data {
-  int? id;
+  String? id;
   int? totalPackage;
   int? totalPrice;
   String? name;
@@ -110,7 +110,7 @@ class StatusOrder {
   int? id;
   String? status;
   String? reason;
-  int? orderId;
+  String? orderId;
   DateTime? createdAt;
   DateTime? updatedAt;
 

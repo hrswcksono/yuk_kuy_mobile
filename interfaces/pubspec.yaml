@@ -24,6 +24,7 @@ dependencies:
   sign_button: ^2.0.3
   tuple: ^2.0.1
   url_launcher: ^6.1.11
+  webview_flutter: ^4.2.1
 
 dev_dependencies:
   flutter_launcher_icons: "^0.13.1"
