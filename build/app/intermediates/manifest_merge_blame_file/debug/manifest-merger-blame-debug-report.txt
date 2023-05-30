@@ -1,0 +1,181 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.yukkuy.mobile.yuk_kuy_mobile"
+4    android:versionCode="1"
+5    android:versionName="1.0.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="19"
+9        android:targetSdkVersion="33" />
+10    <!--
+11         The INTERNET permission is required for development. Specifically,
+12         the Flutter tool needs it to communicate with the running application
+13         to allow setting breakpoints, to provide hot reload, etc.
+14    -->
+15    <uses-permission android:name="android.permission.INTERNET" />
+15-->D:\File Sam\Bootcamp\mobile\yuk_kuy_mobile\android\app\src\debug\AndroidManifest.xml:7:5-67
+15-->D:\File Sam\Bootcamp\mobile\yuk_kuy_mobile\android\app\src\debug\AndroidManifest.xml:7:22-64
+16    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
+16-->D:\File Sam\Bootcamp\mobile\yuk_kuy_mobile\android\app\src\main\AndroidManifest.xml:4:5-77
+16-->D:\File Sam\Bootcamp\mobile\yuk_kuy_mobile\android\app\src\main\AndroidManifest.xml:4:22-74
+17    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+17-->D:\File Sam\Bootcamp\mobile\yuk_kuy_mobile\android\app\src\main\AndroidManifest.xml:5:5-81
+17-->D:\File Sam\Bootcamp\mobile\yuk_kuy_mobile\android\app\src\main\AndroidManifest.xml:5:22-78
+18    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+18-->D:\File Sam\Bootcamp\mobile\yuk_kuy_mobile\android\app\src\main\AndroidManifest.xml:6:5-80
+18-->D:\File Sam\Bootcamp\mobile\yuk_kuy_mobile\android\app\src\main\AndroidManifest.xml:6:22-77
+19    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+19-->D:\File Sam\Bootcamp\mobile\yuk_kuy_mobile\android\app\src\main\AndroidManifest.xml:7:5-82
+19-->D:\File Sam\Bootcamp\mobile\yuk_kuy_mobile\android\app\src\main\AndroidManifest.xml:7:22-79
+20    <uses-permission android:name="android.permission.CAMERA" />
+20-->D:\File Sam\Bootcamp\mobile\yuk_kuy_mobile\android\app\src\main\AndroidManifest.xml:8:6-66
+20-->D:\File Sam\Bootcamp\mobile\yuk_kuy_mobile\android\app\src\main\AndroidManifest.xml:8:23-63
+21
+22    <permission
+22-->[androidx.core:core:1.9.0] C:\Users\ACER\.gradle\caches\transforms-3\5f80b20db3afa86c72a9766b008d752d\transformed\core-1.9.0\AndroidManifest.xml:22:5-24:47
+23        android:name="com.yukkuy.mobile.yuk_kuy_mobile.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+23-->[androidx.core:core:1.9.0] C:\Users\ACER\.gradle\caches\transforms-3\5f80b20db3afa86c72a9766b008d752d\transformed\core-1.9.0\AndroidManifest.xml:23:9-81
+24        android:protectionLevel="signature" />
+24-->[androidx.core:core:1.9.0] C:\Users\ACER\.gradle\caches\transforms-3\5f80b20db3afa86c72a9766b008d752d\transformed\core-1.9.0\AndroidManifest.xml:24:9-44
+25
+26    <uses-permission android:name="com.yukkuy.mobile.yuk_kuy_mobile.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+26-->[androidx.core:core:1.9.0] C:\Users\ACER\.gradle\caches\transforms-3\5f80b20db3afa86c72a9766b008d752d\transformed\core-1.9.0\AndroidManifest.xml:26:5-97
+26-->[androidx.core:core:1.9.0] C:\Users\ACER\.gradle\caches\transforms-3\5f80b20db3afa86c72a9766b008d752d\transformed\core-1.9.0\AndroidManifest.xml:26:22-94
+27
+28    <application
+29        android:name="android.app.Application"
+30        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+30-->[androidx.core:core:1.9.0] C:\Users\ACER\.gradle\caches\transforms-3\5f80b20db3afa86c72a9766b008d752d\transformed\core-1.9.0\AndroidManifest.xml:28:18-86
+31        android:debuggable="true"
+32        android:icon="@mipmap/launcher_icon"
+33        android:label="YukKuy" >
+34        <activity
+35            android:name="com.yukkuy.mobile.yuk_kuy_mobile.MainActivity"
+36            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+37            android:exported="true"
+38            android:hardwareAccelerated="true"
+39            android:launchMode="singleTop"
+40            android:requestLegacyExternalStorage="true"
+41            android:theme="@style/LaunchTheme"
+42            android:windowSoftInputMode="adjustResize" >
+43
+44            <!--
+45                 Specifies an Android theme to apply to this Activity as soon as
+46                 the Android process has started. This theme is visible to the user
+47                 while the Flutter UI initializes. After that, this theme continues
+48                 to determine the Window background behind the Flutter UI.
+49            -->
+50            <meta-data
+51                android:name="io.flutter.embedding.android.NormalTheme"
+52                android:resource="@style/NormalTheme" />
+53
+54            <intent-filter>
+55                <action android:name="android.intent.action.MAIN" />
+56
+57                <category android:name="android.intent.category.LAUNCHER" />
+58            </intent-filter>
+59        </activity>
+60        <!--
+61             Don't delete the meta-data below.
+62             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
+63        -->
+64        <meta-data
+65            android:name="flutterEmbedding"
+66            android:value="2" />
+67
+68        <provider
+68-->[:image_picker_android] D:\File Sam\Bootcamp\mobile\yuk_kuy_mobile\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:10:9-18:20
+69            android:name="io.flutter.plugins.imagepicker.ImagePickerFileProvider"
+69-->[:image_picker_android] D:\File Sam\Bootcamp\mobile\yuk_kuy_mobile\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:11:13-82
+70            android:authorities="com.yukkuy.mobile.yuk_kuy_mobile.flutter.image_provider"
+70-->[:image_picker_android] D:\File Sam\Bootcamp\mobile\yuk_kuy_mobile\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:12:13-74
+71            android:exported="false"
+71-->[:image_picker_android] D:\File Sam\Bootcamp\mobile\yuk_kuy_mobile\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:13:13-37
+72            android:grantUriPermissions="true" >
+72-->[:image_picker_android] D:\File Sam\Bootcamp\mobile\yuk_kuy_mobile\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:14:13-47
+73            <meta-data
+73-->[:image_picker_android] D:\File Sam\Bootcamp\mobile\yuk_kuy_mobile\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:15:13-17:75
+74                android:name="android.support.FILE_PROVIDER_PATHS"
+74-->[:image_picker_android] D:\File Sam\Bootcamp\mobile\yuk_kuy_mobile\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:16:17-67
+75                android:resource="@xml/flutter_image_picker_file_paths" />
+75-->[:image_picker_android] D:\File Sam\Bootcamp\mobile\yuk_kuy_mobile\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:17:17-72
+76        </provider>
+77
+78        <activity
+78-->[:url_launcher_android] D:\File Sam\Bootcamp\mobile\yuk_kuy_mobile\build\url_launcher_android\intermediates\merged_manifest\debug\AndroidManifest.xml:10:9-13:74
+79            android:name="io.flutter.plugins.urllauncher.WebViewActivity"
+79-->[:url_launcher_android] D:\File Sam\Bootcamp\mobile\yuk_kuy_mobile\build\url_launcher_android\intermediates\merged_manifest\debug\AndroidManifest.xml:11:13-74
+80            android:exported="false"
+80-->[:url_launcher_android] D:\File Sam\Bootcamp\mobile\yuk_kuy_mobile\build\url_launcher_android\intermediates\merged_manifest\debug\AndroidManifest.xml:12:13-37
+81            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+81-->[:url_launcher_android] D:\File Sam\Bootcamp\mobile\yuk_kuy_mobile\build\url_launcher_android\intermediates\merged_manifest\debug\AndroidManifest.xml:13:13-71
+82
+83        <uses-library
+83-->[androidx.window:window:1.0.0-beta04] C:\Users\ACER\.gradle\caches\transforms-3\dee59bb480020f42d53c2ea15e4501f7\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:25:9-27:40
+84            android:name="androidx.window.extensions"
+84-->[androidx.window:window:1.0.0-beta04] C:\Users\ACER\.gradle\caches\transforms-3\dee59bb480020f42d53c2ea15e4501f7\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:26:13-54
+85            android:required="false" />
+85-->[androidx.window:window:1.0.0-beta04] C:\Users\ACER\.gradle\caches\transforms-3\dee59bb480020f42d53c2ea15e4501f7\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:27:13-37
+86        <uses-library
+86-->[androidx.window:window:1.0.0-beta04] C:\Users\ACER\.gradle\caches\transforms-3\dee59bb480020f42d53c2ea15e4501f7\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:28:9-30:40
+87            android:name="androidx.window.sidecar"
+87-->[androidx.window:window:1.0.0-beta04] C:\Users\ACER\.gradle\caches\transforms-3\dee59bb480020f42d53c2ea15e4501f7\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:29:13-51
+88            android:required="false" />
+88-->[androidx.window:window:1.0.0-beta04] C:\Users\ACER\.gradle\caches\transforms-3\dee59bb480020f42d53c2ea15e4501f7\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:30:13-37
+89
+90        <provider
+90-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\ACER\.gradle\caches\transforms-3\36aadc6eb473a87ded89a16c724c2dd8\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:24:9-32:20
+91            android:name="androidx.startup.InitializationProvider"
+91-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\ACER\.gradle\caches\transforms-3\36aadc6eb473a87ded89a16c724c2dd8\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:25:13-67
+92            android:authorities="com.yukkuy.mobile.yuk_kuy_mobile.androidx-startup"
+92-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\ACER\.gradle\caches\transforms-3\36aadc6eb473a87ded89a16c724c2dd8\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:26:13-68
+93            android:exported="false" >
+93-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\ACER\.gradle\caches\transforms-3\36aadc6eb473a87ded89a16c724c2dd8\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:27:13-37
+94            <meta-data
+94-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\ACER\.gradle\caches\transforms-3\36aadc6eb473a87ded89a16c724c2dd8\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:29:13-31:52
+95                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+95-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\ACER\.gradle\caches\transforms-3\36aadc6eb473a87ded89a16c724c2dd8\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:30:17-85
+96                android:value="androidx.startup" />
+96-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\ACER\.gradle\caches\transforms-3\36aadc6eb473a87ded89a16c724c2dd8\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:31:17-49
+97        </provider>
+98
+99        <receiver
+99-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\ACER\.gradle\caches\transforms-3\36aadc6eb473a87ded89a16c724c2dd8\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:34:9-52:20
+100            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+100-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\ACER\.gradle\caches\transforms-3\36aadc6eb473a87ded89a16c724c2dd8\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:35:13-76
+101            android:directBootAware="false"
+101-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\ACER\.gradle\caches\transforms-3\36aadc6eb473a87ded89a16c724c2dd8\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:36:13-44
+102            android:enabled="true"
+102-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\ACER\.gradle\caches\transforms-3\36aadc6eb473a87ded89a16c724c2dd8\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:37:13-35
+103            android:exported="true"
+103-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\ACER\.gradle\caches\transforms-3\36aadc6eb473a87ded89a16c724c2dd8\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:38:13-36
+104            android:permission="android.permission.DUMP" >
+104-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\ACER\.gradle\caches\transforms-3\36aadc6eb473a87ded89a16c724c2dd8\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:39:13-57
+105            <intent-filter>
+105-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\ACER\.gradle\caches\transforms-3\36aadc6eb473a87ded89a16c724c2dd8\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:40:13-42:29
+106                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+106-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\ACER\.gradle\caches\transforms-3\36aadc6eb473a87ded89a16c724c2dd8\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:41:17-91
+106-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\ACER\.gradle\caches\transforms-3\36aadc6eb473a87ded89a16c724c2dd8\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:41:25-88
+107            </intent-filter>
+108            <intent-filter>
+108-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\ACER\.gradle\caches\transforms-3\36aadc6eb473a87ded89a16c724c2dd8\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:43:13-45:29
+109                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+109-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\ACER\.gradle\caches\transforms-3\36aadc6eb473a87ded89a16c724c2dd8\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:44:17-85
+109-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\ACER\.gradle\caches\transforms-3\36aadc6eb473a87ded89a16c724c2dd8\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:44:25-82
+110            </intent-filter>
+111            <intent-filter>
+111-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\ACER\.gradle\caches\transforms-3\36aadc6eb473a87ded89a16c724c2dd8\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:46:13-48:29
+112                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+112-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\ACER\.gradle\caches\transforms-3\36aadc6eb473a87ded89a16c724c2dd8\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:47:17-88
+112-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\ACER\.gradle\caches\transforms-3\36aadc6eb473a87ded89a16c724c2dd8\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:47:25-85
+113            </intent-filter>
+114            <intent-filter>
+114-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\ACER\.gradle\caches\transforms-3\36aadc6eb473a87ded89a16c724c2dd8\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:49:13-51:29
+115                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+115-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\ACER\.gradle\caches\transforms-3\36aadc6eb473a87ded89a16c724c2dd8\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:50:17-95
+115-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\ACER\.gradle\caches\transforms-3\36aadc6eb473a87ded89a16c724c2dd8\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:50:25-92
+116            </intent-filter>
+117        </receiver>
+118    </application>
+119
+120</manifest>
