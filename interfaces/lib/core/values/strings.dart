@@ -17,7 +17,6 @@ class Strings {
   static const List<String> filterTransaction = [
     "All Transaction",
     "Payment",
-    "Verification",
     "Success",
     "Rejected",
     "Cancelled"
@@ -26,7 +25,6 @@ class Strings {
   static const List<String> queryTransaction = [
     "",
     "payment",
-    "verification",
     "success",
     "reject",
     "cancel"

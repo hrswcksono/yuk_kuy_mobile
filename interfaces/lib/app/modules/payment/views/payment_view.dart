@@ -69,7 +69,6 @@ class PaymentView extends GetView<PaymentController> {
               GetBuilder<PaymentController>(
                   init: PaymentController(),
                   builder: (ctx) => Row(
-                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
                             "Number of people :",
@@ -91,7 +90,6 @@ class PaymentView extends GetView<PaymentController> {
                                 ),
                                 child: const Icon(
                                   Icons.remove,
-                                  // size: 16.35,
                                   color: Colors.white,
                                 )),
                           ),
@@ -117,7 +115,6 @@ class PaymentView extends GetView<PaymentController> {
                                 ),
                                 child: const Icon(
                                   Icons.add,
-                                  // size: 16.35,
                                   color: Colors.white,
                                 )),
                           ),
@@ -151,7 +148,6 @@ class PaymentView extends GetView<PaymentController> {
                 title: "Email",
                 value: controller.email,
               ),
-              // ElevatedButton(onPressed: () {}, child: const Text("Book Now"))
             ],
           ),
         ),
@@ -220,7 +216,7 @@ class PaymentView extends GetView<PaymentController> {
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                child: Text("Book \nnow",
+                child: Text("Book now",
                     textAlign: TextAlign.center,
                     style: GoogleFonts.inter(
                         textStyle: const TextStyle(
