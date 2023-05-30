@@ -24,7 +24,7 @@ class VerificationSuccessView extends GetView<DetailTransactionController> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const HeaderGlobal(
-                      title: "Verification Success",
+                      title: "Success",
                     ),
                     const SizedBox(
                       height: 50,

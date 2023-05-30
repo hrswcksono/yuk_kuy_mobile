@@ -25,7 +25,7 @@ class OrderProvider extends BaseProvider {
     }
   }
 
-  Future<OrderDetailModel> detailOrder(int id) async {
+  Future<OrderDetailModel> detailOrder(String id) async {
     var response = await get('orders/$id');
     if (!response.body['status']) {
       return Future.error(response.body["message"]);

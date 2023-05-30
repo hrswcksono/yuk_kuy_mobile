@@ -45,6 +45,7 @@ class Data {
   DateTime? updatedAt;
   DateTime? createdAt;
   int? sellerId;
+  String? redirectUrl;
 
   Data({
     this.id,
@@ -58,6 +59,7 @@ class Data {
     this.updatedAt,
     this.createdAt,
     this.sellerId,
+    this.redirectUrl,
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
@@ -76,6 +78,7 @@ class Data {
             ? null
             : DateTime.parse(json["createdAt"]),
         sellerId: json["sellerId"],
+        redirectUrl: json["redirectUrl"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -90,5 +93,6 @@ class Data {
         "updatedAt": updatedAt?.toIso8601String(),
         "createdAt": createdAt?.toIso8601String(),
         "sellerId": sellerId,
+        "redirectUrl": redirectUrl,
       };
 }

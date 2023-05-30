@@ -6,7 +6,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:yuk_kuy_mobile/app/modules/detail_transaction/views/order_canceled_view.dart';
-import 'package:yuk_kuy_mobile/app/modules/detail_transaction/views/verification_pending_view.dart';
 import 'package:yuk_kuy_mobile/app/modules/detail_transaction/views/verification_rejected_view.dart';
 import 'package:yuk_kuy_mobile/app/modules/payment/views/payment_information_view.dart';
 import 'package:yuk_kuy_mobile/core/themes/colors.dart';
@@ -90,7 +89,6 @@ class TransactionView extends GetView {
                             height: Get.height *
                                     (context.loadingPagination ? 0.785 : 0.79) -
                                 (Get.mediaQuery.viewPadding.top),
-                            // height: Get.height * 0.785 - (Get.mediaQuery.viewPadding.top),
                             child: Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 15),
@@ -109,7 +107,6 @@ class TransactionView extends GetView {
                                               int index) =>
                                           itemTransaction(
                                             data[index].id!,
-                                            data[index].product!.accountId!,
                                             data[index]
                                                 .product!
                                                 .name
@@ -131,6 +128,7 @@ class TransactionView extends GetView {
                                                 .statusOrder!
                                                 .reason
                                                 .toString(),
+                                            data[index].urlMidtrans.toString(),
                                           ),
                                       separatorBuilder: (_, __) =>
                                           const SizedBox(
@@ -200,7 +198,6 @@ class TransactionView extends GetView {
       ),
       backgroundColor:
           state ? const Color.fromRGBO(233, 251, 243, 1) : Colors.white,
-      // disabledColor: Colors.white,
       onPressed: () {
         ctx.changeState(index);
       },
@@ -208,27 +205,24 @@ class TransactionView extends GetView {
   }
 
   InkWell itemTransaction(
-    int orderId,
-    int sellerId,
-    String productName,
-    String user,
-    String date,
-    int pax,
-    int price,
-    String status,
-    String image,
-    String reason,
-  ) {
+      String orderId,
+      String productName,
+      String user,
+      String date,
+      int pax,
+      int price,
+      String status,
+      String image,
+      String reason,
+      String urlMidtrans) {
     return InkWell(
       onTap: () {
         if (status == "payment") {
-          Get.to(PaymentInformationView(orderId, sellerId, true));
-        } else if (status == "verification") {
-          Get.to(const VerificationPendingView());
+          Get.to(PaymentInformationView(urlMidtrans));
         } else if (status == "success") {
           Get.toNamed(AppPages.initialDT, arguments: {"orderId": orderId});
         } else if (status == "reject") {
-          Get.to(VerificationRejectedView(orderId, sellerId, reason));
+          Get.to(VerificationRejectedView(reason));
         } else if (status == "cancel") {
           Get.to(OrderCanceledView(reason));
         }
@@ -301,8 +295,6 @@ class TransactionView extends GetView {
                             color: (() {
                               if (status == 'payment') {
                                 return const Color.fromRGBO(4, 193, 234, 1);
-                              } else if (status == 'verification') {
-                                return const Color.fromRGBO(255, 217, 63, 1);
                               } else if (status == 'success') {
                                 return const Color.fromRGBO(83, 177, 117, 1);
                               } else if (status == 'reject') {
