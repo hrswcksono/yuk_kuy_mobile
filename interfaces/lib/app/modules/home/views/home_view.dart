@@ -160,10 +160,11 @@ class HomeView extends GetView {
                       height: Get.height * 0.6,
                       child: const Center(child: CircularProgressIndicator())),
                   onEmpty: SizedBox(
-                    height: Get.height * 0.8,
-                    width: Get.width,
-                    child: Lottie.asset('assets/lotties/empty-box.json',
-                        width: 200, height: 200, fit: BoxFit.cover),
+                    height: Get.height / 2,
+                    child: Center(
+                      child: Lottie.asset('assets/lotties/empty-box.json',
+                          width: 200, height: 200, fit: BoxFit.cover),
+                    ),
                   ),
                   onError: (_) => SizedBox(
                         height: Get.height * 0.6,
