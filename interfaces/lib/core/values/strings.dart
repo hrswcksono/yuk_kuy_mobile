@@ -18,8 +18,8 @@ class Strings {
     "All Transaction",
     "Payment",
     "Success",
-    "Rejected",
-    "Cancelled"
+    "Reject",
+    "Cancel"
   ];
 
   static const List<String> queryTransaction = [
