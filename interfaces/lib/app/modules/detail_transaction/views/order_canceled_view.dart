@@ -22,7 +22,7 @@ class OrderCanceledView extends GetView {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const HeaderGlobal(
-                  title: "Order Cancelled",
+                  title: "Cancel",
                 ),
                 const SizedBox(
                   height: 50,
